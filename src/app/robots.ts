@@ -14,7 +14,6 @@ export default function robots(): MetadataRoute.Robots {
         "/checkout",
         "/login",
         "/register",
-        "/lagoon",
       ],
     },
     sitemap: `${base}/sitemap.xml`,
