@@ -1,0 +1,323 @@
+﻿{
+    "aquavida-merch":  [
+                           "go-with-the-flow-t-shirt-1",
+                           "go-with-the-flow-t-shirt",
+                           "av365-nem-city-t-shirt-black-1",
+                           "av365-nem-city-t-shirt-black",
+                           "fish-leagues-t-shirt-black"
+                       ],
+    "hawkfish":  [
+                     "arc-eye-hawk-paracirrhites-arcatus",
+                     "geometric-pygmy-hawk-pectranthias-inermis",
+                     "flame-hawk-neocirrhites-armatus",
+                     "golden-hawkfish-cirrhitichthys",
+                     "golden-hawk-fish-paracirrhites-xanthus",
+                     "falco-hawk",
+                     "freckled-hawk",
+                     "longnose-hawk",
+                     "spotted-hawk"
+                 ],
+    "jawfish":  [
+                    "blue-spot-jawfish",
+                    "dusky-jawfish-atl",
+                    "pearly-jawfish-atl"
+                ],
+    "basslet":  [
+                    "harlequin-bass-serranus-tigrinus",
+                    "japanese-basslet-leopropoma-susumi",
+                    "macneills-basslet-aus-assessor-macneilli",
+                    "royal-gramma-gramma-loreto",
+                    "tobacco-basslet-serranus-tabacarius",
+                    "yellow-assessor-assessor-flavissimus"
+                ],
+    "hogfish":  [
+                    "coral-hogfish-bodianus-axillaris",
+                    "costa-rica-hogfish-bodianus-diplotaenia",
+                    "eclipse-hogfish-bodianus-mesothorax",
+                    "masudas-hogfish-bodianus-sepiacaudus",
+                    "spanish-hog",
+                    "twospot-candy-hogfish",
+                    "dianas-hogfish-juv"
+                ],
+    "rabbitfish":  [
+                       "blue-lined-rabbit-fish",
+                       "fiji-foxface-fiji",
+                       "foxface-yellow",
+                       "foxface-black-spot",
+                       "orangespot-rabbit-fish",
+                       "scribbled-rabbit-fish"
+                   ],
+    "starfish":  [
+                     "white-sand-star-archaster-typicus",
+                     "orange-star-linkia-linckia",
+                     "choc-chip-star-color-protoreaster-nodosus"
+                 ],
+    "soft-corals-2026":  [
+                             "blue-rasta-zoa",
+                             "gala-zoa",
+                             "blow-pop-zoa",
+                             "unknown-zoa-1",
+                             "green-pink-ricordia-mushroom",
+                             "uknown-zoa",
+                             "unknown-zo",
+                             "captain-jerk",
+                             "la-lakers-zoas",
+                             "ck-venus-zoa",
+                             "unknown-zoa",
+                             "grand-paly",
+                             "rainbow-hornets",
+                             "fruit-loops-zoas",
+                             "hawaiian-ding-dings",
+                             "rhodactis-mushroom",
+                             "green-yuma",
+                             "jawbreaker-mushroom",
+                             "coral-ex"
+                         ],
+    "equipment":  [
+                      "fiji-dry-rock"
+                  ],
+    "cardinal":  [
+                     "banner-banggai-cardinal-t-r-pterapogon-kauderni",
+                     "flame-cardinal"
+                 ],
+    "clownfish":  [
+                      "black-ice-ocellaris-clown-captive-bred-amphiprion-ocellaris",
+                      "black-storm-ocellaris-clown-tr-amphiprion-ocellaris",
+                      "maroon-clown-gold-nugget-cb-premnas-biaculeatus",
+                      "maroon-clown-lightning-captive-bred-premnas-biaculeatus",
+                      "maroon-clown-yellowstripe-cb-premnas-biaculeatus",
+                      "ocellaris-clown-black-white-cb-amphipron-ocellaris",
+                      "orange-storm-ocellaris-clown-cb-amphiprion-ocellaris",
+                      "percula-clown-true-cb-amphiprion-percula",
+                      "picasso-clown-platinum-cb-amphiprion-percula",
+                      "snowflake-ocellaris-clown-b-grade-cb-amphiprion-ocellaris-snowflake",
+                      "snowflake-clown-flurry-cb-amphiprion-ocellaris-snowflake",
+                      "snowflake-wyoming-white-cb-amphiprion-ocellaris-snowflake",
+                      "peach-skunk-clown-amphiprion-akallopisis",
+                      "orange-skunk-clown-amphiprion-sandaracinos",
+                      "mocha-storm-ocellaris-clown-cb-amphiprion-ocellaris",
+                      "mccullochs-clownfish-cb-amphiprion-mccullochi",
+                      "midnight-ocellaris-clown-captive-bred"
+                  ],
+    "tangs":  [
+                  "black-tang-zebrasoma-rostratum",
+                  "blue-eye-tang-ctenochaetus-binotatus",
+                  "blue-tang-yellow-belly-paracanthurus-hepatus",
+                  "galapagos-sawtail-tang-prionurus-laticlavius",
+                  "gold-rim-tang-acanthurus-glaucopareius",
+                  "maculiceps-tang-acanthurus-maculiceps",
+                  "achilles-hybrid-tang-acanthurus-achilles-x-glaucopareius",
+                  "clown-tang-acanthurus-lineatus",
+                  "desjardinii-sailfin-tang-zebrasoma-desjardinii",
+                  "powder-blue-surgeon-acanthurus-leucosternon",
+                  "powder-brown-surgeon-acanthurus-japonicus",
+                  "sailfin-tang-zebrasoma-veliferum",
+                  "sawtail-tang-spotted-prionurus-punctatus",
+                  "scopas-tang-zebrasoma-scopas",
+                  "sohal-tang-red-sea-acanthurus-sohal",
+                  "bariene-tang",
+                  "vlamingi-tang-naso-vlamingi",
+                  "whitemargin-unicornfish-naso-annulatus",
+                  "white-tail-yellow-eye-tang-ctenochaetus",
+                  "koi-tang",
+                  "eiblii-mimic-tang",
+                  "purple-tang",
+                  "zebra-tang",
+                  "achilles-tang-acanthurus-achilles",
+                  "barienetang-acanthurus-bariene",
+                  "atlantic-blue-tang-acanthurus-coeruleus"
+              ],
+    "angelfish":  [
+                      "annularis-angel-pomacanthus-annularis",
+                      "asfur-angel-pomacanthus-asfur",
+                      "bellus-angel-female-genicanthus-bellus",
+                      "bellus-angel-male-genicanthus-bellus",
+                      "bicolor-angel-centropyge-bicolor",
+                      "blueface-angel-pomacanthus-xanthometopon",
+                      "chrysurus-angel-pomacanthus-chrysurus",
+                      "coral-beauty-angel-centropyge-bispinosus",
+                      "cortez-angel-juv-pomacanthus-zonipectus",
+                      "cream-angel-apolemichthys-xanthurus",
+                      "21-griffs-angel-sm"
+                  ],
+    "anthias":  [
+                    "flavoguttatus-anthias-pseudanthias-flavoguttatus",
+                    "bimaculatus-anthias-female-pseudanthias-bimaculatus",
+                    "evansi-anthias-male-pseudanthias-evansi",
+                    "carberry-anthias-fem-nemanthias-carberryi",
+                    "borbonius-blotchy-anthias-holanthias-borbonius",
+                    "ignitus-anthias-female-pseudanthias-ignitus",
+                    "orange-blue-eye-anthias-female-pseudanthias-squamipinnis",
+                    "orange-blue-eye-anthias-male-pseudanthias-squamipinnis",
+                    "randalls-anthias-male-pseudanthisas-randalli",
+                    "ruby-anthias-paranthias-colonus",
+                    "smithvanizi-princess-anthias-psuedanthias-smithvanizi",
+                    "square-yellow-anthias-fem-pseudanthias-pleurotaenia",
+                    "sunburst-anthias-serranocirrhitus-latus",
+                    "tiger-lori-anthias-pseudanthias-lori",
+                    "40-elongatus-anthias-japan-4-to-5-inch"
+                ],
+    "crabs":  [
+                  "sally-lightfoot-crab-pac-percnon",
+                  "emerald-crab-atl-mythrax-sculptus",
+                  "blue-leg-reef-hermit-crab-atl-paguristes",
+                  "red-leg-reef-hermit-paguristes"
+              ],
+    "parrotfish":  [
+                       "bicolor-parrotfish",
+                       "quoys-parrot-algae-eater"
+                   ],
+    "shrimp":  [
+                   "sexy-shrimp-thor-amboinensis",
+                   "camel-shrimp-rhynchocinetes",
+                   "bumble-bee-shrimp-gnathophyllum-americanum",
+                   "peppermint-shrimp",
+                   "pistol-shrimp-candy-stripe-alpheus"
+               ],
+    "accessories":  [
+                        "salifert-nitrate-test-kit"
+                    ],
+    "snail":  [
+                  "bumble-bee-snail-mar-engina-sp",
+                  "cerith-snail-cerith",
+                  "tiger-sand-snail-conomurex-luhuanus"
+              ],
+    "file-fish":  [
+                      "tiger-file-acreichthys-radiatus"
+                  ],
+    "goby":  [
+                 "bumblebee-wheeleri-goby-amblyeleotris-wheeleri",
+                 "dragon-goby-amblygobius-phaleana",
+                 "engineer-neon-goby-pholidychtys-luecotaenia",
+                 "firefish-goby-nemateleotris-magnifica",
+                 "flaming-prawn-goby-stonogobiops-griessingeri",
+                 "golden-head-goby-valenciennea-strigata",
+                 "green-mandarin-goby-synchiropus-splendidus",
+                 "hectors-goby-amblygobius-hectori",
+                 "helfrichs-firefish-nemateleotris-helfrichi",
+                 "purple-firefish-nemateleotris-decora",
+                 "railway-sleeper-goby-valenciennea-helsdingenii",
+                 "rainfordi-goby-amblygobius-rainfordi",
+                 "randalls-goby-amblyeleotris-randalli",
+                 "red-cap-goby-elacatinus-puncticulatus",
+                 "red-striped-worm-goby-gunnelichthys-curiosus",
+                 "scissortail-goby-ptereleotris-evides",
+                 "watchman-goby-pink-blue-spot-cryptocentrus-leptocephalus",
+                 "white-sleeper-goby-valenciennea-sexguttata",
+                 "yasa-hashe-goby-stonogobiops",
+                 "yellow-target-mandarin-goby-synchiropus-picturatus",
+                 "bluestripe-neon-goby-atl",
+                 "green-banded-goby-atl",
+                 "orange-banded-prawn-goby",
+                 "panda-goby",
+                 "twinspot-signal-goby",
+                 "yellowstripe-neon-goby-t-r",
+                 "yellow-watchman",
+                 "citron-clown-goby-yellow-gobiodon-citrinus",
+                 "yellow-clown-goby-gobiodon-okinawae"
+             ],
+    "parrotfish-1":  [
+                         "blue-spot-puffer-fiji",
+                         "dogface-puffer",
+                         "dogface-puffer-yellow-belly",
+                         "porcupine-puffer",
+                         "striped-dogface-puffer",
+                         "valentini-puffer",
+                         "gold-puffer-ultra-arothron-meleagris"
+                     ],
+    "sharks-stingray":  [
+                            "cortez-stingray"
+                        ],
+    "sea-urchin":  [
+                       "royal-urchin-color-mespilia-globulus",
+                       "pencil-urchin-heterocentrotus"
+                   ],
+    "anemone":  [
+                    "copy-rasta-anemone",
+                    "pink-lemonade-lta",
+                    "tube-anemone-super-orange-cerianthus",
+                    "saddle-anemone-ultra-colored-stichodactyla-haddoni",
+                    "saddle-anemone-colored-stichodactyla-haddoni",
+                    "long-tentacle-anemone-ultra-macrodactyla-doreensis",
+                    "long-tentacle-anemone-colored-macrodactyla-doreensis",
+                    "flower-anemone-red-orange-epicystis-crucifer",
+                    "flower-anemone-color-epicystis-crucifer",
+                    "condylactis-anemone-condylactis-gigantea",
+                    "condylactis-anemone-color-condylactis-gigantea",
+                    "chicago-sunburst-anemone",
+                    "nexus-burst-anemone",
+                    "speckled-bta-anemone",
+                    "japanese-anemone-1",
+                    "rainbow-bta",
+                    "mak-inferno-bta"
+                ],
+    "seaslugs-nudibranch":  [
+                                "velvet-sea-slug-chelidonura-varians",
+                                "berghia-nudibranch-berghia",
+                                "green-frilly-lettuce-slug-tridachia-crispata"
+                            ],
+    "sps":  [
+                "acro-1",
+                "acro",
+                "product-2",
+                "product"
+            ],
+    "lionfish":  [
+                     "volitan-lion",
+                     "volitan-lionfish-africa"
+                 ],
+    "lps":  [
+                "unknown-chalice-1",
+                "powerball-goni",
+                "glitter-goni",
+                "raptor-favia",
+                "gold-indo-galaxea",
+                "green-frosty-blue-favia",
+                "green-purple-tip-aussie-hammer",
+                "gold-hammer-1",
+                "unknown-chalice",
+                "holy-grail-acan",
+                "red-green-acan",
+                "pot-o-gold-favia",
+                "cyphastrea",
+                "orange-bowerbanki",
+                "product-1",
+                "unknown-favia",
+                "green-alveopora",
+                "rainbow-goni",
+                "highlighter-goni-2",
+                "yellow-striped-goni",
+                "unknown-torch",
+                "holy-grail-torch",
+                "green-blasto",
+                "orange-green-acantho",
+                "glitter-acantho",
+                "green-blue-acantho",
+                "gold-acantho",
+                "gold-green-fungia",
+                "green-fungia-plate",
+                "joker-torch",
+                "glitter-lobo",
+                "rainbow-acan",
+                "red-acan-2",
+                "splatter-hammer",
+                "hammer",
+                "green-acan-1",
+                "panty-dropper-blastomussa-wellsi",
+                "black-hole-sun-acan-acanstrea-micromussa"
+            ],
+    "blenny":  [
+                   "canary-blenny-yellow-fiji-meiacanthus-ovalaunensis",
+                   "flametail-blenny-enchelyurus-flavipes",
+                   "golden-tiger-blenny-escenius-segmentatus",
+                   "sailfin-blenny-exallias-brevis",
+                   "smiths-blenny-meiacanthus-smithi",
+                   "bicolor-blenny-female",
+                   "bicolor-blenny-male",
+                   "lawnmower-blenny",
+                   "red-scooter-blenny",
+                   "redlip-blenny",
+                   "scooter-blenny",
+                   "starry-blenny"
+               ]
+}

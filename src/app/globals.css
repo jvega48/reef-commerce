@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+@theme {
+  /* Deep-ocean brand palette */
+  --color-abyss-950: #030d18;
+  --color-abyss-900: #05182b;
+  --color-abyss-800: #0a2440;
+  --color-abyss-700: #113558;
+  --color-abyss-600: #1b4a75;
+
+  --color-reef-300: #7ee7f0;
+  --color-reef-400: #38d4e0;
+  --color-reef-500: #14b5c8;
+  --color-reef-600: #0d92a3;
+
+  --color-coral-300: #ffb08a;
+  --color-coral-400: #ff8a5c;
+  --color-coral-500: #ff6b35;
+  --color-coral-600: #e55220;
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+}
+
+body {
+  background: var(--color-abyss-950);
+  color: #e6f1f8;
+  font-family: var(--font-sans);
+}
+
+/* Rich-text product descriptions (imported HTML) */
+.prose-reef p {
+  margin-bottom: 0.5rem;
+  color: #b8cfdd;
+}

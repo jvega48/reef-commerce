@@ -1,0 +1,572 @@
+﻿[
+    {
+        "id":  506954875171,
+        "title":  "Accessories",
+        "handle":  "accessories",
+        "description":  "",
+        "published_at":  "2026-06-25T23:10:39-04:00",
+        "updated_at":  "2026-07-03T15:34:00-04:00",
+        "image":  {
+                      "id":  1745988452643,
+                      "created_at":  "2026-06-25T23:10:38-04:00",
+                      "src":  "https://cdn.shopify.com/s/files/1/0689/6474/5507/collections/Screenshot_2026-06-25_at_8.09.15_PM.png?v=1782443439",
+                      "alt":  null
+                  },
+        "products_count":  1
+    },
+    {
+        "id":  506954449187,
+        "title":  "Anemone",
+        "handle":  "anemone",
+        "description":  "",
+        "published_at":  "2026-06-25T23:00:07-04:00",
+        "updated_at":  "2026-07-07T00:50:06-04:00",
+        "image":  {
+                      "id":  1745988124963,
+                      "created_at":  "2026-06-25T23:00:06-04:00",
+                      "src":  "https://cdn.shopify.com/s/files/1/0689/6474/5507/collections/Screenshot_2026-06-25_at_7.55.53_PM.png?v=1782442806",
+                      "alt":  null
+                  },
+        "products_count":  17
+    },
+    {
+        "id":  506950844707,
+        "title":  "Angelfish",
+        "handle":  "angelfish",
+        "description":  "",
+        "published_at":  "2026-06-25T22:24:39-04:00",
+        "updated_at":  "2026-06-27T12:14:14-04:00",
+        "image":  {
+                      "id":  1745987109155,
+                      "created_at":  "2026-06-25T22:24:38-04:00",
+                      "src":  "https://cdn.shopify.com/s/files/1/0689/6474/5507/collections/Screenshot_2026-06-25_at_7.04.55_PM.png?v=1782440678",
+                      "alt":  null
+                  },
+        "products_count":  11
+    },
+    {
+        "id":  506950877475,
+        "title":  "Anthias",
+        "handle":  "anthias",
+        "description":  "",
+        "published_at":  "2026-06-25T22:27:00-04:00",
+        "updated_at":  "2026-07-03T21:52:49-04:00",
+        "image":  {
+                      "id":  1745987141923,
+                      "created_at":  "2026-06-25T22:26:59-04:00",
+                      "src":  "https://cdn.shopify.com/s/files/1/0689/6474/5507/collections/Screenshot_2026-06-25_at_7.06.18_PM.png?v=1782440820",
+                      "alt":  null
+                  },
+        "products_count":  15
+    },
+    {
+        "id":  475032518947,
+        "title":  "AquaVida merch",
+        "handle":  "aquavida-merch",
+        "description":  null,
+        "published_at":  "2024-05-04T02:25:04-04:00",
+        "updated_at":  "2026-06-25T22:47:18-04:00",
+        "image":  {
+                      "id":  1745987797283,
+                      "created_at":  "2026-06-25T22:47:18-04:00",
+                      "src":  "https://cdn.shopify.com/s/files/1/0689/6474/5507/collections/IMG-3997_02f80794-c53d-45f8-8b2e-f96cba9bbb56.png?v=1782442038",
+                      "alt":  null
+                  },
+        "products_count":  5
+    },
+    {
+        "id":  506950910243,
+        "title":  "Basslet",
+        "handle":  "basslet",
+        "description":  "",
+        "published_at":  "2026-06-25T22:27:37-04:00",
+        "updated_at":  "2026-06-27T12:18:38-04:00",
+        "image":  {
+                      "id":  1745987174691,
+                      "created_at":  "2026-06-25T22:27:36-04:00",
+                      "src":  "https://cdn.shopify.com/s/files/1/0689/6474/5507/collections/Screenshot_2026-06-25_at_7.06.44_PM.png?v=1782440856",
+                      "alt":  null
+                  },
+        "products_count":  6
+    },
+    {
+        "id":  506950943011,
+        "title":  "Blenny",
+        "handle":  "blenny",
+        "description":  "",
+        "published_at":  "2026-06-25T22:28:16-04:00",
+        "updated_at":  "2026-06-27T12:24:31-04:00",
+        "image":  {
+                      "id":  1745987207459,
+                      "created_at":  "2026-06-25T22:28:15-04:00",
+                      "src":  "https://cdn.shopify.com/s/files/1/0689/6474/5507/collections/Screenshot_2026-06-25_at_7.07.56_PM.png?v=1782440896",
+                      "alt":  null
+                  },
+        "products_count":  12
+    },
+    {
+        "id":  506951008547,
+        "title":  "Butterfly",
+        "handle":  "butterfly",
+        "description":  "",
+        "published_at":  "2026-06-25T22:28:57-04:00",
+        "updated_at":  "2026-06-25T22:28:57-04:00",
+        "image":  {
+                      "id":  1745987240227,
+                      "created_at":  "2026-06-25T22:28:56-04:00",
+                      "src":  "https://cdn.shopify.com/s/files/1/0689/6474/5507/collections/Screenshot_2026-06-25_at_7.08.38_PM.png?v=1782440936",
+                      "alt":  null
+                  },
+        "products_count":  0
+    },
+    {
+        "id":  506951041315,
+        "title":  "Cardinal",
+        "handle":  "cardinal",
+        "description":  "",
+        "published_at":  "2026-06-25T22:29:26-04:00",
+        "updated_at":  "2026-06-27T12:26:01-04:00",
+        "image":  {
+                      "id":  1745987272995,
+                      "created_at":  "2026-06-25T22:29:25-04:00",
+                      "src":  "https://cdn.shopify.com/s/files/1/0689/6474/5507/collections/Screenshot_2026-06-25_at_7.09.08_PM.png?v=1782440966",
+                      "alt":  null
+                  },
+        "products_count":  2
+    },
+    {
+        "id":  506954776867,
+        "title":  "Clam",
+        "handle":  "clam",
+        "description":  "",
+        "published_at":  "2026-06-25T23:04:56-04:00",
+        "updated_at":  "2026-06-25T23:04:56-04:00",
+        "image":  {
+                      "id":  1745988387107,
+                      "created_at":  "2026-06-25T23:04:55-04:00",
+                      "src":  "https://cdn.shopify.com/s/files/1/0689/6474/5507/collections/Screenshot_2026-06-25_at_7.59.20_PM.png?v=1782443096",
+                      "alt":  null
+                  },
+        "products_count":  0
+    },
+    {
+        "id":  506951139619,
+        "title":  "Clownfish",
+        "handle":  "clownfish",
+        "description":  "",
+        "published_at":  "2026-06-25T22:29:54-04:00",
+        "updated_at":  "2026-06-27T12:34:53-04:00",
+        "image":  {
+                      "id":  1745987305763,
+                      "created_at":  "2026-06-25T22:29:53-04:00",
+                      "src":  "https://cdn.shopify.com/s/files/1/0689/6474/5507/collections/Screenshot_2026-06-25_at_7.10.12_PM.png?v=1782440994",
+                      "alt":  null
+                  },
+        "products_count":  17
+    },
+    {
+        "id":  506954481955,
+        "title":  "Crabs",
+        "handle":  "crabs",
+        "description":  "",
+        "published_at":  "2026-06-25T23:00:32-04:00",
+        "updated_at":  "2026-07-07T00:51:44-04:00",
+        "image":  {
+                      "id":  1745988157731,
+                      "created_at":  "2026-06-25T23:00:30-04:00",
+                      "src":  "https://cdn.shopify.com/s/files/1/0689/6474/5507/collections/Screenshot_2026-06-25_at_7.56.17_PM.png?v=1782442831",
+                      "alt":  null
+                  },
+        "products_count":  4
+    },
+    {
+        "id":  506954907939,
+        "title":  "Equipment",
+        "handle":  "equipment",
+        "description":  "",
+        "published_at":  "2026-06-25T23:11:11-04:00",
+        "updated_at":  "2026-07-07T00:42:31-04:00",
+        "image":  {
+                      "id":  1745988485411,
+                      "created_at":  "2026-06-25T23:11:11-04:00",
+                      "src":  "https://cdn.shopify.com/s/files/1/0689/6474/5507/collections/Screenshot_2026-06-25_at_8.09.43_PM.png?v=1782443471",
+                      "alt":  null
+                  },
+        "products_count":  1
+    },
+    {
+        "id":  506951303459,
+        "title":  "File fish",
+        "handle":  "file-fish",
+        "description":  "",
+        "published_at":  "2026-06-25T22:30:31-04:00",
+        "updated_at":  "2026-06-27T12:35:43-04:00",
+        "image":  {
+                      "id":  1745987338531,
+                      "created_at":  "2026-06-25T22:30:30-04:00",
+                      "src":  "https://cdn.shopify.com/s/files/1/0689/6474/5507/collections/Screenshot_2026-06-25_at_7.10.32_PM.png?v=1782441031",
+                      "alt":  null
+                  },
+        "products_count":  1
+    },
+    {
+        "id":  506955006243,
+        "title":  "Food/ Additives",
+        "handle":  "food-additives",
+        "description":  "",
+        "published_at":  "2026-06-25T23:11:36-04:00",
+        "updated_at":  "2026-06-25T23:11:36-04:00",
+        "image":  {
+                      "id":  1745988518179,
+                      "created_at":  "2026-06-25T23:11:35-04:00",
+                      "src":  "https://cdn.shopify.com/s/files/1/0689/6474/5507/collections/Screenshot_2026-06-25_at_8.10.09_PM.png?v=1782443496",
+                      "alt":  null
+                  },
+        "products_count":  0
+    },
+    {
+        "id":  506951336227,
+        "title":  "Goby",
+        "handle":  "goby",
+        "description":  "",
+        "published_at":  "2026-06-25T22:31:09-04:00",
+        "updated_at":  "2026-06-27T12:50:20-04:00",
+        "image":  {
+                      "id":  1745987371299,
+                      "created_at":  "2026-06-25T22:31:08-04:00",
+                      "src":  "https://cdn.shopify.com/s/files/1/0689/6474/5507/collections/Screenshot_2026-06-25_at_7.10.57_PM.png?v=1782441069",
+                      "alt":  null
+                  },
+        "products_count":  29
+    },
+    {
+        "id":  506951368995,
+        "title":  "Hawkfish",
+        "handle":  "hawkfish",
+        "description":  "",
+        "published_at":  "2026-06-25T22:31:42-04:00",
+        "updated_at":  "2026-06-27T12:56:14-04:00",
+        "image":  {
+                      "id":  1745987404067,
+                      "created_at":  "2026-06-25T22:31:41-04:00",
+                      "src":  "https://cdn.shopify.com/s/files/1/0689/6474/5507/collections/Screenshot_2026-06-25_at_7.11.30_PM.png?v=1782441101",
+                      "alt":  null
+                  },
+        "products_count":  9
+    },
+    {
+        "id":  506951401763,
+        "title":  "Hogfish",
+        "handle":  "hogfish",
+        "description":  "",
+        "published_at":  "2026-06-25T22:32:08-04:00",
+        "updated_at":  "2026-06-27T15:24:20-04:00",
+        "image":  {
+                      "id":  1745987436835,
+                      "created_at":  "2026-06-25T22:32:07-04:00",
+                      "src":  "https://cdn.shopify.com/s/files/1/0689/6474/5507/collections/Screenshot_2026-06-25_at_7.12.39_PM.png?v=1782441128",
+                      "alt":  null
+                  },
+        "products_count":  7
+    },
+    {
+        "id":  506951434531,
+        "title":  "Jawfish",
+        "handle":  "jawfish",
+        "description":  "",
+        "published_at":  "2026-06-25T22:32:37-04:00",
+        "updated_at":  "2026-06-28T01:37:32-04:00",
+        "image":  {
+                      "id":  1745987469603,
+                      "created_at":  "2026-06-25T22:32:35-04:00",
+                      "src":  "https://cdn.shopify.com/s/files/1/0689/6474/5507/collections/Screenshot_2026-06-25_at_7.13.12_PM.png?v=1782441156",
+                      "alt":  null
+                  },
+        "products_count":  3
+    },
+    {
+        "id":  506946879779,
+        "title":  "Large Polyp Stony",
+        "handle":  "lps",
+        "description":  "",
+        "published_at":  "2026-06-25T18:51:03-04:00",
+        "updated_at":  "2026-07-07T04:57:57-04:00",
+        "image":  {
+                      "id":  1745985962275,
+                      "created_at":  "2026-06-25T18:51:02-04:00",
+                      "src":  "https://cdn.shopify.com/s/files/1/0689/6474/5507/collections/41DFAF55-8B94-4275-89FD-02DF7FEAA7C3.jpg?v=1782427862",
+                      "alt":  null
+                  },
+        "products_count":  38
+    },
+    {
+        "id":  506951467299,
+        "title":  "Lionfish",
+        "handle":  "lionfish",
+        "description":  "",
+        "published_at":  "2026-06-25T22:33:09-04:00",
+        "updated_at":  "2026-06-28T02:15:03-04:00",
+        "image":  {
+                      "id":  1745987502371,
+                      "created_at":  "2026-06-25T22:33:08-04:00",
+                      "src":  "https://cdn.shopify.com/s/files/1/0689/6474/5507/collections/Screenshot_2026-06-25_at_7.13.30_PM.png?v=1782441188",
+                      "alt":  null
+                  },
+        "products_count":  2
+    },
+    {
+        "id":  506949828899,
+        "title":  "Non Photosynthetic Coral",
+        "handle":  "non-photosynthetic-coral",
+        "description":  "",
+        "published_at":  "2026-06-25T21:18:46-04:00",
+        "updated_at":  "2026-06-25T21:20:56-04:00",
+        "image":  {
+                      "id":  1745986912547,
+                      "created_at":  "2026-06-25T21:18:46-04:00",
+                      "src":  "https://cdn.shopify.com/s/files/1/0689/6474/5507/collections/Screenshot_2026-06-25_at_6.19.44_PM.png?v=1782436856",
+                      "alt":  null
+                  },
+        "products_count":  0
+    },
+    {
+        "id":  506951532835,
+        "title":  "Parrotfish",
+        "handle":  "parrotfish",
+        "description":  "",
+        "published_at":  "2026-06-25T22:33:39-04:00",
+        "updated_at":  "2026-06-28T02:24:27-04:00",
+        "image":  {
+                      "id":  1745987535139,
+                      "created_at":  "2026-06-25T22:33:38-04:00",
+                      "src":  "https://cdn.shopify.com/s/files/1/0689/6474/5507/collections/Screenshot_2026-06-25_at_7.13.43_PM.png?v=1782441218",
+                      "alt":  null
+                  },
+        "products_count":  2
+    },
+    {
+        "id":  506951598371,
+        "title":  "Pufferfish",
+        "handle":  "parrotfish-1",
+        "description":  "",
+        "published_at":  "2026-06-25T22:34:22-04:00",
+        "updated_at":  "2026-06-28T06:32:53-04:00",
+        "image":  {
+                      "id":  1745987567907,
+                      "created_at":  "2026-06-25T22:34:21-04:00",
+                      "src":  "https://cdn.shopify.com/s/files/1/0689/6474/5507/collections/Screenshot_2026-06-25_at_7.16.51_PM.png?v=1782441262",
+                      "alt":  null
+                  },
+        "products_count":  7
+    },
+    {
+        "id":  506951631139,
+        "title":  "Rabbitfish",
+        "handle":  "rabbitfish",
+        "description":  "",
+        "published_at":  "2026-06-25T22:35:12-04:00",
+        "updated_at":  "2026-06-29T14:23:23-04:00",
+        "image":  {
+                      "id":  1745987600675,
+                      "created_at":  "2026-06-25T22:35:11-04:00",
+                      "src":  "https://cdn.shopify.com/s/files/1/0689/6474/5507/collections/Screenshot_2026-06-25_at_7.17.13_PM.png?v=1782441311",
+                      "alt":  null
+                  },
+        "products_count":  6
+    },
+    {
+        "id":  506951663907,
+        "title":  "Scorpionfish",
+        "handle":  "scorpionfish",
+        "description":  "",
+        "published_at":  "2026-06-25T22:35:46-04:00",
+        "updated_at":  "2026-06-25T22:35:46-04:00",
+        "image":  {
+                      "id":  1745987633443,
+                      "created_at":  "2026-06-25T22:35:45-04:00",
+                      "src":  "https://cdn.shopify.com/s/files/1/0689/6474/5507/collections/Screenshot_2026-06-25_at_7.17.38_PM.png?v=1782441345",
+                      "alt":  null
+                  },
+        "products_count":  0
+    },
+    {
+        "id":  506954744099,
+        "title":  "Sea urchin",
+        "handle":  "sea-urchin",
+        "description":  "",
+        "published_at":  "2026-06-25T23:02:56-04:00",
+        "updated_at":  "2026-07-07T00:52:35-04:00",
+        "image":  {
+                      "id":  1745988354339,
+                      "created_at":  "2026-06-25T23:02:55-04:00",
+                      "src":  "https://cdn.shopify.com/s/files/1/0689/6474/5507/collections/Screenshot_2026-06-25_at_7.58.56_PM.png?v=1782442975",
+                      "alt":  null
+                  },
+        "products_count":  2
+    },
+    {
+        "id":  506954547491,
+        "title":  "Seaslugs/ Nudibranch",
+        "handle":  "seaslugs-nudibranch",
+        "description":  "",
+        "published_at":  "2026-06-25T23:01:40-04:00",
+        "updated_at":  "2026-07-07T00:45:45-04:00",
+        "image":  {
+                      "id":  1745988223267,
+                      "created_at":  "2026-06-25T23:01:39-04:00",
+                      "src":  "https://cdn.shopify.com/s/files/1/0689/6474/5507/collections/Screenshot_2026-06-25_at_7.57.22_PM.png?v=1782442899",
+                      "alt":  null
+                  },
+        "products_count":  3
+    },
+    {
+        "id":  506951696675,
+        "title":  "Sharks/ Stingray",
+        "handle":  "sharks-stingray",
+        "description":  "",
+        "published_at":  "2026-06-25T22:36:20-04:00",
+        "updated_at":  "2026-06-29T14:24:27-04:00",
+        "image":  {
+                      "id":  1745987666211,
+                      "created_at":  "2026-06-25T22:36:19-04:00",
+                      "src":  "https://cdn.shopify.com/s/files/1/0689/6474/5507/collections/Screenshot_2026-06-25_at_7.20.18_PM.png?v=1782441379",
+                      "alt":  null
+                  },
+        "products_count":  1
+    },
+    {
+        "id":  506954613027,
+        "title":  "Shrimp",
+        "handle":  "shrimp",
+        "description":  "",
+        "published_at":  "2026-06-25T23:02:05-04:00",
+        "updated_at":  "2026-07-07T00:46:30-04:00",
+        "image":  {
+                      "id":  1745988288803,
+                      "created_at":  "2026-06-25T23:02:04-04:00",
+                      "src":  "https://cdn.shopify.com/s/files/1/0689/6474/5507/collections/Screenshot_2026-06-25_at_7.57.55_PM.png?v=1782442924",
+                      "alt":  null
+                  },
+        "products_count":  5
+    },
+    {
+        "id":  506946978083,
+        "title":  "Small Polyp Stony",
+        "handle":  "sps",
+        "description":  "",
+        "published_at":  "2026-06-25T18:55:08-04:00",
+        "updated_at":  "2026-07-07T20:44:18-04:00",
+        "image":  {
+                      "id":  1745985995043,
+                      "created_at":  "2026-06-25T18:55:07-04:00",
+                      "src":  "https://cdn.shopify.com/s/files/1/0689/6474/5507/collections/Screenshot_2026-06-25_at_3.54.34_PM.png?v=1782428108",
+                      "alt":  null
+                  },
+        "products_count":  4
+    },
+    {
+        "id":  506954678563,
+        "title":  "Snail",
+        "handle":  "snail",
+        "description":  "",
+        "published_at":  "2026-06-25T23:02:32-04:00",
+        "updated_at":  "2026-07-07T00:41:34-04:00",
+        "image":  {
+                      "id":  1745988321571,
+                      "created_at":  "2026-06-25T23:02:31-04:00",
+                      "src":  "https://cdn.shopify.com/s/files/1/0689/6474/5507/collections/Screenshot_2026-06-25_at_7.58.21_PM.png?v=1782442952",
+                      "alt":  null
+                  },
+        "products_count":  3
+    },
+    {
+        "id":  506946748707,
+        "title":  "Soft Corals",
+        "handle":  "soft-corals-2026",
+        "description":  "",
+        "published_at":  "2026-06-25T18:47:32-04:00",
+        "updated_at":  "2026-07-07T04:55:50-04:00",
+        "image":  {
+                      "id":  1745985929507,
+                      "created_at":  "2026-06-25T18:47:31-04:00",
+                      "src":  "https://cdn.shopify.com/s/files/1/0689/6474/5507/collections/EE3D50D4-2D44-43DA-8020-6ADE57B3B91C.jpg?v=1782427651",
+                      "alt":  null
+                  },
+        "products_count":  19
+    },
+    {
+        "id":  506954514723,
+        "title":  "Starfish",
+        "handle":  "starfish",
+        "description":  "",
+        "published_at":  "2026-06-25T23:00:57-04:00",
+        "updated_at":  "2026-07-07T00:53:22-04:00",
+        "image":  {
+                      "id":  1745988190499,
+                      "created_at":  "2026-06-25T23:00:56-04:00",
+                      "src":  "https://cdn.shopify.com/s/files/1/0689/6474/5507/collections/Screenshot_2026-06-25_at_7.56.54_PM.png?v=1782442857",
+                      "alt":  null
+                  },
+        "products_count":  3
+    },
+    {
+        "id":  506951729443,
+        "title":  "Tangs",
+        "handle":  "tangs",
+        "description":  "",
+        "published_at":  "2026-06-25T22:36:52-04:00",
+        "updated_at":  "2026-06-27T11:52:32-04:00",
+        "image":  {
+                      "id":  1745987698979,
+                      "created_at":  "2026-06-25T22:36:51-04:00",
+                      "src":  "https://cdn.shopify.com/s/files/1/0689/6474/5507/collections/Screenshot_2026-06-25_at_7.20.38_PM.png?v=1782441412",
+                      "alt":  null
+                  },
+        "products_count":  26
+    },
+    {
+        "id":  506951794979,
+        "title":  "Tilefish",
+        "handle":  "tilefish",
+        "description":  "",
+        "published_at":  "2026-06-25T22:37:23-04:00",
+        "updated_at":  "2026-06-25T22:37:24-04:00",
+        "image":  {
+                      "id":  1745987731747,
+                      "created_at":  "2026-06-25T22:37:21-04:00",
+                      "src":  "https://cdn.shopify.com/s/files/1/0689/6474/5507/collections/Screenshot_2026-06-25_at_7.18.32_PM.png?v=1782441442",
+                      "alt":  null
+                  },
+        "products_count":  0
+    },
+    {
+        "id":  506951827747,
+        "title":  "Wrasse",
+        "handle":  "wrasse",
+        "description":  "",
+        "published_at":  "2026-06-25T22:37:58-04:00",
+        "updated_at":  "2026-06-25T22:37:59-04:00",
+        "image":  {
+                      "id":  1745987764515,
+                      "created_at":  "2026-06-25T22:37:57-04:00",
+                      "src":  "https://cdn.shopify.com/s/files/1/0689/6474/5507/collections/Screenshot_2026-06-25_at_7.18.50_PM.png?v=1782441478",
+                      "alt":  null
+                  },
+        "products_count":  0
+    },
+    {
+        "id":  506949697827,
+        "title":  "WYSIWYG",
+        "handle":  "wysiwyg",
+        "description":  "",
+        "published_at":  "2026-06-25T21:15:12-04:00",
+        "updated_at":  "2026-07-03T22:07:26-04:00",
+        "image":  {
+                      "id":  1745986847011,
+                      "created_at":  "2026-06-25T21:15:11-04:00",
+                      "src":  "https://cdn.shopify.com/s/files/1/0689/6474/5507/collections/IMG_8905.jpg?v=1782436512",
+                      "alt":  null
+                  },
+        "products_count":  1
+    }
+]
