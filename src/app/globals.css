@@ -1,12 +1,13 @@
 @import "tailwindcss";
 
 @theme {
-  /* Deep-ocean brand palette */
-  --color-abyss-950: #030d18;
-  --color-abyss-900: #05182b;
-  --color-abyss-800: #0a2440;
-  --color-abyss-700: #113558;
-  --color-abyss-600: #1b4a75;
+  /* Deep-ocean brand palette — warmed & lifted so it feels like a lit
+     display tank rather than the midnight abyss */
+  --color-abyss-950: #061a2c;
+  --color-abyss-900: #0b2740;
+  --color-abyss-800: #143658;
+  --color-abyss-700: #1e4a75;
+  --color-abyss-600: #2a5f92;
 
   --color-reef-300: #7ee7f0;
   --color-reef-400: #38d4e0;
@@ -24,8 +25,8 @@
 }
 
 body {
-  background: var(--color-abyss-950);
-  color: #e6f1f8;
+  background: linear-gradient(180deg, #061a2c 0%, #082036 100%);
+  color: #ecf5fa;
   font-family: var(--font-sans);
 }
 
