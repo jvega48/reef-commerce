@@ -84,8 +84,26 @@ h1, h2, h3 {
   background: radial-gradient(closest-side, rgba(255, 107, 53, 0.22), transparent);
 }
 
-/* Rich-text product descriptions (imported HTML) */
+/* Rich-text product descriptions (imported HTML).
+   Shopify exports carry inline fonts/colors that vanish on our dark
+   background — force every descendant back to theme colors. */
+.prose-reef,
+.prose-reef * {
+  color: #b8cfdd !important;
+  background: transparent !important;
+  font-family: var(--font-sans) !important;
+  font-size: 0.925rem !important;
+  line-height: 1.65 !important;
+}
 .prose-reef p {
   margin-bottom: 0.5rem;
-  color: #b8cfdd;
+}
+.prose-reef strong,
+.prose-reef b {
+  color: #e6f1f8 !important;
+  font-weight: 600;
+}
+.prose-reef a {
+  color: var(--color-reef-400) !important;
+  text-decoration: underline;
 }

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { formatPrice } from "@/components/ProductCard";
 
@@ -12,10 +13,19 @@ export default async function AdminOrdersPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold">Orders</h1>
+      <div className="flex items-center justify-between">
+        <h1 className="text-2xl font-bold">Orders</h1>
+        <Link
+          href="/admin/orders/new"
+          className="rounded-full bg-coral-500 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-coral-500/25 transition hover:bg-coral-600"
+        >
+          + Create Order
+        </Link>
+      </div>
       {orders.length === 0 ? (
         <p className="mt-6 text-slate-400">
-          No orders yet. Orders will appear here once Stripe checkout is configured and live.
+          No orders yet. Create one manually above, or they&apos;ll arrive automatically once
+          Stripe checkout is live.
         </p>
       ) : (
         <div className="mt-5 overflow-x-auto rounded-xl border border-abyss-700/60">
@@ -33,7 +43,11 @@ export default async function AdminOrdersPage() {
             <tbody className="divide-y divide-abyss-800 bg-abyss-950">
               {orders.map((o) => (
                 <tr key={o.id} className="hover:bg-abyss-900">
-                  <td className="px-4 py-2 font-semibold">#{o.orderNumber}</td>
+                  <td className="px-4 py-2 font-semibold">
+                    <Link href={`/admin/orders/${o.id}`} className="text-reef-300 hover:text-reef-200">
+                      #{o.orderNumber}
+                    </Link>
+                  </td>
                   <td className="px-4 py-2 text-slate-300">{o.user?.name ?? o.email}</td>
                   <td className="px-4 py-2 text-xs uppercase text-slate-400">{o.status}</td>
                   <td className="px-4 py-2 text-right">{o.items.length}</td>

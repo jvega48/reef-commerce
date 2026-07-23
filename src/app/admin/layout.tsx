@@ -20,7 +20,7 @@ export default async function AdminLayout({
 
   return (
     <div className="flex min-h-screen">
-      <aside className="w-56 shrink-0 border-r border-abyss-700/60 bg-abyss-900">
+      <aside className="w-56 shrink-0 border-r border-abyss-700/60 bg-abyss-900 print:hidden">
         <div className="border-b border-abyss-700/60 px-5 py-4">
           <Link href="/admin" className="text-lg font-bold">
             <span className="text-reef-400">AV365</span>{" "}
@@ -49,7 +49,7 @@ export default async function AdminLayout({
           </Link>
         </div>
       </aside>
-      <main className="flex-1 overflow-x-auto p-8">{children}</main>
+      <main className="flex-1 overflow-x-auto p-8 print:p-0">{children}</main>
     </div>
   );
 }
