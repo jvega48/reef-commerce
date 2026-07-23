@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { addToCart } from "@/lib/cart-actions";
+import { sanitizeDescription } from "@/lib/sanitize";
 import ProductCard, { formatPrice } from "@/components/ProductCard";
 
 export async function generateMetadata({
@@ -11,11 +12,20 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const product = await prisma.product.findUnique({ where: { slug } });
+  const product = await prisma.product.findUnique({
+    where: { slug },
+    include: { images: { orderBy: { position: "asc" }, take: 1 } },
+  });
   if (!product) return {};
   return {
     title: product.metaTitle ?? product.name,
     description: product.metaDescription ?? undefined,
+    alternates: { canonical: `/product/${product.slug}` },
+    openGraph: {
+      title: product.name,
+      description: product.metaDescription ?? undefined,
+      images: product.images[0] ? [{ url: product.images[0].url }] : undefined,
+    },
   };
 }
 
@@ -74,8 +84,31 @@ export default async function ProductPage({
     ["Scientific Name", product.scientificName],
   ];
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.name,
+    sku: product.sku,
+    image: product.images.map((i) => i.url),
+    description: product.metaDescription ?? undefined,
+    brand: { "@type": "Brand", name: "AquaVida365" },
+    offers: {
+      "@type": "Offer",
+      priceCurrency: "USD",
+      price: Number(product.price).toFixed(2),
+      availability:
+        soldOut
+          ? "https://schema.org/OutOfStock"
+          : "https://schema.org/InStock",
+    },
+  };
+
   return (
     <div className="mx-auto max-w-7xl px-4 py-8">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* Breadcrumbs */}
       <nav className="mb-6 text-sm text-slate-400">
         <Link href="/shop" className="hover:text-reef-300">Shop</Link>
@@ -213,7 +246,7 @@ export default async function ProductPage({
           {product.description && (
             <div
               className="prose-reef mt-6 text-sm leading-relaxed"
-              dangerouslySetInnerHTML={{ __html: product.description }}
+              dangerouslySetInnerHTML={{ __html: sanitizeDescription(product.description) }}
             />
           )}
         </div>

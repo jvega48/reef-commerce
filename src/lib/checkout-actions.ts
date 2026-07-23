@@ -6,7 +6,7 @@ import Stripe from "stripe";
 import { auth } from "@/auth";
 import { prisma } from "./prisma";
 import { getCart } from "./cart";
-import { calcShipping, finalizeOrder, type ShippingMethod } from "./checkout";
+import { calcShipping, finalizeOrder, money, type ShippingMethod } from "./checkout";
 
 const str = (fd: FormData, key: string) => {
   const v = String(fd.get(key) ?? "").trim();
@@ -46,12 +46,11 @@ export async function placeOrder(formData: FormData) {
     }
   }
 
-  const subtotal = cart.items.reduce(
-    (sum, i) => sum + Number(i.product.price) * i.quantity,
-    0,
+  const subtotal = money(
+    cart.items.reduce((sum, i) => sum + Number(i.product.price) * i.quantity, 0),
   );
   const shippingCost = calcShipping(method, subtotal);
-  const total = subtotal + shippingCost;
+  const total = money(subtotal + shippingCost);
 
   const userId = session?.user?.id;
 

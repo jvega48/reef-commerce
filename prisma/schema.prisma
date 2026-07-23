@@ -209,6 +209,7 @@ model Product {
   updatedAt DateTime @updatedAt
 
   @@index([status, livestockType])
+  @@index([status, createdAt])
   @@index([slug])
 }
 
@@ -308,6 +309,8 @@ model Order {
 
   @@index([status])
   @@index([email])
+  @@index([userId])
+  @@index([createdAt])
 }
 
 model OrderItem {
@@ -322,6 +325,9 @@ model OrderItem {
   unitPrice Decimal @db.Decimal(10, 2)
   quantity  Int
   imageUrl  String?
+
+  @@index([orderId])
+  @@index([productId])
 }
 
 enum ShipmentStatus {
@@ -346,6 +352,8 @@ model Shipment {
   deliveredAt    DateTime?
   createdAt      DateTime       @default(now())
   updatedAt      DateTime       @updatedAt
+
+  @@index([orderId])
 }
 
 model Address {
@@ -410,6 +418,8 @@ model PointsTransaction {
   orderId   String?
   note      String?
   createdAt DateTime     @default(now())
+
+  @@index([userId])
 }
 
 model WishlistItem {

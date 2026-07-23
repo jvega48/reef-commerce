@@ -77,6 +77,12 @@ async function nextSku(): Promise<string> {
 // Image upload (local /public/uploads for dev; swap for R2 in production)
 // ---------------------------------------------------------------------------
 
+const ALLOWED_MEDIA_EXT = new Set([
+  ".jpg", ".jpeg", ".png", ".webp", ".gif", ".avif",
+  ".mp4", ".mov", ".webm",
+]);
+const MAX_UPLOAD_BYTES = 25 * 1024 * 1024; // 25 MB per file
+
 async function saveUploadedImages(
   formData: FormData,
   productId: string,
@@ -94,7 +100,11 @@ async function saveUploadedImages(
   for (const file of files) {
     const isVideo = file.type.startsWith("video/");
     if (!file.type.startsWith("image/") && !isVideo) continue;
-    const ext = path.extname(file.name).toLowerCase() || (isVideo ? ".mp4" : ".jpg");
+    if (file.size > MAX_UPLOAD_BYTES) continue;
+    // Extension allowlist — client MIME types are spoofable, and the stored
+    // filename is always our own generated name, never user input.
+    const ext = path.extname(file.name).toLowerCase();
+    if (!ALLOWED_MEDIA_EXT.has(ext)) continue;
     const filename = `${Date.now()}-${randomBytes(4).toString("hex")}${ext}`;
     await writeFile(path.join(dir, filename), Buffer.from(await file.arrayBuffer()));
     await prisma.productImage.create({

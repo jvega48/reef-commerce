@@ -85,6 +85,17 @@ h1, h2, h3 {
   background: radial-gradient(closest-side, rgba(255, 107, 53, 0.22), transparent);
 }
 
+/* Respect users who prefer reduced motion (WCAG 2.3.3) */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 /* Rich-text product descriptions (imported HTML).
    Shopify exports carry inline fonts/colors that vanish on our dark
    background — force every descendant back to theme colors. */

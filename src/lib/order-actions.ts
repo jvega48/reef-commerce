@@ -64,14 +64,14 @@ export async function createManualOrder(formData: FormData) {
     }
   }
 
-  const subtotal = lines.reduce(
-    (sum, l) => sum + Number(l.product.price) * l.quantity,
-    0,
+  const round = (n: number) => Math.round(n * 100) / 100;
+  const subtotal = round(
+    lines.reduce((sum, l) => sum + Number(l.product.price) * l.quantity, 0),
   );
   const discount = Math.min(num(formData, "discount"), subtotal);
   const shippingCost = num(formData, "shippingCost");
   const tax = num(formData, "tax");
-  const total = Math.max(0, subtotal - discount + shippingCost + tax);
+  const total = round(Math.max(0, subtotal - discount + shippingCost + tax));
   const status =
     (["PENDING", "PAID", "PROCESSING"] as const).find(
       (s) => s === String(formData.get("status")),

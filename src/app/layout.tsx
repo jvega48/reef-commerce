@@ -19,12 +19,17 @@ const sora = Sora({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
   title: {
     default: "AquaVida365 — Premium Corals, Fish & Inverts",
     template: "%s | AquaVida365",
   },
   description:
     "Premium WYSIWYG corals, rare saltwater fish, and reef-safe invertebrates, shipped overnight to your door.",
+  openGraph: {
+    siteName: "AquaVida365",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
