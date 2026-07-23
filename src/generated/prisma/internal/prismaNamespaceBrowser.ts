@@ -70,6 +70,7 @@ export const ModelName = {
   WishlistItem: 'WishlistItem',
   Review: 'Review',
   StockAlert: 'StockAlert',
+  StoreSetting: 'StoreSetting',
   AuditLog: 'AuditLog'
 } as const
 
@@ -390,6 +391,15 @@ export const StockAlertScalarFieldEnum = {
 export type StockAlertScalarFieldEnum = (typeof StockAlertScalarFieldEnum)[keyof typeof StockAlertScalarFieldEnum]
 
 
+export const StoreSettingScalarFieldEnum = {
+  key: 'key',
+  value: 'value',
+  updatedAt: 'updatedAt'
+} as const
+
+export type StoreSettingScalarFieldEnum = (typeof StoreSettingScalarFieldEnum)[keyof typeof StoreSettingScalarFieldEnum]
+
+
 export const AuditLogScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -408,6 +418,13 @@ export const SortOrder = {
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const NullableJsonNullValueInput = {

@@ -60,11 +60,12 @@ export default function Footer() {
           </ul>
         </div>
         <div>
-          <p className="mb-3 font-semibold uppercase tracking-wider text-slate-200">Promise</p>
+          <p className="mb-3 font-semibold uppercase tracking-wider text-slate-200">Help</p>
           <ul className="space-y-2">
-            <li>🚚 Overnight shipping</li>
-            <li>✅ Live-arrival guarantee</li>
-            <li>💎 Reef Points rewards</li>
+            <li><Link href="/shipping" className="hover:text-reef-300">Shipping Policy</Link></li>
+            <li><Link href="/guarantee" className="hover:text-reef-300">Live Arrival Guarantee</Link></li>
+            <li><Link href="/guarantee" className="hover:text-reef-300">Returns & Refunds</Link></li>
+            <li><Link href="/contact" className="hover:text-reef-300">Contact Us</Link></li>
           </ul>
         </div>
       </div>

@@ -113,6 +113,11 @@ export type Review = Prisma.ReviewModel
  */
 export type StockAlert = Prisma.StockAlertModel
 /**
+ * Model StoreSetting
+ * 
+ */
+export type StoreSetting = Prisma.StoreSettingModel
+/**
  * Model AuditLog
  * 
  */

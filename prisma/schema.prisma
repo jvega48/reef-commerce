@@ -464,6 +464,15 @@ model StockAlert {
 // Ops
 // ---------------------------------------------------------------------------
 
+// One row per settings group (e.g. "shipping", "storeInfo", "guarantee").
+// Values are merged over code defaults so a missing row/field falls back to
+// the published policy defaults in src/lib/settings.ts.
+model StoreSetting {
+  key       String   @id
+  value     Json
+  updatedAt DateTime @updatedAt
+}
+
 model AuditLog {
   id        String   @id @default(cuid())
   userId    String?

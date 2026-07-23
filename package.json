@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "tsx scripts/test-checkout.ts && tsx scripts/test-oversell.ts"
+    "test": "tsx scripts/test-shipping.ts && tsx scripts/test-checkout.ts && tsx scripts/test-oversell.ts"
   },
   "overrides": {
     "sharp": "^0.35.0",

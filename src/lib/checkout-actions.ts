@@ -7,6 +7,7 @@ import { auth } from "@/auth";
 import { prisma } from "./prisma";
 import { getCart } from "./cart";
 import { calcShipping, finalizeOrder, money, type ShippingMethod } from "./checkout";
+import { getShippingSettings } from "./settings";
 
 const str = (fd: FormData, key: string) => {
   const v = String(fd.get(key) ?? "").trim();
@@ -49,7 +50,8 @@ export async function placeOrder(formData: FormData) {
   const subtotal = money(
     cart.items.reduce((sum, i) => sum + Number(i.product.price) * i.quantity, 0),
   );
-  const shippingCost = calcShipping(method, subtotal);
+  const shippingCfg = await getShippingSettings();
+  const shippingCost = calcShipping(shippingCfg, method, subtotal, state);
   const total = money(subtotal + shippingCost);
 
   const userId = session?.user?.id;
@@ -118,7 +120,7 @@ export async function placeOrder(formData: FormData) {
               {
                 price_data: {
                   currency: "usd",
-                  product_data: { name: "Overnight Shipping (UPS Next Day Air)" },
+                  product_data: { name: shippingCfg.overnightLabel },
                   unit_amount: Math.round(shippingCost * 100),
                 },
                 quantity: 1,

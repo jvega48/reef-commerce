@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 import { getCart } from "@/lib/cart";
 import { placeOrder } from "@/lib/checkout-actions";
-import { FREE_SHIPPING_THRESHOLD, SHIPPING_METHODS } from "@/lib/checkout";
+import { getShippingSettings } from "@/lib/settings";
 import { formatPrice } from "@/components/ProductCard";
 
 export const metadata = { title: "Checkout" };
@@ -18,10 +18,11 @@ export default async function CheckoutPage({
 }: {
   searchParams: Promise<{ error?: string; cancelled?: string }>;
 }) {
-  const [cart, session, { error, cancelled }] = await Promise.all([
+  const [cart, session, { error, cancelled }, shipping] = await Promise.all([
     getCart(),
     auth(),
     searchParams,
+    getShippingSettings(),
   ]);
   if (!cart || cart.items.length === 0) redirect("/cart");
 
@@ -30,7 +31,7 @@ export default async function CheckoutPage({
     0,
   );
   const overnightRate =
-    subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_METHODS.overnight.rate;
+    subtotal >= shipping.freeShippingThreshold ? 0 : shipping.overnightRate;
   const stripeEnabled = Boolean(process.env.STRIPE_SECRET_KEY);
 
   return (
@@ -85,32 +86,40 @@ export default async function CheckoutPage({
                 <input type="radio" name="shippingMethod" value="overnight" defaultChecked className="mt-1 accent-[#14b5c8]" />
                 <span className="flex-1">
                   <span className="flex items-center justify-between font-medium text-slate-200">
-                    {SHIPPING_METHODS.overnight.label}
+                    {shipping.overnightLabel}
                     <span className="font-bold text-reef-300">
                       {overnightRate === 0 ? "FREE" : formatPrice(overnightRate)}
                     </span>
                   </span>
                   <span className="mt-0.5 block text-xs text-slate-400">
-                    {SHIPPING_METHODS.overnight.description}
+                    {shipping.overnightDescription}
                     {overnightRate > 0 && (
-                      <> · free over {formatPrice(FREE_SHIPPING_THRESHOLD)}</>
+                      <>
+                        {" "}· {formatPrice(shipping.inStateRate)} in {shipping.homeState} ·
+                        free over {formatPrice(shipping.freeShippingThreshold)}
+                      </>
                     )}
                   </span>
                 </span>
               </label>
-              <label className="flex cursor-pointer items-start gap-3 rounded-xl border border-abyss-700 bg-abyss-950 p-4 transition has-[:checked]:border-reef-500/60 has-[:checked]:bg-abyss-800">
-                <input type="radio" name="shippingMethod" value="pickup" className="mt-1 accent-[#14b5c8]" />
-                <span className="flex-1">
-                  <span className="flex items-center justify-between font-medium text-slate-200">
-                    {SHIPPING_METHODS.pickup.label}
-                    <span className="font-bold text-reef-300">FREE</span>
+              {shipping.localPickupEnabled && (
+                <label className="flex cursor-pointer items-start gap-3 rounded-xl border border-abyss-700 bg-abyss-950 p-4 transition has-[:checked]:border-reef-500/60 has-[:checked]:bg-abyss-800">
+                  <input type="radio" name="shippingMethod" value="pickup" className="mt-1 accent-[#14b5c8]" />
+                  <span className="flex-1">
+                    <span className="flex items-center justify-between font-medium text-slate-200">
+                      Local Pickup
+                      <span className="font-bold text-reef-300">FREE</span>
+                    </span>
+                    <span className="mt-0.5 block text-xs text-slate-400">
+                      Pick up in store — we&apos;ll email you when it&apos;s ready
+                    </span>
                   </span>
-                  <span className="mt-0.5 block text-xs text-slate-400">
-                    {SHIPPING_METHODS.pickup.description}
-                  </span>
-                </span>
-              </label>
+                </label>
+              )}
             </div>
+            <p className="mt-3 text-xs text-slate-500">
+              {shipping.shipDaysNote}. {shipping.allowedStatesNote}
+            </p>
           </section>
 
           <section className="rounded-2xl border border-abyss-700/60 bg-abyss-900 p-5">

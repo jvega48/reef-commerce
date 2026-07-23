@@ -416,6 +416,7 @@ export const ModelName = {
   WishlistItem: 'WishlistItem',
   Review: 'Review',
   StockAlert: 'StockAlert',
+  StoreSetting: 'StoreSetting',
   AuditLog: 'AuditLog'
 } as const
 
@@ -432,7 +433,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "account" | "session" | "verificationToken" | "category" | "product" | "productImage" | "productCategory" | "cart" | "cartItem" | "order" | "orderItem" | "shipment" | "address" | "coupon" | "pointsTransaction" | "wishlistItem" | "review" | "stockAlert" | "auditLog"
+    modelProps: "user" | "account" | "session" | "verificationToken" | "category" | "product" | "productImage" | "productCategory" | "cart" | "cartItem" | "order" | "orderItem" | "shipment" | "address" | "coupon" | "pointsTransaction" | "wishlistItem" | "review" | "stockAlert" | "storeSetting" | "auditLog"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1842,6 +1843,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    StoreSetting: {
+      payload: Prisma.$StoreSettingPayload<ExtArgs>
+      fields: Prisma.StoreSettingFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.StoreSettingFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreSettingPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.StoreSettingFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreSettingPayload>
+        }
+        findFirst: {
+          args: Prisma.StoreSettingFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreSettingPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.StoreSettingFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreSettingPayload>
+        }
+        findMany: {
+          args: Prisma.StoreSettingFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreSettingPayload>[]
+        }
+        create: {
+          args: Prisma.StoreSettingCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreSettingPayload>
+        }
+        createMany: {
+          args: Prisma.StoreSettingCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.StoreSettingCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreSettingPayload>[]
+        }
+        delete: {
+          args: Prisma.StoreSettingDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreSettingPayload>
+        }
+        update: {
+          args: Prisma.StoreSettingUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreSettingPayload>
+        }
+        deleteMany: {
+          args: Prisma.StoreSettingDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.StoreSettingUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.StoreSettingUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreSettingPayload>[]
+        }
+        upsert: {
+          args: Prisma.StoreSettingUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreSettingPayload>
+        }
+        aggregate: {
+          args: Prisma.StoreSettingAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateStoreSetting>
+        }
+        groupBy: {
+          args: Prisma.StoreSettingGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.StoreSettingGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.StoreSettingCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.StoreSettingCountAggregateOutputType> | number
+        }
+      }
+    }
     AuditLog: {
       payload: Prisma.$AuditLogPayload<ExtArgs>
       fields: Prisma.AuditLogFieldRefs
@@ -2256,6 +2331,15 @@ export const StockAlertScalarFieldEnum = {
 export type StockAlertScalarFieldEnum = (typeof StockAlertScalarFieldEnum)[keyof typeof StockAlertScalarFieldEnum]
 
 
+export const StoreSettingScalarFieldEnum = {
+  key: 'key',
+  value: 'value',
+  updatedAt: 'updatedAt'
+} as const
+
+export type StoreSettingScalarFieldEnum = (typeof StoreSettingScalarFieldEnum)[keyof typeof StoreSettingScalarFieldEnum]
+
+
 export const AuditLogScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -2274,6 +2358,13 @@ export const SortOrder = {
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const NullableJsonNullValueInput = {
@@ -2743,6 +2834,7 @@ export type GlobalOmitConfig = {
   wishlistItem?: Prisma.WishlistItemOmit
   review?: Prisma.ReviewOmit
   stockAlert?: Prisma.StockAlertOmit
+  storeSetting?: Prisma.StoreSettingOmit
   auditLog?: Prisma.AuditLogOmit
 }
 

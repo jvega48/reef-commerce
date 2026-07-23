@@ -1,32 +1,25 @@
 import { prisma } from "./prisma";
+import type { ShippingSettings } from "./settings";
 
 // ---------------------------------------------------------------------------
-// Shipping options (flat-rate until the UPS API is wired up)
+// Shipping (flat-rate per published policy until the aggregator API is wired
+// up). All rates and thresholds come from admin-editable StoreSettings —
+// see src/lib/settings.ts.
 // ---------------------------------------------------------------------------
 
-export const FREE_SHIPPING_THRESHOLD = 299;
+export type ShippingMethod = "overnight" | "pickup";
 
-export const SHIPPING_METHODS = {
-  overnight: {
-    label: "UPS Next Day Air",
-    description: "Required for live corals, fish & inverts — insulated box with heat/cold packs",
-    rate: 39.99,
-    freeOver: FREE_SHIPPING_THRESHOLD,
-  },
-  pickup: {
-    label: "Local Pickup",
-    description: "Pick up in store — we'll email you when it's ready",
-    rate: 0,
-    freeOver: 0,
-  },
-} as const;
-
-export type ShippingMethod = keyof typeof SHIPPING_METHODS;
-
-export function calcShipping(method: ShippingMethod, subtotal: number): number {
-  const m = SHIPPING_METHODS[method];
-  if (m.freeOver > 0 && subtotal >= m.freeOver) return 0;
-  return m.rate;
+export function calcShipping(
+  cfg: ShippingSettings,
+  method: ShippingMethod,
+  subtotal: number,
+  state?: string | null,
+): number {
+  if (method === "pickup") return 0;
+  if (subtotal >= cfg.freeShippingThreshold) return 0;
+  const inState =
+    (state ?? "").trim().toUpperCase() === cfg.homeState.toUpperCase();
+  return inState ? cfg.inStateRate : cfg.overnightRate;
 }
 
 /** Round to cents — keeps float arithmetic out of stored money values. */
