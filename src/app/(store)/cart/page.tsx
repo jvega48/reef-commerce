@@ -6,7 +6,12 @@ import { formatPrice } from "@/components/ProductCard";
 
 export const metadata = { title: "Cart" };
 
-export default async function CartPage() {
+export default async function CartPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ error?: string; name?: string }>;
+}) {
+  const { error, name } = await searchParams;
   const cart = await getCart();
   const items = cart?.items ?? [];
   const subtotal = items.reduce(
@@ -33,6 +38,12 @@ export default async function CartPage() {
   return (
     <div className="mx-auto max-w-4xl px-4 py-10">
       <h1 className="text-3xl font-bold">Cart</h1>
+      {error === "stock" && (
+        <p className="mt-4 rounded-lg border border-coral-500/40 bg-coral-500/10 px-4 py-2 text-sm text-coral-300">
+          {name ? `"${name}"` : "An item"} sold out or doesn&apos;t have enough stock — adjust
+          your cart to continue.
+        </p>
+      )}
       <div className="mt-6 space-y-4">
         {items.map((item) => {
           const img = item.product.images[0];
@@ -98,13 +109,12 @@ export default async function CartPage() {
           Subtotal: <span className="font-bold text-reef-300">{formatPrice(subtotal)}</span>
         </p>
         <p className="text-sm text-slate-500">Shipping and tax calculated at checkout.</p>
-        <button
-          disabled
-          title="Checkout goes live once Stripe keys are configured"
-          className="cursor-not-allowed rounded-full bg-abyss-700 px-8 py-3 font-semibold text-slate-400"
+        <Link
+          href="/checkout"
+          className="rounded-full bg-coral-500 px-10 py-3.5 font-semibold text-white shadow-lg shadow-coral-500/25 transition hover:bg-coral-600"
         >
-          Checkout (Stripe setup pending)
-        </button>
+          Proceed to Checkout →
+        </Link>
       </div>
     </div>
   );
