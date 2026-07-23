@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { auth } from "@/auth";
 import { getCartItemCount } from "@/lib/cart";
@@ -24,11 +25,21 @@ export default async function Header() {
         <div className="mx-auto flex max-w-7xl items-center gap-8 px-4 py-3.5">
           <Link
             href="/"
-            className="font-[family-name:var(--font-display)] text-2xl font-extrabold tracking-tight"
+            className="flex items-center gap-2.5 font-[family-name:var(--font-display)] text-2xl font-extrabold tracking-tight"
           >
-            <span className="text-reef-400">Aqua</span>
-            <span className="text-coral-400">Vida</span>
-            <span className="align-super text-xs font-bold text-slate-500">365</span>
+            <Image
+              src="/brand/logo-mark.png"
+              alt="AquaVida365 logo"
+              width={38}
+              height={38}
+              priority
+              className="h-9 w-9"
+            />
+            <span>
+              <span className="text-reef-400">Aqua</span>
+              <span className="text-coral-400">Vida</span>
+              <span className="align-super text-xs font-bold text-slate-500">365</span>
+            </span>
           </Link>
 
           <nav className="hidden gap-1 text-sm font-medium md:flex">

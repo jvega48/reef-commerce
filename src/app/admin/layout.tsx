@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { auth, STAFF_ROLES } from "@/auth";
@@ -23,9 +24,18 @@ export default async function AdminLayout({
     <div className="flex min-h-screen">
       <aside className="w-56 shrink-0 border-r border-abyss-700/60 bg-abyss-900 print:hidden">
         <div className="border-b border-abyss-700/60 px-5 py-4">
-          <Link href="/admin" className="text-lg font-bold">
-            <span className="text-reef-400">AV365</span>{" "}
-            <span className="text-sm font-medium text-slate-400">Admin</span>
+          <Link href="/admin" className="flex items-center gap-2 text-lg font-bold">
+            <Image
+              src="/brand/logo-mark.png"
+              alt="AquaVida365 logo"
+              width={28}
+              height={28}
+              className="h-7 w-7"
+            />
+            <span>
+              <span className="text-reef-400">AV365</span>{" "}
+              <span className="text-sm font-medium text-slate-400">Admin</span>
+            </span>
           </Link>
         </div>
         <nav className="space-y-1 p-3 text-sm">

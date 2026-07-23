@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 export default function Footer() {
@@ -32,11 +33,20 @@ export default function Footer() {
 
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-12 text-sm text-slate-400 md:grid-cols-4">
         <div>
-          <p className="font-[family-name:var(--font-display)] text-xl font-extrabold">
-            <span className="text-reef-400">Aqua</span>
-            <span className="text-coral-400">Vida</span>
-            <span className="text-xs font-bold text-slate-500">365</span>
-          </p>
+          <div className="flex items-center gap-2.5">
+            <Image
+              src="/brand/logo-mark.png"
+              alt="AquaVida365 logo"
+              width={36}
+              height={36}
+              className="h-9 w-9"
+            />
+            <p className="font-[family-name:var(--font-display)] text-xl font-extrabold">
+              <span className="text-reef-400">Aqua</span>
+              <span className="text-coral-400">Vida</span>
+              <span className="text-xs font-bold text-slate-500">365</span>
+            </p>
+          </div>
           <p className="mt-3 max-w-xs leading-relaxed">
             Premium corals, rare saltwater fish, and reef-safe invertebrates —
             photographed in our tanks, shipped overnight with a live-arrival guarantee.

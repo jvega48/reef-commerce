@@ -29,6 +29,7 @@ export const metadata: Metadata = {
   openGraph: {
     siteName: "AquaVida365",
     type: "website",
+    images: [{ url: "/brand/og-logo.png", width: 1200, height: 628, alt: "AquaVida365" }],
   },
 };
 

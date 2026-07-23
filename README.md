@@ -80,6 +80,7 @@ idempotency, oversell race). `npm run build` must pass before deploying.
 | [docs/API_DOCUMENTATION.md](docs/API_DOCUMENTATION.md) | Every endpoint + server actions |
 | [docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md) | Common problems and fixes |
 | [docs/CONFIGURATION_CHECKLIST.md](docs/CONFIGURATION_CHECKLIST.md) | Launch checklist |
+| [docs/COSTS.md](docs/COSTS.md) | Monthly cost breakdown ($0 infra at launch) |
 | [docs/business-rules.md](docs/business-rules.md) | Extracted store policies (source of truth) |
 
 ## Current integration status

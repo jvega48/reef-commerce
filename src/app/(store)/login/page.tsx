@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { AuthError } from "next-auth";
@@ -32,6 +33,14 @@ export default async function LoginPage({
 
   return (
     <div className="mx-auto max-w-md px-4 py-20">
+      <Image
+        src="/brand/logo.png"
+        alt="AquaVida365"
+        width={110}
+        height={140}
+        priority
+        className="mx-auto mb-8 h-auto w-28"
+      />
       <h1 className="text-center text-3xl font-bold">Welcome back</h1>
       <p className="mt-2 text-center text-slate-400">Sign in to your AquaVida365 account</p>
 
