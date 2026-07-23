@@ -60,6 +60,12 @@ export default async function AdminProductsPage({
           <h1 className="text-2xl font-bold">Products</h1>
           <p className="mt-1 text-sm text-slate-400">{total} products</p>
         </div>
+        <Link
+          href="/admin/products/new"
+          className="rounded-full bg-coral-500 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-coral-500/25 transition hover:bg-coral-600"
+        >
+          + New Product
+        </Link>
       </div>
 
       <div className="mt-5 flex flex-wrap items-center gap-3">
@@ -119,7 +125,7 @@ export default async function AdminProductsPage({
                     </div>
                     <div className="min-w-0">
                       <Link
-                        href={`/product/${p.slug}`}
+                        href={`/admin/products/${p.id}/edit`}
                         className="block truncate font-medium text-slate-200 hover:text-reef-300"
                       >
                         {p.name}

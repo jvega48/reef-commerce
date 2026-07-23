@@ -19,6 +19,7 @@
   --color-coral-600: #e55220;
 
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-sora), var(--font-geist-sans), ui-sans-serif, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
 }
 
@@ -26,6 +27,61 @@ body {
   background: var(--color-abyss-950);
   color: #e6f1f8;
   font-family: var(--font-sans);
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
+
+::selection {
+  background: rgba(20, 181, 200, 0.35);
+}
+
+/* Slim dark scrollbar */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--color-abyss-950); }
+::-webkit-scrollbar-thumb { background: var(--color-abyss-700); border-radius: 6px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-abyss-600); }
+
+/* Frosted panel */
+.glass {
+  background: rgba(8, 30, 52, 0.6);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(56, 212, 224, 0.12);
+}
+
+.text-gradient {
+  background: linear-gradient(92deg, #7ee7f0 0%, #38d4e0 45%, #ff8a5c 110%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Entrance motion */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: none; }
+}
+.animate-fade-up { animation: fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.anim-d1 { animation-delay: 0.08s; }
+.anim-d2 { animation-delay: 0.16s; }
+.anim-d3 { animation-delay: 0.24s; }
+.anim-d4 { animation-delay: 0.32s; }
+
+@keyframes drift {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+.animate-drift { animation: drift 6s ease-in-out infinite; }
+
+/* Soft glow accents behind hero */
+.glow-reef {
+  background: radial-gradient(closest-side, rgba(20, 181, 200, 0.28), transparent);
+}
+.glow-coral {
+  background: radial-gradient(closest-side, rgba(255, 107, 53, 0.22), transparent);
 }
 
 /* Rich-text product descriptions (imported HTML) */
