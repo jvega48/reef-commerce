@@ -119,3 +119,55 @@ h1, h2, h3 {
   color: var(--color-reef-400) !important;
   text-decoration: underline;
 }
+.prose-reef h2 {
+  color: #e6f1f8 !important;
+  font-size: 1.25rem !important;
+  font-weight: 700;
+  margin: 1.5rem 0 0.5rem;
+}
+.prose-reef h3,
+.prose-reef h4 {
+  color: #e6f1f8 !important;
+  font-size: 1.05rem !important;
+  font-weight: 600;
+  margin: 1.25rem 0 0.4rem;
+}
+.prose-reef ul,
+.prose-reef ol {
+  margin: 0.5rem 0 0.75rem;
+  padding-left: 1.4rem;
+}
+.prose-reef ul { list-style: disc; }
+.prose-reef ol { list-style: decimal; }
+.prose-reef li { margin-bottom: 0.3rem; }
+.prose-reef blockquote {
+  border-left: 3px solid var(--color-reef-500);
+  padding-left: 1rem;
+  margin: 0.75rem 0;
+  font-style: italic;
+}
+.prose-reef table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  display: block;
+  overflow-x: auto;
+}
+.prose-reef th,
+.prose-reef td {
+  border: 1px solid #1d3349;
+  padding: 0.45rem 0.75rem;
+  text-align: left;
+  font-size: 0.875rem !important;
+}
+.prose-reef th {
+  color: #e6f1f8 !important;
+  font-weight: 600;
+  background: #0b2740 !important;
+}
+.prose-reef img {
+  border-radius: 0.75rem;
+  margin: 1rem 0;
+  max-width: 100%;
+  height: auto;
+}

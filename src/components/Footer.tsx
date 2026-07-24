@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import NewsletterForm from "@/components/NewsletterForm";
 
 export default function Footer() {
   return (
@@ -15,24 +16,12 @@ export default function Footer() {
               New WYSIWYG frags, rare fish, and subscriber-only deals — every week.
             </p>
           </div>
-          <form className="flex w-full max-w-md gap-2">
-            <input
-              type="email"
-              placeholder="you@reef.com"
-              className="flex-1 rounded-full border border-abyss-700 bg-abyss-950 px-5 py-2.5 text-sm placeholder:text-slate-500 focus:border-reef-500/60 focus:outline-none"
-            />
-            <button
-              type="button"
-              className="rounded-full bg-coral-500 px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-coral-600"
-            >
-              Subscribe
-            </button>
-          </form>
+          <NewsletterForm source="footer" />
         </div>
       </div>
 
-      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-12 text-sm text-slate-400 md:grid-cols-4">
-        <div>
+      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-12 text-sm text-slate-400 sm:grid-cols-2 md:grid-cols-5">
+        <div className="sm:col-span-2 md:col-span-1">
           <div className="flex items-center gap-2.5">
             <Image
               src="/brand/logo-mark.png"
@@ -59,14 +48,28 @@ export default function Footer() {
             <li><Link href="/shop?type=FISH" className="hover:text-reef-300">Saltwater Fish</Link></li>
             <li><Link href="/shop?type=INVERTEBRATE" className="hover:text-reef-300">Invertebrates</Link></li>
             <li><Link href="/shop?category=wysiwyg" className="hover:text-reef-300">WYSIWYG</Link></li>
+            <li><Link href="/gift-cards" className="hover:text-reef-300">Gift Cards</Link></li>
+          </ul>
+        </div>
+        <div>
+          <p className="mb-3 font-semibold uppercase tracking-wider text-slate-200">Learn</p>
+          <ul className="space-y-2">
+            <li><Link href="/learn" className="hover:text-reef-300">Learning Center</Link></li>
+            <li><Link href="/learn?category=water" className="hover:text-reef-300">Water Education</Link></li>
+            <li><Link href="/learn?category=help" className="hover:text-reef-300">Help Center</Link></li>
+            <li><Link href="/faq" className="hover:text-reef-300">FAQ</Link></li>
+            <li><Link href="/about" className="hover:text-reef-300">About Us</Link></li>
           </ul>
         </div>
         <div>
           <p className="mb-3 font-semibold uppercase tracking-wider text-slate-200">Account</p>
           <ul className="space-y-2">
             <li><Link href="/account" className="hover:text-reef-300">My Account</Link></li>
+            <li><Link href="/account/orders" className="hover:text-reef-300">Order Tracking</Link></li>
+            <li><Link href="/account/rewards" className="hover:text-reef-300">Reef Rewards</Link></li>
             <li><Link href="/cart" className="hover:text-reef-300">Cart</Link></li>
-            <li><Link href="/register" className="hover:text-reef-300">Create Account</Link></li>
+            <li><Link href="/wholesale" className="hover:text-reef-300">Wholesale</Link></li>
+            <li><Link href="/distributors" className="hover:text-reef-300">Become a Distributor</Link></li>
           </ul>
         </div>
         <div>
@@ -74,13 +77,20 @@ export default function Footer() {
           <ul className="space-y-2">
             <li><Link href="/shipping" className="hover:text-reef-300">Shipping Policy</Link></li>
             <li><Link href="/guarantee" className="hover:text-reef-300">Live Arrival Guarantee</Link></li>
-            <li><Link href="/guarantee" className="hover:text-reef-300">Returns & Refunds</Link></li>
+            <li><Link href="/returns" className="hover:text-reef-300">Returns &amp; Refunds</Link></li>
             <li><Link href="/contact" className="hover:text-reef-300">Contact Us</Link></li>
+            <li><Link href="/account/support" className="hover:text-reef-300">Support Tickets</Link></li>
           </ul>
         </div>
       </div>
-      <div className="border-t border-abyss-800 py-4 text-center text-xs text-slate-500">
-        © {new Date().getFullYear()} AquaVida365. All rights reserved.
+      <div className="border-t border-abyss-800 py-4">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-2 px-4 text-xs text-slate-500 sm:flex-row">
+          <p>© {new Date().getFullYear()} AquaVida365. All rights reserved.</p>
+          <p className="flex gap-4">
+            <Link href="/privacy" className="hover:text-reef-300">Privacy Policy</Link>
+            <Link href="/terms" className="hover:text-reef-300">Terms of Service</Link>
+          </p>
+        </div>
       </div>
     </footer>
   );

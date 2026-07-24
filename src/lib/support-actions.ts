@@ -46,7 +46,11 @@ export async function createTicket(formData: FormData) {
   const topic = TOPICS.find((t) => t === String(formData.get("topic"))) ?? "OTHER";
   const orderId = String(formData.get("orderId") ?? "").trim() || null;
 
-  const back = fromContact ? "/contact" : "/account/support";
+  // Public inquiry forms live on several pages — bounce back to the one used.
+  const publicBack =
+    topic === "WHOLESALE" ? "/wholesale" :
+    topic === "DISTRIBUTOR" ? "/distributors" : "/contact";
+  const back = fromContact ? publicBack : "/account/support";
   if (!email || !subject || !body) redirect(`${back}?error=missing`);
   // Honeypot field: bots fill every input — humans never see this one.
   if (String(formData.get("website") ?? "")) redirect(`${back}?sent=1`);
@@ -85,7 +89,7 @@ export async function createTicket(formData: FormData) {
   });
 
   revalidatePath("/admin/support");
-  if (fromContact && !session?.user) redirect("/contact?sent=1");
+  if (fromContact) redirect(`${publicBack}?sent=1`);
   redirect(`/account/support/${ticket.id}`);
 }
 
