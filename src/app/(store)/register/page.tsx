@@ -1,45 +1,60 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { randomBytes } from "node:crypto";
 import bcrypt from "bcryptjs";
 import { auth, signIn } from "@/auth";
 import { prisma } from "@/lib/prisma";
+import { sendEmail } from "@/lib/email";
+import { welcomeEmail } from "@/lib/email-templates";
 
 export const metadata = { title: "Create Account" };
 
 export default async function RegisterPage({
   searchParams,
 }: {
-  searchParams: Promise<{ error?: string }>;
+  searchParams: Promise<{ error?: string; ref?: string }>;
 }) {
   const session = await auth();
   if (session?.user) redirect("/account");
-  const { error } = await searchParams;
+  const { error, ref } = await searchParams;
 
   async function register(formData: FormData) {
     "use server";
     const name = String(formData.get("name") ?? "").trim();
     const email = String(formData.get("email") ?? "").toLowerCase().trim();
     const password = String(formData.get("password") ?? "");
+    const refCode = String(formData.get("ref") ?? "").trim();
 
     if (!email || password.length < 8) redirect("/register?error=weak");
 
     const existing = await prisma.user.findUnique({ where: { email } });
     if (existing) redirect("/register?error=exists");
 
+    // Referral: credit the referrer once this account places a first order.
+    const referrer = refCode
+      ? await prisma.user.findUnique({ where: { referralCode: refCode } })
+      : null;
+
     const passwordHash = await bcrypt.hash(password, 12);
-    await prisma.user.create({
-      data: { name: name || null, email, passwordHash, role: "CUSTOMER" },
+    const referralCode = `AV${randomBytes(4).toString("hex").toUpperCase()}`;
+    const user = await prisma.user.create({
+      data: {
+        name: name || null,
+        email,
+        passwordHash,
+        role: "CUSTOMER",
+        referralCode,
+        referredById: referrer?.id ?? null,
+        // 100 Reef Points signup bonus
+        reefPoints: 100,
+        pointsTransactions: {
+          create: { points: 100, reason: "SIGNUP" },
+        },
+      },
     });
-    // 100 Reef Points signup bonus
-    const user = await prisma.user.findUnique({ where: { email } });
-    if (user) {
-      await prisma.$transaction([
-        prisma.pointsTransaction.create({
-          data: { userId: user.id, points: 100, reason: "SIGNUP" },
-        }),
-        prisma.user.update({ where: { id: user.id }, data: { reefPoints: 100 } }),
-      ]);
-    }
+
+    const tpl = welcomeEmail({ name: user.name, referralCode });
+    await sendEmail({ to: email, ...tpl, template: "welcome" });
 
     await signIn("credentials", { email, password, redirectTo: "/account" });
   }
@@ -63,7 +78,14 @@ export default async function RegisterPage({
         </p>
       )}
 
+      {ref && (
+        <p className="mt-4 rounded-lg border border-reef-500/40 bg-reef-500/10 px-4 py-2 text-center text-sm text-reef-300">
+          🤝 You were referred by a friend — welcome to the reef!
+        </p>
+      )}
+
       <form action={register} className="mt-8 space-y-4">
+        {ref && <input type="hidden" name="ref" value={ref} />}
         <input
           type="text"
           name="name"

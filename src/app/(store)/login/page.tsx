@@ -9,21 +9,24 @@ export const metadata = { title: "Sign In" };
 export default async function LoginPage({
   searchParams,
 }: {
-  searchParams: Promise<{ error?: string }>;
+  searchParams: Promise<{ error?: string; reset?: string; next?: string }>;
 }) {
   const session = await auth();
   if (session?.user) {
     redirect(STAFF_ROLES.includes(session.user.role) ? "/admin" : "/account");
   }
-  const { error } = await searchParams;
+  const { error, reset, next } = await searchParams;
+  // Only same-site paths — never an absolute URL (open-redirect guard).
+  const nextPath = next && /^\/(?!\/)/.test(next) ? next : null;
 
   async function login(formData: FormData) {
     "use server";
+    const to = String(formData.get("next") ?? "");
     try {
       await signIn("credentials", {
         email: formData.get("email"),
         password: formData.get("password"),
-        redirectTo: "/login",
+        redirectTo: /^\/(?!\/)/.test(to) ? to : "/login",
       });
     } catch (e) {
       if (e instanceof AuthError) redirect("/login?error=1");
@@ -49,8 +52,14 @@ export default async function LoginPage({
           Invalid email or password.
         </p>
       )}
+      {reset && (
+        <p className="mt-4 rounded-lg border border-reef-500/40 bg-reef-500/10 px-4 py-2 text-sm text-reef-300">
+          Password updated — sign in with your new password.
+        </p>
+      )}
 
       <form action={login} className="mt-8 space-y-4">
+        {nextPath && <input type="hidden" name="next" value={nextPath} />}
         <input
           type="email"
           name="email"
@@ -72,6 +81,12 @@ export default async function LoginPage({
           Sign In
         </button>
       </form>
+
+      <p className="mt-4 text-center text-sm">
+        <Link href="/forgot-password" className="text-slate-400 hover:text-reef-300">
+          Forgot your password?
+        </Link>
+      </p>
 
       <p className="mt-6 text-center text-sm text-slate-400">
         New here?{" "}
