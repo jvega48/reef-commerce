@@ -26,11 +26,28 @@ export const metadata: Metadata = {
   },
   description:
     "Premium WYSIWYG corals, rare saltwater fish, and reef-safe invertebrates, shipped overnight to your door.",
+  keywords: [
+    "corals", "saltwater fish", "reef", "WYSIWYG coral", "live coral",
+    "reef invertebrates", "aquacultured coral", "marine livestock", "AquaVida365",
+  ],
+  applicationName: "AquaVida365",
+  formatDetection: { telephone: false, email: false, address: false },
   openGraph: {
     siteName: "AquaVida365",
     type: "website",
     images: [{ url: "/brand/og-logo.png", width: 1200, height: 628, alt: "AquaVida365" }],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "AquaVida365 — Premium Corals, Fish & Inverts",
+    description: "WYSIWYG corals & rare saltwater fish, shipped overnight with a live-arrival guarantee.",
+  },
+};
+
+export const viewport = {
+  themeColor: "#061a2c",
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({
