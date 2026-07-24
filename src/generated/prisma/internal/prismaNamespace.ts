@@ -2760,11 +2760,14 @@ export const ProductImageScalarFieldEnum = {
   id: 'id',
   productId: 'productId',
   url: 'url',
+  thumbUrl: 'thumbUrl',
   alt: 'alt',
   position: 'position',
   width: 'width',
   height: 'height',
-  isVideo: 'isVideo'
+  bytes: 'bytes',
+  isVideo: 'isVideo',
+  createdAt: 'createdAt'
 } as const
 
 export type ProductImageScalarFieldEnum = (typeof ProductImageScalarFieldEnum)[keyof typeof ProductImageScalarFieldEnum]

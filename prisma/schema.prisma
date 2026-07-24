@@ -240,13 +240,18 @@ model ProductImage {
   productId String
   product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
   url       String
+  // Optimized 400px square generated at upload time. Null for the migrated
+  // Shopify catalog, which is served straight from their CDN.
+  thumbUrl  String?
   alt       String?
   position  Int     @default(0)
   width     Int?
   height    Int?
+  bytes     Int?
   isVideo   Boolean @default(false)
+  createdAt DateTime @default(now())
 
-  @@index([productId])
+  @@index([productId, position])
 }
 
 model ProductCategory {

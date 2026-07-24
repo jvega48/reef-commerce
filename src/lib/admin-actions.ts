@@ -1,14 +1,17 @@
 "use server";
 
-import { mkdir, writeFile } from "node:fs/promises";
-import path from "node:path";
-import { randomBytes } from "node:crypto";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { sendEmail } from "@/lib/email";
 import { restockEmail } from "@/lib/email-templates";
+import {
+  ImageRejected,
+  attachUploadedMedia,
+  processAndStoreImage,
+} from "@/lib/image-processing";
+import { deleteObject } from "@/lib/storage";
 import type {
   CareLevel,
   Intensity,
@@ -76,48 +79,22 @@ async function nextSku(): Promise<string> {
 }
 
 // ---------------------------------------------------------------------------
-// Image upload (local /public/uploads for dev; swap for R2 in production)
+// Image upload — validated, optimized, and stored via the storage abstraction
+// (Cloudflare R2 in production, public/uploads locally). See
+// src/lib/image-processing.ts and src/lib/storage.ts.
 // ---------------------------------------------------------------------------
 
-const ALLOWED_MEDIA_EXT = new Set([
-  ".jpg", ".jpeg", ".png", ".webp", ".gif", ".avif",
-  ".mp4", ".mov", ".webm",
-]);
-const MAX_UPLOAD_BYTES = 25 * 1024 * 1024; // 25 MB per file
-
+/** Pull the uploaded files off the form and attach them to the product. */
 async function saveUploadedImages(
   formData: FormData,
   productId: string,
   startPosition: number,
-) {
+): Promise<string[]> {
   const files = formData
     .getAll("images")
     .filter((f): f is File => f instanceof File && f.size > 0);
-  if (files.length === 0) return;
-
-  const dir = path.join(process.cwd(), "public", "uploads");
-  await mkdir(dir, { recursive: true });
-
-  let pos = startPosition;
-  for (const file of files) {
-    const isVideo = file.type.startsWith("video/");
-    if (!file.type.startsWith("image/") && !isVideo) continue;
-    if (file.size > MAX_UPLOAD_BYTES) continue;
-    // Extension allowlist — client MIME types are spoofable, and the stored
-    // filename is always our own generated name, never user input.
-    const ext = path.extname(file.name).toLowerCase();
-    if (!ALLOWED_MEDIA_EXT.has(ext)) continue;
-    const filename = `${Date.now()}-${randomBytes(4).toString("hex")}${ext}`;
-    await writeFile(path.join(dir, filename), Buffer.from(await file.arrayBuffer()));
-    await prisma.productImage.create({
-      data: {
-        productId,
-        url: `/uploads/${filename}`,
-        position: pos++,
-        isVideo,
-      },
-    });
-  }
+  if (files.length === 0) return [];
+  return attachUploadedMedia(files, productId, startPosition);
 }
 
 // ---------------------------------------------------------------------------
@@ -182,7 +159,7 @@ export async function createProduct(formData: FormData) {
     },
   });
 
-  await saveUploadedImages(formData, product.id, 0);
+  const uploadErrors = await saveUploadedImages(formData, product.id, 0);
   await prisma.auditLog.create({
     data: {
       userId: session.user.id,
@@ -195,7 +172,10 @@ export async function createProduct(formData: FormData) {
   revalidatePath("/admin/products");
   revalidatePath("/shop");
   revalidatePath("/");
-  redirect(`/admin/products/${product.id}/edit?created=1`);
+  const q = uploadErrors.length
+    ? `?created=1&uploadError=${encodeURIComponent(uploadErrors.join(" · "))}`
+    : "?created=1";
+  redirect(`/admin/products/${product.id}/edit${q}`);
 }
 
 export async function updateProduct(formData: FormData) {
@@ -231,7 +211,7 @@ export async function updateProduct(formData: FormData) {
   });
 
   const maxPos = existing.images.reduce((m, i) => Math.max(m, i.position), -1);
-  await saveUploadedImages(formData, productId, maxPos + 1);
+  const uploadErrors = await saveUploadedImages(formData, productId, maxPos + 1);
 
   // Back in stock? Notify everyone on the alert list (once per restock).
   const cameBackInStock =
@@ -273,7 +253,44 @@ export async function updateProduct(formData: FormData) {
   revalidatePath(`/product/${slug}`);
   revalidatePath("/shop");
   revalidatePath("/");
-  redirect(`/admin/products/${productId}/edit?saved=1`);
+  const q = uploadErrors.length
+    ? `?saved=1&uploadError=${encodeURIComponent(uploadErrors.join(" · "))}`
+    : "?saved=1";
+  redirect(`/admin/products/${productId}/edit${q}`);
+}
+
+// ---------------------------------------------------------------------------
+// Image management: delete, reorder, set primary, alt text, replace
+//
+// "Primary image" is simply position 0 — every storefront read takes the
+// lowest position, so promoting an image means renumbering. Positions are
+// always rewritten as a dense 0-based sequence to keep ordering unambiguous.
+// ---------------------------------------------------------------------------
+
+/** Rewrite a product's image positions to a dense 0..n-1 sequence. */
+async function normalizePositions(productId: string) {
+  const images = await prisma.productImage.findMany({
+    where: { productId },
+    orderBy: [{ position: "asc" }, { createdAt: "asc" }],
+    select: { id: true },
+  });
+  await prisma.$transaction(
+    images.map((img, i) =>
+      prisma.productImage.update({ where: { id: img.id }, data: { position: i } }),
+    ),
+  );
+}
+
+async function revalidateProductImages(productId: string) {
+  const product = await prisma.product.findUnique({
+    where: { id: productId },
+    select: { slug: true },
+  });
+  revalidatePath(`/admin/products/${productId}/edit`);
+  revalidatePath("/admin/media");
+  if (product) revalidatePath(`/product/${product.slug}`);
+  revalidatePath("/shop");
+  revalidatePath("/");
 }
 
 export async function deleteProductImage(formData: FormData) {
@@ -281,9 +298,127 @@ export async function deleteProductImage(formData: FormData) {
   const imageId = String(formData.get("imageId") ?? "");
   const image = await prisma.productImage.findUnique({ where: { id: imageId } });
   if (!image) return;
+
   await prisma.productImage.delete({ where: { id: imageId } });
-  revalidatePath(`/admin/products/${image.productId}/edit`);
-  revalidatePath("/shop");
+  // Reclaim the blob too, so deletes don't leak storage. Shopify CDN URLs are
+  // left untouched (we don't own them).
+  await deleteObject(image.url);
+  if (image.thumbUrl) await deleteObject(image.thumbUrl);
+
+  await normalizePositions(image.productId);
+  await revalidateProductImages(image.productId);
+}
+
+/** Move an image one slot earlier/later, or straight to the front (primary). */
+export async function moveProductImage(formData: FormData) {
+  await requireEditor();
+  const imageId = String(formData.get("imageId") ?? "");
+  const direction = String(formData.get("direction") ?? "");
+  const image = await prisma.productImage.findUnique({ where: { id: imageId } });
+  if (!image) return;
+
+  const siblings = await prisma.productImage.findMany({
+    where: { productId: image.productId },
+    orderBy: [{ position: "asc" }, { createdAt: "asc" }],
+    select: { id: true },
+  });
+  const from = siblings.findIndex((s) => s.id === imageId);
+  if (from === -1) return;
+
+  let to = from;
+  if (direction === "up") to = Math.max(0, from - 1);
+  else if (direction === "down") to = Math.min(siblings.length - 1, from + 1);
+  else if (direction === "primary") to = 0;
+  if (to === from) return;
+
+  const reordered = [...siblings];
+  const [moved] = reordered.splice(from, 1);
+  reordered.splice(to, 0, moved);
+
+  await prisma.$transaction(
+    reordered.map((s, i) =>
+      prisma.productImage.update({ where: { id: s.id }, data: { position: i } }),
+    ),
+  );
+  await revalidateProductImages(image.productId);
+}
+
+/** Persist a new drag-and-drop order (array of image ids, front to back). */
+export async function reorderProductImages(formData: FormData) {
+  await requireEditor();
+  const productId = String(formData.get("productId") ?? "");
+  let ids: string[] = [];
+  try {
+    ids = JSON.parse(String(formData.get("order") ?? "[]"));
+  } catch {
+    return;
+  }
+  if (!productId || !Array.isArray(ids) || ids.length === 0) return;
+
+  // Only accept ids that actually belong to this product — never trust the
+  // client to tell us which rows to renumber.
+  const owned = await prisma.productImage.findMany({
+    where: { productId },
+    select: { id: true },
+  });
+  const ownedIds = new Set(owned.map((o) => o.id));
+  const clean = ids.filter((id) => ownedIds.has(id));
+  // Anything the client omitted keeps its relative order at the end.
+  for (const o of owned) if (!clean.includes(o.id)) clean.push(o.id);
+
+  await prisma.$transaction(
+    clean.map((id, i) =>
+      prisma.productImage.update({ where: { id }, data: { position: i } }),
+    ),
+  );
+  await revalidateProductImages(productId);
+}
+
+export async function updateImageAlt(formData: FormData) {
+  await requireEditor();
+  const imageId = String(formData.get("imageId") ?? "");
+  const alt = String(formData.get("alt") ?? "").trim().slice(0, 200) || null;
+  const image = await prisma.productImage.findUnique({ where: { id: imageId } });
+  if (!image) return;
+  await prisma.productImage.update({ where: { id: imageId }, data: { alt } });
+  await revalidateProductImages(image.productId);
+}
+
+/** Swap the file behind an existing image row, keeping its position and alt. */
+export async function replaceProductImage(formData: FormData) {
+  await requireEditor();
+  const imageId = String(formData.get("imageId") ?? "");
+  const file = formData.get("file");
+  const image = await prisma.productImage.findUnique({ where: { id: imageId } });
+  if (!image) return;
+  if (!(file instanceof File) || file.size === 0) return;
+
+  try {
+    const buffer = Buffer.from(await file.arrayBuffer());
+    const processed = await processAndStoreImage(buffer, file.name);
+    const oldUrl = image.url;
+    const oldThumb = image.thumbUrl;
+    await prisma.productImage.update({
+      where: { id: imageId },
+      data: {
+        url: processed.url,
+        thumbUrl: processed.thumbUrl,
+        width: processed.width,
+        height: processed.height,
+        bytes: processed.bytes,
+        isVideo: false,
+      },
+    });
+    await deleteObject(oldUrl);
+    if (oldThumb) await deleteObject(oldThumb);
+  } catch (e) {
+    const msg = e instanceof ImageRejected ? e.message : "Replacement failed.";
+    redirect(
+      `/admin/products/${image.productId}/edit?uploadError=${encodeURIComponent(msg)}`,
+    );
+  }
+  await revalidateProductImages(image.productId);
+  redirect(`/admin/products/${image.productId}/edit?saved=1`);
 }
 
 export async function deleteProduct(formData: FormData) {

@@ -1,13 +1,10 @@
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
-import {
-  deleteProduct,
-  deleteProductImage,
-  updateProduct,
-} from "@/lib/admin-actions";
+import { deleteProduct, updateProduct } from "@/lib/admin-actions";
+import { storageBackend } from "@/lib/storage";
 import ProductForm from "@/components/admin/ProductForm";
+import ProductImageManager from "@/components/admin/ProductImageManager";
 
 export const metadata = { title: "Edit Product — Admin" };
 
@@ -16,7 +13,12 @@ export default async function EditProductPage({
   searchParams,
 }: {
   params: Promise<{ id: string }>;
-  searchParams: Promise<{ saved?: string; created?: string; error?: string }>;
+  searchParams: Promise<{
+    saved?: string;
+    created?: string;
+    error?: string;
+    uploadError?: string;
+  }>;
 }) {
   const [{ id }, flags] = await Promise.all([params, searchParams]);
   const product = await prisma.product.findUnique({
@@ -60,39 +62,35 @@ export default async function EditProductPage({
           A product name is required.
         </p>
       )}
-
-      {/* Existing images (separate forms — cannot nest inside the main form) */}
-      {product.images.length > 0 && (
-        <section className="mb-8 rounded-2xl border border-abyss-700/60 bg-abyss-900 p-5">
-          <h2 className="mb-4 font-semibold text-slate-200">Current Images</h2>
-          <div className="grid grid-cols-3 gap-3 md:grid-cols-6">
-            {product.images.map((img) => (
-              <div
-                key={img.id}
-                className="group relative aspect-square overflow-hidden rounded-lg border border-abyss-700 bg-abyss-800"
-              >
-                <Image
-                  src={img.url}
-                  alt={img.alt ?? product.name}
-                  fill
-                  sizes="15vw"
-                  className="object-cover"
-                />
-                <form action={deleteProductImage} className="absolute right-1 top-1 hidden group-hover:block">
-                  <input type="hidden" name="imageId" value={img.id} />
-                  <button
-                    type="submit"
-                    className="flex h-6 w-6 items-center justify-center rounded-full bg-abyss-950/90 text-xs text-coral-300 hover:bg-coral-500 hover:text-white"
-                    aria-label="Delete image"
-                  >
-                    ✕
-                  </button>
-                </form>
-              </div>
-            ))}
-          </div>
-        </section>
+      {flags.uploadError && (
+        <p className="mb-4 rounded-lg border border-coral-500/40 bg-coral-500/10 px-4 py-2 text-sm text-coral-300">
+          Some files were not added — {flags.uploadError}
+        </p>
       )}
+
+      {/* Image manager (separate forms — cannot nest inside the main form) */}
+      <section className="mb-8 rounded-2xl border border-abyss-700/60 bg-abyss-900 p-5">
+        <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
+          <h2 className="font-semibold text-slate-200">
+            Images ({product.images.length})
+          </h2>
+          <span
+            className={`rounded-full px-2.5 py-0.5 text-[11px] font-semibold ${
+              storageBackend() === "r2"
+                ? "bg-emerald-500/20 text-emerald-300"
+                : "bg-amber-500/20 text-amber-300"
+            }`}
+            title={
+              storageBackend() === "r2"
+                ? "Uploads go to Cloudflare R2 and survive deploys"
+                : "Uploads write to public/uploads — fine locally, but they are lost on redeploy in serverless hosting. Set R2_* to fix."
+            }
+          >
+            storage: {storageBackend() === "r2" ? "Cloudflare R2" : "local disk (dev)"}
+          </span>
+        </div>
+        <ProductImageManager productId={product.id} images={product.images} />
+      </section>
 
       <ProductForm
         action={updateProduct}

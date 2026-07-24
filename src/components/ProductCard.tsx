@@ -9,7 +9,9 @@ export interface ProductCardData {
   quantity: number;
   inventoryMode: string;
   featured: boolean;
-  images: { url: string; alt: string | null }[];
+  // images[0] is the primary — every query orders by position ASC and
+  // positions are kept dense and 0-based.
+  images: { url: string; thumbUrl?: string | null; alt: string | null }[];
 }
 
 export function formatPrice(value: unknown): string {
@@ -30,7 +32,9 @@ export default function ProductCard({ product }: { product: ProductCardData }) {
       <div className="relative aspect-square overflow-hidden bg-abyss-800">
         {img ? (
           <Image
-            src={img.url}
+            // Prefer the generated 400px thumbnail; the migrated Shopify
+            // catalog has none, so fall back to the full-size URL.
+            src={img.thumbUrl ?? img.url}
             alt={img.alt ?? product.name}
             fill
             sizes="(max-width: 768px) 50vw, 25vw"

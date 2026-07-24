@@ -71,13 +71,19 @@ export default function ImageDropzone() {
         <p className="mt-2 text-sm font-medium text-slate-200">
           Drag &amp; drop photos or videos here
         </p>
-        <p className="mt-1 text-xs text-slate-500">or click to browse — JPG, PNG, WebP, MP4</p>
+        <p className="mt-1 text-xs text-slate-500">
+          or click to browse — JPG, PNG, WebP, AVIF, HEIC, GIF up to 15 MB · MP4/MOV/WebM up to 100 MB
+        </p>
+        <p className="mt-1 text-xs text-slate-600">
+          Images are auto-converted to WebP, capped at 2000px, and thumbnailed. EXIF
+          (including GPS) is stripped.
+        </p>
         <input
           ref={inputRef}
           type="file"
           name="images"
           multiple
-          accept="image/*,video/*"
+          accept="image/*,video/mp4,video/quicktime,video/webm"
           className="hidden"
           onChange={(e) => syncPreviews(e.currentTarget.files)}
         />

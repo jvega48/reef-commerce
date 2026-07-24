@@ -7,14 +7,14 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "tsx scripts/test-shipping.ts && tsx scripts/test-checkout.ts && tsx scripts/test-oversell.ts && tsx scripts/test-promotions.ts && tsx scripts/test-pdf.ts && tsx scripts/test-search.ts && tsx scripts/test-csv.ts"
+    "test": "tsx scripts/test-shipping.ts && tsx scripts/test-checkout.ts && tsx scripts/test-oversell.ts && tsx scripts/test-promotions.ts && tsx scripts/test-pdf.ts && tsx scripts/test-search.ts && tsx scripts/test-csv.ts && tsx scripts/test-image-pipeline.ts && tsx scripts/test-image-integrity.ts"
   },
   "overrides": {
-    "sharp": "^0.35.0",
     "postcss": "^8.5.10"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.11.3",
+    "@aws-sdk/client-s3": "^3.1094.0",
     "@prisma/adapter-pg": "^7.9.0",
     "@prisma/client": "^7.9.0",
     "@types/pdfkit": "^0.17.6",
@@ -26,6 +26,7 @@
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "sanitize-html": "^2.17.6",
+    "sharp": "^0.35.3",
     "stripe": "^22.3.2",
     "zod": "^4.4.3"
   },
