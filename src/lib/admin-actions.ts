@@ -7,6 +7,8 @@ import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
+import { sendEmail } from "@/lib/email";
+import { restockEmail } from "@/lib/email-templates";
 import type {
   CareLevel,
   Intensity,
@@ -230,6 +232,33 @@ export async function updateProduct(formData: FormData) {
 
   const maxPos = existing.images.reduce((m, i) => Math.max(m, i.position), -1);
   await saveUploadedImages(formData, productId, maxPos + 1);
+
+  // Back in stock? Notify everyone on the alert list (once per restock).
+  const cameBackInStock =
+    existing.quantity < 1 &&
+    quantity > 0 &&
+    fields.status === "ACTIVE";
+  if (cameBackInStock) {
+    const alerts = await prisma.stockAlert.findMany({
+      where: { productId, notified: false },
+      include: { user: { select: { email: true, notifyRestock: true } } },
+    });
+    for (const alert of alerts) {
+      if (alert.user.notifyRestock) {
+        const tpl = restockEmail({ name: fields.name, slug });
+        await sendEmail({
+          to: alert.user.email,
+          ...tpl,
+          template: "restock",
+          meta: { productId },
+        });
+      }
+      await prisma.stockAlert.update({
+        where: { id: alert.id },
+        data: { notified: true },
+      });
+    }
+  }
 
   await prisma.auditLog.create({
     data: {

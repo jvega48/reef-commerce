@@ -42,7 +42,7 @@ const CATEGORY_TILES: {
 ];
 
 export default async function HomePage() {
-  const [featured, newArrivals, heroImage, productCount, tileImages] =
+  const [featured, newArrivals, bestSellers, latestGuides, heroImage, productCount, tileImages] =
     await Promise.all([
       prisma.product.findMany({
         where: { status: "ACTIVE", featured: true, images: { some: {} } },
@@ -55,6 +55,22 @@ export default async function HomePage() {
         include: { images: { orderBy: { position: "asc" }, take: 1 } },
         orderBy: { createdAt: "desc" },
         take: 8,
+      }),
+      prisma.product.findMany({
+        where: {
+          status: "ACTIVE",
+          quantity: { gt: 0 },
+          soldCount: { gt: 0 },
+          images: { some: {} },
+        },
+        include: { images: { orderBy: { position: "asc" }, take: 1 } },
+        orderBy: { soldCount: "desc" },
+        take: 4,
+      }),
+      prisma.article.findMany({
+        where: { published: true },
+        orderBy: { publishedAt: "desc" },
+        take: 3,
       }),
       prisma.productImage.findFirst({
         where: {
@@ -198,7 +214,7 @@ export default async function HomePage() {
             </p>
             <h2 className="mt-1 text-2xl font-bold md:text-3xl">New Arrivals</h2>
           </div>
-          <Link href="/shop" className="text-sm font-medium text-reef-400 hover:text-reef-300">
+          <Link href="/shop?sort=newest" className="text-sm font-medium text-reef-400 hover:text-reef-300">
             View all →
           </Link>
         </div>
@@ -208,6 +224,62 @@ export default async function HomePage() {
           ))}
         </div>
       </section>
+
+      {/* ================= Best sellers ================= */}
+      {bestSellers.length > 0 && (
+        <section className="mx-auto max-w-7xl px-4 py-10">
+          <div className="mb-6 flex items-end justify-between">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-[0.3em] text-coral-400">
+                Reefer favorites
+              </p>
+              <h2 className="mt-1 text-2xl font-bold md:text-3xl">Best Sellers</h2>
+            </div>
+            <Link href="/shop?sort=popular" className="text-sm font-medium text-reef-400 hover:text-reef-300">
+              View all →
+            </Link>
+          </div>
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-5">
+            {bestSellers.map((p) => (
+              <ProductCard key={p.id} product={p} />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* ================= Learning center teaser ================= */}
+      {latestGuides.length > 0 && (
+        <section className="mx-auto max-w-7xl px-4 py-10">
+          <div className="mb-6 flex items-end justify-between">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-[0.3em] text-reef-400">
+                Level up your reef
+              </p>
+              <h2 className="mt-1 text-2xl font-bold md:text-3xl">From the Learning Center</h2>
+            </div>
+            <Link href="/learn" className="text-sm font-medium text-reef-400 hover:text-reef-300">
+              All guides →
+            </Link>
+          </div>
+          <div className="grid gap-4 md:grid-cols-3">
+            {latestGuides.map((a) => (
+              <Link
+                key={a.id}
+                href={`/learn/${a.slug}`}
+                className="group rounded-2xl border border-abyss-700/50 bg-abyss-900 p-5 transition duration-300 hover:-translate-y-1 hover:border-reef-500/50"
+              >
+                <p className="text-xs font-semibold uppercase tracking-wider text-reef-400">
+                  {a.readMinutes} min read
+                </p>
+                <h3 className="mt-2 font-semibold text-slate-100 transition group-hover:text-reef-300">
+                  {a.title}
+                </h3>
+                <p className="mt-2 line-clamp-2 text-sm text-slate-400">{a.excerpt}</p>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* ================= Big CTA ================= */}
       <section className="mx-auto max-w-7xl px-4 py-16">

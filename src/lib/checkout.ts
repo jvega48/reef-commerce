@@ -1,6 +1,6 @@
 import { prisma } from "./prisma";
 import { sendEmail } from "./email";
-import { orderConfirmationEmail } from "./email-templates";
+import { giftCardEmail, orderConfirmationEmail } from "./email-templates";
 import { formatMoney } from "./format";
 import type { ShippingSettings } from "./settings";
 
@@ -84,6 +84,47 @@ export async function finalizeOrder(orderId: string, paymentIntentId?: string | 
       });
     }
 
+    // Consume applied promotions now that payment is real.
+    if (order.couponId) {
+      await tx.coupon.update({
+        where: { id: order.couponId },
+        data: { usedCount: { increment: 1 } },
+      });
+    }
+    if (order.giftCardId && Number(order.giftCardAmount) > 0) {
+      // Guarded decrement: a concurrent spend of the same card can't take the
+      // balance negative — the losing order gets flagged for staff.
+      const res = await tx.giftCard.updateMany({
+        where: { id: order.giftCardId, balance: { gte: order.giftCardAmount } },
+        data: { balance: { decrement: order.giftCardAmount } },
+      });
+      if (res.count === 0) {
+        await tx.order.update({
+          where: { id: orderId },
+          data: {
+            internalNotes:
+              `${order.internalNotes ?? ""}\n⚠ GIFT CARD BALANCE CONFLICT — collect ${formatMoney(order.giftCardAmount as unknown as number)} or adjust`.trim(),
+          },
+        });
+      }
+    }
+    if (order.userId && order.pointsRedeemed > 0) {
+      const res = await tx.user.updateMany({
+        where: { id: order.userId, reefPoints: { gte: order.pointsRedeemed } },
+        data: { reefPoints: { decrement: order.pointsRedeemed } },
+      });
+      if (res.count > 0) {
+        await tx.pointsTransaction.create({
+          data: {
+            userId: order.userId,
+            points: -order.pointsRedeemed,
+            reason: "REDEEMED",
+            orderId: order.id,
+          },
+        });
+      }
+    }
+
     // Reef Points: 1 point per dollar for account holders.
     if (order.userId) {
       const points = Math.floor(Number(order.total));
@@ -148,7 +189,11 @@ export async function finalizeOrder(orderId: string, paymentIntentId?: string | 
   if (!finalized) return;
   const order = await prisma.order.findUnique({
     where: { id: orderId },
-    include: { items: true },
+    include: {
+      items: true,
+      giftCardsIssued: true,
+      user: { select: { name: true } },
+    },
   });
   if (order && order.status === "PAID") {
     const tpl = orderConfirmationEmail({
@@ -167,5 +212,27 @@ export async function finalizeOrder(orderId: string, paymentIntentId?: string | 
       template: "order-confirmation",
       meta: { orderId },
     });
+
+    // Digital gift cards bought in this order: activate + deliver by email.
+    for (const gc of order.giftCardsIssued) {
+      if (gc.active && gc.deliveredAt) continue;
+      await prisma.giftCard.update({
+        where: { id: gc.id },
+        data: { active: true, deliveredAt: new Date() },
+      });
+      const giftTpl = giftCardEmail({
+        code: gc.code,
+        amount: formatMoney(gc.initialBalance),
+        recipientName: gc.recipientName,
+        fromName: order.user?.name ?? null,
+        message: gc.message,
+      });
+      await sendEmail({
+        to: gc.recipientEmail ?? order.email,
+        ...giftTpl,
+        template: "gift-card",
+        meta: { orderId, giftCardId: gc.id },
+      });
+    }
   }
 }
