@@ -34,6 +34,9 @@ export type ProductAvgAggregateOutputType = {
   quantity: number | null
   lowStockThreshold: number | null
   weightGrams: number | null
+  ratingAvg: runtime.Decimal | null
+  ratingCount: number | null
+  soldCount: number | null
   shopifyId: number | null
 }
 
@@ -45,6 +48,9 @@ export type ProductSumAggregateOutputType = {
   quantity: number | null
   lowStockThreshold: number | null
   weightGrams: number | null
+  ratingAvg: runtime.Decimal | null
+  ratingCount: number | null
+  soldCount: number | null
   shopifyId: bigint | null
 }
 
@@ -81,6 +87,9 @@ export type ProductMinAggregateOutputType = {
   featured: boolean | null
   metaTitle: string | null
   metaDescription: string | null
+  ratingAvg: runtime.Decimal | null
+  ratingCount: number | null
+  soldCount: number | null
   shopifyId: bigint | null
   shopifyHandle: string | null
   createdAt: Date | null
@@ -120,6 +129,9 @@ export type ProductMaxAggregateOutputType = {
   featured: boolean | null
   metaTitle: string | null
   metaDescription: string | null
+  ratingAvg: runtime.Decimal | null
+  ratingCount: number | null
+  soldCount: number | null
   shopifyId: bigint | null
   shopifyHandle: string | null
   createdAt: Date | null
@@ -161,6 +173,9 @@ export type ProductCountAggregateOutputType = {
   featured: number
   metaTitle: number
   metaDescription: number
+  ratingAvg: number
+  ratingCount: number
+  soldCount: number
   shopifyId: number
   shopifyHandle: number
   createdAt: number
@@ -177,6 +192,9 @@ export type ProductAvgAggregateInputType = {
   quantity?: true
   lowStockThreshold?: true
   weightGrams?: true
+  ratingAvg?: true
+  ratingCount?: true
+  soldCount?: true
   shopifyId?: true
 }
 
@@ -188,6 +206,9 @@ export type ProductSumAggregateInputType = {
   quantity?: true
   lowStockThreshold?: true
   weightGrams?: true
+  ratingAvg?: true
+  ratingCount?: true
+  soldCount?: true
   shopifyId?: true
 }
 
@@ -224,6 +245,9 @@ export type ProductMinAggregateInputType = {
   featured?: true
   metaTitle?: true
   metaDescription?: true
+  ratingAvg?: true
+  ratingCount?: true
+  soldCount?: true
   shopifyId?: true
   shopifyHandle?: true
   createdAt?: true
@@ -263,6 +287,9 @@ export type ProductMaxAggregateInputType = {
   featured?: true
   metaTitle?: true
   metaDescription?: true
+  ratingAvg?: true
+  ratingCount?: true
+  soldCount?: true
   shopifyId?: true
   shopifyHandle?: true
   createdAt?: true
@@ -304,6 +331,9 @@ export type ProductCountAggregateInputType = {
   featured?: true
   metaTitle?: true
   metaDescription?: true
+  ratingAvg?: true
+  ratingCount?: true
+  soldCount?: true
   shopifyId?: true
   shopifyHandle?: true
   createdAt?: true
@@ -432,6 +462,9 @@ export type ProductGroupByOutputType = {
   featured: boolean
   metaTitle: string | null
   metaDescription: string | null
+  ratingAvg: runtime.Decimal
+  ratingCount: number
+  soldCount: number
   shopifyId: bigint | null
   shopifyHandle: string | null
   createdAt: Date
@@ -496,6 +529,9 @@ export type ProductWhereInput = {
   featured?: Prisma.BoolFilter<"Product"> | boolean
   metaTitle?: Prisma.StringNullableFilter<"Product"> | string | null
   metaDescription?: Prisma.StringNullableFilter<"Product"> | string | null
+  ratingAvg?: Prisma.DecimalFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFilter<"Product"> | number
+  soldCount?: Prisma.IntFilter<"Product"> | number
   shopifyId?: Prisma.BigIntNullableFilter<"Product"> | bigint | number | null
   shopifyHandle?: Prisma.StringNullableFilter<"Product"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Product"> | Date | string
@@ -544,6 +580,9 @@ export type ProductOrderByWithRelationInput = {
   featured?: Prisma.SortOrder
   metaTitle?: Prisma.SortOrderInput | Prisma.SortOrder
   metaDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  ratingAvg?: Prisma.SortOrder
+  ratingCount?: Prisma.SortOrder
+  soldCount?: Prisma.SortOrder
   shopifyId?: Prisma.SortOrderInput | Prisma.SortOrder
   shopifyHandle?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -596,6 +635,9 @@ export type ProductWhereUniqueInput = Prisma.AtLeast<{
   featured?: Prisma.BoolFilter<"Product"> | boolean
   metaTitle?: Prisma.StringNullableFilter<"Product"> | string | null
   metaDescription?: Prisma.StringNullableFilter<"Product"> | string | null
+  ratingAvg?: Prisma.DecimalFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFilter<"Product"> | number
+  soldCount?: Prisma.IntFilter<"Product"> | number
   shopifyHandle?: Prisma.StringNullableFilter<"Product"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Product"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Product"> | Date | string
@@ -643,6 +685,9 @@ export type ProductOrderByWithAggregationInput = {
   featured?: Prisma.SortOrder
   metaTitle?: Prisma.SortOrderInput | Prisma.SortOrder
   metaDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  ratingAvg?: Prisma.SortOrder
+  ratingCount?: Prisma.SortOrder
+  soldCount?: Prisma.SortOrder
   shopifyId?: Prisma.SortOrderInput | Prisma.SortOrder
   shopifyHandle?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -692,6 +737,9 @@ export type ProductScalarWhereWithAggregatesInput = {
   featured?: Prisma.BoolWithAggregatesFilter<"Product"> | boolean
   metaTitle?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
   metaDescription?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
+  ratingAvg?: Prisma.DecimalWithAggregatesFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntWithAggregatesFilter<"Product"> | number
+  soldCount?: Prisma.IntWithAggregatesFilter<"Product"> | number
   shopifyId?: Prisma.BigIntNullableWithAggregatesFilter<"Product"> | bigint | number | null
   shopifyHandle?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Product"> | Date | string
@@ -733,6 +781,9 @@ export type ProductCreateInput = {
   featured?: boolean
   metaTitle?: string | null
   metaDescription?: string | null
+  ratingAvg?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: number
+  soldCount?: number
   shopifyId?: bigint | number | null
   shopifyHandle?: string | null
   createdAt?: Date | string
@@ -781,6 +832,9 @@ export type ProductUncheckedCreateInput = {
   featured?: boolean
   metaTitle?: string | null
   metaDescription?: string | null
+  ratingAvg?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: number
+  soldCount?: number
   shopifyId?: bigint | number | null
   shopifyHandle?: string | null
   createdAt?: Date | string
@@ -829,6 +883,9 @@ export type ProductUpdateInput = {
   featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ratingAvg?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
+  soldCount?: Prisma.IntFieldUpdateOperationsInput | number
   shopifyId?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   shopifyHandle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -877,6 +934,9 @@ export type ProductUncheckedUpdateInput = {
   featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ratingAvg?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
+  soldCount?: Prisma.IntFieldUpdateOperationsInput | number
   shopifyId?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   shopifyHandle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -925,6 +985,9 @@ export type ProductCreateManyInput = {
   featured?: boolean
   metaTitle?: string | null
   metaDescription?: string | null
+  ratingAvg?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: number
+  soldCount?: number
   shopifyId?: bigint | number | null
   shopifyHandle?: string | null
   createdAt?: Date | string
@@ -966,6 +1029,9 @@ export type ProductUpdateManyMutationInput = {
   featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ratingAvg?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
+  soldCount?: Prisma.IntFieldUpdateOperationsInput | number
   shopifyId?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   shopifyHandle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1007,6 +1073,9 @@ export type ProductUncheckedUpdateManyInput = {
   featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ratingAvg?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
+  soldCount?: Prisma.IntFieldUpdateOperationsInput | number
   shopifyId?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   shopifyHandle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1048,6 +1117,9 @@ export type ProductCountOrderByAggregateInput = {
   featured?: Prisma.SortOrder
   metaTitle?: Prisma.SortOrder
   metaDescription?: Prisma.SortOrder
+  ratingAvg?: Prisma.SortOrder
+  ratingCount?: Prisma.SortOrder
+  soldCount?: Prisma.SortOrder
   shopifyId?: Prisma.SortOrder
   shopifyHandle?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -1062,6 +1134,9 @@ export type ProductAvgOrderByAggregateInput = {
   quantity?: Prisma.SortOrder
   lowStockThreshold?: Prisma.SortOrder
   weightGrams?: Prisma.SortOrder
+  ratingAvg?: Prisma.SortOrder
+  ratingCount?: Prisma.SortOrder
+  soldCount?: Prisma.SortOrder
   shopifyId?: Prisma.SortOrder
 }
 
@@ -1098,6 +1173,9 @@ export type ProductMaxOrderByAggregateInput = {
   featured?: Prisma.SortOrder
   metaTitle?: Prisma.SortOrder
   metaDescription?: Prisma.SortOrder
+  ratingAvg?: Prisma.SortOrder
+  ratingCount?: Prisma.SortOrder
+  soldCount?: Prisma.SortOrder
   shopifyId?: Prisma.SortOrder
   shopifyHandle?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -1137,6 +1215,9 @@ export type ProductMinOrderByAggregateInput = {
   featured?: Prisma.SortOrder
   metaTitle?: Prisma.SortOrder
   metaDescription?: Prisma.SortOrder
+  ratingAvg?: Prisma.SortOrder
+  ratingCount?: Prisma.SortOrder
+  soldCount?: Prisma.SortOrder
   shopifyId?: Prisma.SortOrder
   shopifyHandle?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -1151,6 +1232,9 @@ export type ProductSumOrderByAggregateInput = {
   quantity?: Prisma.SortOrder
   lowStockThreshold?: Prisma.SortOrder
   weightGrams?: Prisma.SortOrder
+  ratingAvg?: Prisma.SortOrder
+  ratingCount?: Prisma.SortOrder
+  soldCount?: Prisma.SortOrder
   shopifyId?: Prisma.SortOrder
 }
 
@@ -1353,6 +1437,9 @@ export type ProductCreateWithoutImagesInput = {
   featured?: boolean
   metaTitle?: string | null
   metaDescription?: string | null
+  ratingAvg?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: number
+  soldCount?: number
   shopifyId?: bigint | number | null
   shopifyHandle?: string | null
   createdAt?: Date | string
@@ -1400,6 +1487,9 @@ export type ProductUncheckedCreateWithoutImagesInput = {
   featured?: boolean
   metaTitle?: string | null
   metaDescription?: string | null
+  ratingAvg?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: number
+  soldCount?: number
   shopifyId?: bigint | number | null
   shopifyHandle?: string | null
   createdAt?: Date | string
@@ -1463,6 +1553,9 @@ export type ProductUpdateWithoutImagesInput = {
   featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ratingAvg?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
+  soldCount?: Prisma.IntFieldUpdateOperationsInput | number
   shopifyId?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   shopifyHandle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1510,6 +1603,9 @@ export type ProductUncheckedUpdateWithoutImagesInput = {
   featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ratingAvg?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
+  soldCount?: Prisma.IntFieldUpdateOperationsInput | number
   shopifyId?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   shopifyHandle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1557,6 +1653,9 @@ export type ProductCreateWithoutCategoriesInput = {
   featured?: boolean
   metaTitle?: string | null
   metaDescription?: string | null
+  ratingAvg?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: number
+  soldCount?: number
   shopifyId?: bigint | number | null
   shopifyHandle?: string | null
   createdAt?: Date | string
@@ -1604,6 +1703,9 @@ export type ProductUncheckedCreateWithoutCategoriesInput = {
   featured?: boolean
   metaTitle?: string | null
   metaDescription?: string | null
+  ratingAvg?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: number
+  soldCount?: number
   shopifyId?: bigint | number | null
   shopifyHandle?: string | null
   createdAt?: Date | string
@@ -1667,6 +1769,9 @@ export type ProductUpdateWithoutCategoriesInput = {
   featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ratingAvg?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
+  soldCount?: Prisma.IntFieldUpdateOperationsInput | number
   shopifyId?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   shopifyHandle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1714,6 +1819,9 @@ export type ProductUncheckedUpdateWithoutCategoriesInput = {
   featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ratingAvg?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
+  soldCount?: Prisma.IntFieldUpdateOperationsInput | number
   shopifyId?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   shopifyHandle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1761,6 +1869,9 @@ export type ProductCreateWithoutCartItemsInput = {
   featured?: boolean
   metaTitle?: string | null
   metaDescription?: string | null
+  ratingAvg?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: number
+  soldCount?: number
   shopifyId?: bigint | number | null
   shopifyHandle?: string | null
   createdAt?: Date | string
@@ -1808,6 +1919,9 @@ export type ProductUncheckedCreateWithoutCartItemsInput = {
   featured?: boolean
   metaTitle?: string | null
   metaDescription?: string | null
+  ratingAvg?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: number
+  soldCount?: number
   shopifyId?: bigint | number | null
   shopifyHandle?: string | null
   createdAt?: Date | string
@@ -1871,6 +1985,9 @@ export type ProductUpdateWithoutCartItemsInput = {
   featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ratingAvg?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
+  soldCount?: Prisma.IntFieldUpdateOperationsInput | number
   shopifyId?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   shopifyHandle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1918,6 +2035,9 @@ export type ProductUncheckedUpdateWithoutCartItemsInput = {
   featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ratingAvg?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
+  soldCount?: Prisma.IntFieldUpdateOperationsInput | number
   shopifyId?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   shopifyHandle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1965,6 +2085,9 @@ export type ProductCreateWithoutOrderItemsInput = {
   featured?: boolean
   metaTitle?: string | null
   metaDescription?: string | null
+  ratingAvg?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: number
+  soldCount?: number
   shopifyId?: bigint | number | null
   shopifyHandle?: string | null
   createdAt?: Date | string
@@ -2012,6 +2135,9 @@ export type ProductUncheckedCreateWithoutOrderItemsInput = {
   featured?: boolean
   metaTitle?: string | null
   metaDescription?: string | null
+  ratingAvg?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: number
+  soldCount?: number
   shopifyId?: bigint | number | null
   shopifyHandle?: string | null
   createdAt?: Date | string
@@ -2075,6 +2201,9 @@ export type ProductUpdateWithoutOrderItemsInput = {
   featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ratingAvg?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
+  soldCount?: Prisma.IntFieldUpdateOperationsInput | number
   shopifyId?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   shopifyHandle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2122,6 +2251,9 @@ export type ProductUncheckedUpdateWithoutOrderItemsInput = {
   featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ratingAvg?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
+  soldCount?: Prisma.IntFieldUpdateOperationsInput | number
   shopifyId?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   shopifyHandle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2169,6 +2301,9 @@ export type ProductCreateWithoutWishlistItemsInput = {
   featured?: boolean
   metaTitle?: string | null
   metaDescription?: string | null
+  ratingAvg?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: number
+  soldCount?: number
   shopifyId?: bigint | number | null
   shopifyHandle?: string | null
   createdAt?: Date | string
@@ -2216,6 +2351,9 @@ export type ProductUncheckedCreateWithoutWishlistItemsInput = {
   featured?: boolean
   metaTitle?: string | null
   metaDescription?: string | null
+  ratingAvg?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: number
+  soldCount?: number
   shopifyId?: bigint | number | null
   shopifyHandle?: string | null
   createdAt?: Date | string
@@ -2279,6 +2417,9 @@ export type ProductUpdateWithoutWishlistItemsInput = {
   featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ratingAvg?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
+  soldCount?: Prisma.IntFieldUpdateOperationsInput | number
   shopifyId?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   shopifyHandle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2326,6 +2467,9 @@ export type ProductUncheckedUpdateWithoutWishlistItemsInput = {
   featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ratingAvg?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
+  soldCount?: Prisma.IntFieldUpdateOperationsInput | number
   shopifyId?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   shopifyHandle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2373,6 +2517,9 @@ export type ProductCreateWithoutReviewsInput = {
   featured?: boolean
   metaTitle?: string | null
   metaDescription?: string | null
+  ratingAvg?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: number
+  soldCount?: number
   shopifyId?: bigint | number | null
   shopifyHandle?: string | null
   createdAt?: Date | string
@@ -2420,6 +2567,9 @@ export type ProductUncheckedCreateWithoutReviewsInput = {
   featured?: boolean
   metaTitle?: string | null
   metaDescription?: string | null
+  ratingAvg?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: number
+  soldCount?: number
   shopifyId?: bigint | number | null
   shopifyHandle?: string | null
   createdAt?: Date | string
@@ -2483,6 +2633,9 @@ export type ProductUpdateWithoutReviewsInput = {
   featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ratingAvg?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
+  soldCount?: Prisma.IntFieldUpdateOperationsInput | number
   shopifyId?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   shopifyHandle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2530,6 +2683,9 @@ export type ProductUncheckedUpdateWithoutReviewsInput = {
   featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ratingAvg?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
+  soldCount?: Prisma.IntFieldUpdateOperationsInput | number
   shopifyId?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   shopifyHandle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2577,6 +2733,9 @@ export type ProductCreateWithoutStockAlertsInput = {
   featured?: boolean
   metaTitle?: string | null
   metaDescription?: string | null
+  ratingAvg?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: number
+  soldCount?: number
   shopifyId?: bigint | number | null
   shopifyHandle?: string | null
   createdAt?: Date | string
@@ -2624,6 +2783,9 @@ export type ProductUncheckedCreateWithoutStockAlertsInput = {
   featured?: boolean
   metaTitle?: string | null
   metaDescription?: string | null
+  ratingAvg?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: number
+  soldCount?: number
   shopifyId?: bigint | number | null
   shopifyHandle?: string | null
   createdAt?: Date | string
@@ -2687,6 +2849,9 @@ export type ProductUpdateWithoutStockAlertsInput = {
   featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ratingAvg?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
+  soldCount?: Prisma.IntFieldUpdateOperationsInput | number
   shopifyId?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   shopifyHandle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2734,6 +2899,9 @@ export type ProductUncheckedUpdateWithoutStockAlertsInput = {
   featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ratingAvg?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
+  soldCount?: Prisma.IntFieldUpdateOperationsInput | number
   shopifyId?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   shopifyHandle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2866,6 +3034,9 @@ export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   featured?: boolean
   metaTitle?: boolean
   metaDescription?: boolean
+  ratingAvg?: boolean
+  ratingCount?: boolean
+  soldCount?: boolean
   shopifyId?: boolean
   shopifyHandle?: boolean
   createdAt?: boolean
@@ -2915,6 +3086,9 @@ export type ProductSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   featured?: boolean
   metaTitle?: boolean
   metaDescription?: boolean
+  ratingAvg?: boolean
+  ratingCount?: boolean
+  soldCount?: boolean
   shopifyId?: boolean
   shopifyHandle?: boolean
   createdAt?: boolean
@@ -2956,6 +3130,9 @@ export type ProductSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   featured?: boolean
   metaTitle?: boolean
   metaDescription?: boolean
+  ratingAvg?: boolean
+  ratingCount?: boolean
+  soldCount?: boolean
   shopifyId?: boolean
   shopifyHandle?: boolean
   createdAt?: boolean
@@ -2997,13 +3174,16 @@ export type ProductSelectScalar = {
   featured?: boolean
   metaTitle?: boolean
   metaDescription?: boolean
+  ratingAvg?: boolean
+  ratingCount?: boolean
+  soldCount?: boolean
   shopifyId?: boolean
   shopifyHandle?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sku" | "name" | "slug" | "scientificName" | "description" | "status" | "inventoryMode" | "livestockType" | "careLevel" | "lighting" | "flow" | "placement" | "temperament" | "minTankSizeGallons" | "growthRate" | "colors" | "specimenSize" | "growthForm" | "price" | "compareAtPrice" | "cost" | "quantity" | "lowStockThreshold" | "weightGrams" | "taxable" | "vendor" | "collectionDate" | "arrivalDate" | "shippingRestrictions" | "tags" | "featured" | "metaTitle" | "metaDescription" | "shopifyId" | "shopifyHandle" | "createdAt" | "updatedAt", ExtArgs["result"]["product"]>
+export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sku" | "name" | "slug" | "scientificName" | "description" | "status" | "inventoryMode" | "livestockType" | "careLevel" | "lighting" | "flow" | "placement" | "temperament" | "minTankSizeGallons" | "growthRate" | "colors" | "specimenSize" | "growthForm" | "price" | "compareAtPrice" | "cost" | "quantity" | "lowStockThreshold" | "weightGrams" | "taxable" | "vendor" | "collectionDate" | "arrivalDate" | "shippingRestrictions" | "tags" | "featured" | "metaTitle" | "metaDescription" | "ratingAvg" | "ratingCount" | "soldCount" | "shopifyId" | "shopifyHandle" | "createdAt" | "updatedAt", ExtArgs["result"]["product"]>
 export type ProductInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   images?: boolean | Prisma.Product$imagesArgs<ExtArgs>
   categories?: boolean | Prisma.Product$categoriesArgs<ExtArgs>
@@ -3063,6 +3243,9 @@ export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     featured: boolean
     metaTitle: string | null
     metaDescription: string | null
+    ratingAvg: runtime.Decimal
+    ratingCount: number
+    soldCount: number
     shopifyId: bigint | null
     shopifyHandle: string | null
     createdAt: Date
@@ -3531,6 +3714,9 @@ export interface ProductFieldRefs {
   readonly featured: Prisma.FieldRef<"Product", 'Boolean'>
   readonly metaTitle: Prisma.FieldRef<"Product", 'String'>
   readonly metaDescription: Prisma.FieldRef<"Product", 'String'>
+  readonly ratingAvg: Prisma.FieldRef<"Product", 'Decimal'>
+  readonly ratingCount: Prisma.FieldRef<"Product", 'Int'>
+  readonly soldCount: Prisma.FieldRef<"Product", 'Int'>
   readonly shopifyId: Prisma.FieldRef<"Product", 'BigInt'>
   readonly shopifyHandle: Prisma.FieldRef<"Product", 'String'>
   readonly createdAt: Prisma.FieldRef<"Product", 'DateTime'>

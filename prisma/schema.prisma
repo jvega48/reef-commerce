@@ -41,6 +41,15 @@ model User {
   updatedAt     DateTime  @updatedAt
   lastLoginAt   DateTime?
 
+  // Notification preferences (marketingOptIn above covers promotions)
+  notifyOrderUpdates Boolean @default(true)
+  notifyRestock      Boolean @default(true)
+
+  // Referral program: each user gets a shareable code; referredById records
+  // who sent them so both sides can be rewarded on first purchase.
+  referralCode String? @unique
+  referredById String?
+
   accounts          Account[]
   sessions          Session[]
   addresses         Address[]
@@ -51,6 +60,9 @@ model User {
   pointsTransactions PointsTransaction[]
   stockAlerts       StockAlert[]
   auditLogs         AuditLog[]
+  supportTickets    SupportTicket[]
+  ticketMessages    TicketMessage[]
+  giftCardsBought   GiftCard[]
 }
 
 enum VipTier {
@@ -193,6 +205,16 @@ model Product {
   metaTitle       String?
   metaDescription String?
 
+  // Denormalized review + sales stats (updated on review approval / order
+  // finalize) so listing pages never need aggregate queries.
+  ratingAvg   Decimal @default(0) @db.Decimal(3, 2)
+  ratingCount Int     @default(0)
+  soldCount   Int     @default(0)
+
+  // Full-text search: generated tsvector column + GIN index, created in the
+  // migration SQL (Prisma can't express generated columns natively).
+  search Unsupported("tsvector")?
+
   // Provenance (Shopify migration)
   shopifyId     BigInt? @unique
   shopifyHandle String?
@@ -246,8 +268,16 @@ model Cart {
   user      User?      @relation(fields: [userId], references: [id], onDelete: Cascade)
   sessionId String?    @unique // anonymous carts
   items     CartItem[]
+  // Abandoned-cart recovery: email captured at checkout start; a tokenized
+  // "resume your cart" link is emailed after the cart goes stale.
+  email               String?
+  recoveryToken       String?   @unique
+  recoveryEmailSentAt DateTime?
+  recoveredAt         DateTime?
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
+
+  @@index([updatedAt])
 }
 
 model CartItem {
@@ -268,7 +298,8 @@ model CartItem {
 enum OrderStatus {
   PENDING
   PAID
-  PROCESSING
+  PACKING
+  READY_TO_SHIP
   SHIPPED
   DELIVERED
   CANCELLED
@@ -294,6 +325,17 @@ model Order {
   coupon   Coupon? @relation(fields: [couponId], references: [id])
   pointsRedeemed Int @default(0)
 
+  giftCardId     String?
+  giftCard       GiftCard? @relation(fields: [giftCardId], references: [id])
+  giftCardAmount Decimal   @default(0) @db.Decimal(10, 2)
+
+  // Gift orders get a gift receipt (no prices) instead of an invoice.
+  isGift      Boolean @default(false)
+  giftMessage String?
+
+  refundAmount Decimal @default(0) @db.Decimal(10, 2)
+  refundReason String?
+
   stripePaymentIntentId String? @unique
   stripeCheckoutSessionId String? @unique
 
@@ -303,6 +345,9 @@ model Order {
   internalNotes String?
   items         OrderItem[]
   shipments     Shipment[]
+  events        OrderEvent[]
+  tickets       SupportTicket[]
+  giftCardsIssued GiftCard[] @relation("GiftCardPurchaseOrder")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -434,18 +479,21 @@ model WishlistItem {
 }
 
 model Review {
-  id        String   @id @default(cuid())
-  userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  productId String
-  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
-  rating    Int // 1-5
-  title     String?
-  body      String?
-  approved  Boolean  @default(false)
-  createdAt DateTime @default(now())
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  productId  String
+  product    Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  rating     Int // 1-5
+  title      String?
+  body       String?
+  approved   Boolean  @default(false)
+  verified   Boolean  @default(false) // reviewer actually bought this product
+  adminReply String?
+  createdAt  DateTime @default(now())
 
   @@unique([userId, productId])
+  @@index([productId, approved])
 }
 
 model StockAlert {
@@ -458,6 +506,162 @@ model StockAlert {
   createdAt DateTime @default(now())
 
   @@unique([userId, productId])
+}
+
+// Order timeline — one row per lifecycle event, rendered on both the admin
+// order page and the customer's order-tracking page.
+model OrderEvent {
+  id        String   @id @default(cuid())
+  orderId   String
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  type      String // e.g. "status", "payment", "shipment", "note", "refund"
+  message   String
+  visibleToCustomer Boolean @default(true)
+  createdById String?
+  createdAt DateTime @default(now())
+
+  @@index([orderId, createdAt])
+}
+
+model GiftCard {
+  id             String   @id @default(cuid())
+  code           String   @unique // AV365-XXXX-XXXX-XXXX
+  initialBalance Decimal  @db.Decimal(10, 2)
+  balance        Decimal  @db.Decimal(10, 2)
+  active         Boolean  @default(true)
+  purchasedById  String?
+  purchasedBy    User?    @relation(fields: [purchasedById], references: [id])
+  purchaseOrderId String?
+  purchaseOrder  Order?   @relation("GiftCardPurchaseOrder", fields: [purchaseOrderId], references: [id])
+  recipientEmail String?
+  recipientName  String?
+  message        String?
+  deliveredAt    DateTime? // when the code was emailed to the recipient
+  expiresAt      DateTime?
+  ordersRedeemed Order[]
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+// ---------------------------------------------------------------------------
+// Support
+// ---------------------------------------------------------------------------
+
+enum TicketStatus {
+  OPEN
+  AWAITING_CUSTOMER
+  AWAITING_SUPPORT
+  RESOLVED
+  CLOSED
+}
+
+enum TicketTopic {
+  ORDER_ISSUE
+  DOA_CLAIM
+  SHIPPING
+  PRODUCT_QUESTION
+  WHOLESALE
+  DISTRIBUTOR
+  ACCOUNT
+  OTHER
+}
+
+model SupportTicket {
+  id        String       @id @default(cuid())
+  number    Int          @unique @default(autoincrement())
+  userId    String?
+  user      User?        @relation(fields: [userId], references: [id])
+  email     String
+  name      String?
+  subject   String
+  topic     TicketTopic  @default(OTHER)
+  status    TicketStatus @default(OPEN)
+  orderId   String?
+  order     Order?       @relation(fields: [orderId], references: [id])
+  messages  TicketMessage[]
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+
+  @@index([status, updatedAt])
+  @@index([userId])
+  @@index([email])
+}
+
+model TicketMessage {
+  id        String        @id @default(cuid())
+  ticketId  String
+  ticket    SupportTicket @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  authorId  String?
+  author    User?         @relation(fields: [authorId], references: [id])
+  fromStaff Boolean       @default(false)
+  body      String
+  createdAt DateTime      @default(now())
+
+  @@index([ticketId, createdAt])
+}
+
+// ---------------------------------------------------------------------------
+// Content & email
+// ---------------------------------------------------------------------------
+
+enum ArticleCategory {
+  LEARNING        // Learning Center guides
+  WATER_EDUCATION // water chemistry / parameters series
+  KNOWLEDGE_BASE  // support how-tos
+}
+
+model Article {
+  id           String          @id @default(cuid())
+  slug         String          @unique
+  title        String
+  excerpt      String
+  body         String // sanitized HTML
+  category     ArticleCategory @default(LEARNING)
+  heroImageUrl String?
+  tags         String[]
+  readMinutes  Int             @default(4)
+  published    Boolean         @default(true)
+  publishedAt  DateTime        @default(now())
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+
+  @@index([category, published, publishedAt])
+}
+
+model NewsletterSubscriber {
+  id             String    @id @default(cuid())
+  email          String    @unique
+  source         String    @default("footer") // footer, checkout, popup
+  unsubscribeToken String  @unique @default(cuid())
+  unsubscribedAt DateTime?
+  createdAt      DateTime  @default(now())
+}
+
+model PasswordResetToken {
+  id        String   @id @default(cuid())
+  tokenHash String   @unique // sha256 of the emailed token
+  email     String
+  expires   DateTime
+  usedAt    DateTime?
+  createdAt DateTime @default(now())
+
+  @@index([email])
+}
+
+// Outbound email log — every send (real via Resend, or console fallback in
+// dev) is recorded here for observability and abandoned-cart dedupe.
+model EmailLog {
+  id        String   @id @default(cuid())
+  to        String
+  subject   String
+  template  String
+  status    String // SENT, FAILED, CONSOLE
+  error     String?
+  meta      Json?
+  createdAt DateTime @default(now())
+
+  @@index([template, to])
+  @@index([createdAt])
 }
 
 // ---------------------------------------------------------------------------

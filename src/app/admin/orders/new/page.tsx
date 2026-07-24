@@ -57,10 +57,10 @@ export default async function NewOrderPage({
             </div>
             <div>
               <label className={label}>Order Status</label>
-              <select name="status" defaultValue="PROCESSING" className={input}>
+              <select name="status" defaultValue="PACKING" className={input}>
                 <option value="PENDING">Pending (awaiting payment)</option>
                 <option value="PAID">Paid</option>
-                <option value="PROCESSING">Processing</option>
+                <option value="PACKING">Packing</option>
               </select>
             </div>
           </div>

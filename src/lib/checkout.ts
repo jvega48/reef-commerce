@@ -1,4 +1,7 @@
 import { prisma } from "./prisma";
+import { sendEmail } from "./email";
+import { orderConfirmationEmail } from "./email-templates";
+import { formatMoney } from "./format";
 import type { ShippingSettings } from "./settings";
 
 // ---------------------------------------------------------------------------
@@ -31,12 +34,12 @@ export const money = (n: number): number => Math.round(n * 100) / 100;
 // ---------------------------------------------------------------------------
 
 export async function finalizeOrder(orderId: string, paymentIntentId?: string | null) {
-  await prisma.$transaction(async (tx) => {
+  const finalized = await prisma.$transaction(async (tx) => {
     const order = await tx.order.findUnique({
       where: { id: orderId },
       include: { items: true },
     });
-    if (!order || order.status !== "PENDING") return; // already finalized
+    if (!order || order.status !== "PENDING") return false; // already finalized
 
     await tx.order.update({
       where: { id: orderId },
@@ -58,7 +61,7 @@ export async function finalizeOrder(orderId: string, paymentIntentId?: string | 
       const needed = product.inventoryMode === "WYSIWYG" ? 1 : item.quantity;
       const result = await tx.product.updateMany({
         where: { id: product.id, quantity: { gte: needed } },
-        data: { quantity: { decrement: needed } },
+        data: { quantity: { decrement: needed }, soldCount: { increment: needed } },
       });
       if (result.count === 0) {
         oversold.push(item.sku);
@@ -98,6 +101,71 @@ export async function finalizeOrder(orderId: string, paymentIntentId?: string | 
           data: { reefPoints: { increment: points } },
         });
       }
+
+      // Referral reward: first paid order triggers the referrer's bonus.
+      const buyer = await tx.user.findUnique({ where: { id: order.userId } });
+      if (buyer?.referredById) {
+        const priorPaid = await tx.order.count({
+          where: {
+            userId: buyer.id,
+            id: { not: order.id },
+            status: { notIn: ["PENDING", "CANCELLED"] },
+          },
+        });
+        if (priorPaid === 0) {
+          const REFERRAL_BONUS = 500;
+          await tx.pointsTransaction.create({
+            data: {
+              userId: buyer.referredById,
+              points: REFERRAL_BONUS,
+              reason: "REFERRAL",
+              orderId: order.id,
+              note: `Referred customer placed their first order`,
+            },
+          });
+          await tx.user.update({
+            where: { id: buyer.referredById },
+            data: { reefPoints: { increment: REFERRAL_BONUS } },
+          });
+        }
+      }
     }
+
+    await tx.orderEvent.create({
+      data: {
+        orderId: order.id,
+        type: "payment",
+        message: paymentIntentId
+          ? "Payment received via Stripe"
+          : "Payment recorded (test mode)",
+      },
+    });
+    return true;
   });
+
+  // Post-transaction side effects — only on the run that actually finalized,
+  // so webhook retries can't duplicate the confirmation email.
+  if (!finalized) return;
+  const order = await prisma.order.findUnique({
+    where: { id: orderId },
+    include: { items: true },
+  });
+  if (order && order.status === "PAID") {
+    const tpl = orderConfirmationEmail({
+      orderNumber: order.orderNumber,
+      items: order.items.map((i) => ({
+        name: i.name,
+        quantity: i.quantity,
+        price: formatMoney(Number(i.unitPrice) * i.quantity),
+      })),
+      total: formatMoney(order.total),
+      isPickup: !order.shippingAddressId,
+    });
+    await sendEmail({
+      to: order.email,
+      ...tpl,
+      template: "order-confirmation",
+      meta: { orderId },
+    });
+  }
 }

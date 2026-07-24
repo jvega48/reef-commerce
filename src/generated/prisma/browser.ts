@@ -113,6 +113,46 @@ export type Review = Prisma.ReviewModel
  */
 export type StockAlert = Prisma.StockAlertModel
 /**
+ * Model OrderEvent
+ * 
+ */
+export type OrderEvent = Prisma.OrderEventModel
+/**
+ * Model GiftCard
+ * 
+ */
+export type GiftCard = Prisma.GiftCardModel
+/**
+ * Model SupportTicket
+ * 
+ */
+export type SupportTicket = Prisma.SupportTicketModel
+/**
+ * Model TicketMessage
+ * 
+ */
+export type TicketMessage = Prisma.TicketMessageModel
+/**
+ * Model Article
+ * 
+ */
+export type Article = Prisma.ArticleModel
+/**
+ * Model NewsletterSubscriber
+ * 
+ */
+export type NewsletterSubscriber = Prisma.NewsletterSubscriberModel
+/**
+ * Model PasswordResetToken
+ * 
+ */
+export type PasswordResetToken = Prisma.PasswordResetTokenModel
+/**
+ * Model EmailLog
+ * 
+ */
+export type EmailLog = Prisma.EmailLogModel
+/**
  * Model StoreSetting
  * 
  */

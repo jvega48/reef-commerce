@@ -5,9 +5,17 @@ import { auth, STAFF_ROLES } from "@/auth";
 
 const NAV = [
   { label: "Dashboard", href: "/admin" },
+  { label: "Analytics", href: "/admin/analytics" },
   { label: "Products", href: "/admin/products" },
   { label: "Orders", href: "/admin/orders" },
+  { label: "Packing Queue", href: "/admin/packing" },
   { label: "Customers", href: "/admin/customers" },
+  { label: "Reviews", href: "/admin/reviews" },
+  { label: "Support", href: "/admin/support" },
+  { label: "Coupons", href: "/admin/coupons" },
+  { label: "Gift Cards", href: "/admin/gift-cards" },
+  { label: "Articles", href: "/admin/articles" },
+  { label: "Audit Log", href: "/admin/audit" },
   { label: "Settings", href: "/admin/settings" },
 ];
 

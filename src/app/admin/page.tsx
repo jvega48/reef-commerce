@@ -34,7 +34,9 @@ export default async function AdminDashboard() {
     prisma.product.count({ where: { inventoryMode: "WYSIWYG" } }),
     prisma.user.count({ where: { role: "CUSTOMER" } }),
     prisma.order.count({ where: { createdAt: { gte: dayStart } } }),
-    prisma.order.count({ where: { status: { in: ["PAID", "PROCESSING"] } } }),
+    prisma.order.count({
+      where: { status: { in: ["PAID", "PACKING", "READY_TO_SHIP"] } },
+    }),
     prisma.order.aggregate({
       _sum: { total: true },
       where: { createdAt: { gte: monthStart }, status: { notIn: ["CANCELLED", "REFUNDED"] } },

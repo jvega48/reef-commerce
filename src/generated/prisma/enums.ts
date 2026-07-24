@@ -85,7 +85,8 @@ export type Intensity = (typeof Intensity)[keyof typeof Intensity]
 export const OrderStatus = {
   PENDING: 'PENDING',
   PAID: 'PAID',
-  PROCESSING: 'PROCESSING',
+  PACKING: 'PACKING',
+  READY_TO_SHIP: 'READY_TO_SHIP',
   SHIPPED: 'SHIPPED',
   DELIVERED: 'DELIVERED',
   CANCELLED: 'CANCELLED',
@@ -128,3 +129,37 @@ export const PointsReason = {
 } as const
 
 export type PointsReason = (typeof PointsReason)[keyof typeof PointsReason]
+
+
+export const TicketStatus = {
+  OPEN: 'OPEN',
+  AWAITING_CUSTOMER: 'AWAITING_CUSTOMER',
+  AWAITING_SUPPORT: 'AWAITING_SUPPORT',
+  RESOLVED: 'RESOLVED',
+  CLOSED: 'CLOSED'
+} as const
+
+export type TicketStatus = (typeof TicketStatus)[keyof typeof TicketStatus]
+
+
+export const TicketTopic = {
+  ORDER_ISSUE: 'ORDER_ISSUE',
+  DOA_CLAIM: 'DOA_CLAIM',
+  SHIPPING: 'SHIPPING',
+  PRODUCT_QUESTION: 'PRODUCT_QUESTION',
+  WHOLESALE: 'WHOLESALE',
+  DISTRIBUTOR: 'DISTRIBUTOR',
+  ACCOUNT: 'ACCOUNT',
+  OTHER: 'OTHER'
+} as const
+
+export type TicketTopic = (typeof TicketTopic)[keyof typeof TicketTopic]
+
+
+export const ArticleCategory = {
+  LEARNING: 'LEARNING',
+  WATER_EDUCATION: 'WATER_EDUCATION',
+  KNOWLEDGE_BASE: 'KNOWLEDGE_BASE'
+} as const
+
+export type ArticleCategory = (typeof ArticleCategory)[keyof typeof ArticleCategory]

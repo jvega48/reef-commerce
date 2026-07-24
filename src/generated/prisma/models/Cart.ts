@@ -28,6 +28,10 @@ export type CartMinAggregateOutputType = {
   id: string | null
   userId: string | null
   sessionId: string | null
+  email: string | null
+  recoveryToken: string | null
+  recoveryEmailSentAt: Date | null
+  recoveredAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -36,6 +40,10 @@ export type CartMaxAggregateOutputType = {
   id: string | null
   userId: string | null
   sessionId: string | null
+  email: string | null
+  recoveryToken: string | null
+  recoveryEmailSentAt: Date | null
+  recoveredAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -44,6 +52,10 @@ export type CartCountAggregateOutputType = {
   id: number
   userId: number
   sessionId: number
+  email: number
+  recoveryToken: number
+  recoveryEmailSentAt: number
+  recoveredAt: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -54,6 +66,10 @@ export type CartMinAggregateInputType = {
   id?: true
   userId?: true
   sessionId?: true
+  email?: true
+  recoveryToken?: true
+  recoveryEmailSentAt?: true
+  recoveredAt?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -62,6 +78,10 @@ export type CartMaxAggregateInputType = {
   id?: true
   userId?: true
   sessionId?: true
+  email?: true
+  recoveryToken?: true
+  recoveryEmailSentAt?: true
+  recoveredAt?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -70,6 +90,10 @@ export type CartCountAggregateInputType = {
   id?: true
   userId?: true
   sessionId?: true
+  email?: true
+  recoveryToken?: true
+  recoveryEmailSentAt?: true
+  recoveredAt?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -151,6 +175,10 @@ export type CartGroupByOutputType = {
   id: string
   userId: string | null
   sessionId: string | null
+  email: string | null
+  recoveryToken: string | null
+  recoveryEmailSentAt: Date | null
+  recoveredAt: Date | null
   createdAt: Date
   updatedAt: Date
   _count: CartCountAggregateOutputType | null
@@ -180,6 +208,10 @@ export type CartWhereInput = {
   id?: Prisma.StringFilter<"Cart"> | string
   userId?: Prisma.StringNullableFilter<"Cart"> | string | null
   sessionId?: Prisma.StringNullableFilter<"Cart"> | string | null
+  email?: Prisma.StringNullableFilter<"Cart"> | string | null
+  recoveryToken?: Prisma.StringNullableFilter<"Cart"> | string | null
+  recoveryEmailSentAt?: Prisma.DateTimeNullableFilter<"Cart"> | Date | string | null
+  recoveredAt?: Prisma.DateTimeNullableFilter<"Cart"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Cart"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Cart"> | Date | string
   user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
@@ -190,6 +222,10 @@ export type CartOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrderInput | Prisma.SortOrder
   sessionId?: Prisma.SortOrderInput | Prisma.SortOrder
+  email?: Prisma.SortOrderInput | Prisma.SortOrder
+  recoveryToken?: Prisma.SortOrderInput | Prisma.SortOrder
+  recoveryEmailSentAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  recoveredAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
@@ -200,19 +236,27 @@ export type CartWhereUniqueInput = Prisma.AtLeast<{
   id?: string
   userId?: string
   sessionId?: string
+  recoveryToken?: string
   AND?: Prisma.CartWhereInput | Prisma.CartWhereInput[]
   OR?: Prisma.CartWhereInput[]
   NOT?: Prisma.CartWhereInput | Prisma.CartWhereInput[]
+  email?: Prisma.StringNullableFilter<"Cart"> | string | null
+  recoveryEmailSentAt?: Prisma.DateTimeNullableFilter<"Cart"> | Date | string | null
+  recoveredAt?: Prisma.DateTimeNullableFilter<"Cart"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Cart"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Cart"> | Date | string
   user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   items?: Prisma.CartItemListRelationFilter
-}, "id" | "userId" | "sessionId">
+}, "id" | "userId" | "sessionId" | "recoveryToken">
 
 export type CartOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrderInput | Prisma.SortOrder
   sessionId?: Prisma.SortOrderInput | Prisma.SortOrder
+  email?: Prisma.SortOrderInput | Prisma.SortOrder
+  recoveryToken?: Prisma.SortOrderInput | Prisma.SortOrder
+  recoveryEmailSentAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  recoveredAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.CartCountOrderByAggregateInput
@@ -227,6 +271,10 @@ export type CartScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Cart"> | string
   userId?: Prisma.StringNullableWithAggregatesFilter<"Cart"> | string | null
   sessionId?: Prisma.StringNullableWithAggregatesFilter<"Cart"> | string | null
+  email?: Prisma.StringNullableWithAggregatesFilter<"Cart"> | string | null
+  recoveryToken?: Prisma.StringNullableWithAggregatesFilter<"Cart"> | string | null
+  recoveryEmailSentAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Cart"> | Date | string | null
+  recoveredAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Cart"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Cart"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Cart"> | Date | string
 }
@@ -234,6 +282,10 @@ export type CartScalarWhereWithAggregatesInput = {
 export type CartCreateInput = {
   id?: string
   sessionId?: string | null
+  email?: string | null
+  recoveryToken?: string | null
+  recoveryEmailSentAt?: Date | string | null
+  recoveredAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user?: Prisma.UserCreateNestedOneWithoutCartInput
@@ -244,6 +296,10 @@ export type CartUncheckedCreateInput = {
   id?: string
   userId?: string | null
   sessionId?: string | null
+  email?: string | null
+  recoveryToken?: string | null
+  recoveryEmailSentAt?: Date | string | null
+  recoveredAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   items?: Prisma.CartItemUncheckedCreateNestedManyWithoutCartInput
@@ -252,6 +308,10 @@ export type CartUncheckedCreateInput = {
 export type CartUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   sessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recoveryToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recoveryEmailSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  recoveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneWithoutCartNestedInput
@@ -262,6 +322,10 @@ export type CartUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recoveryToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recoveryEmailSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  recoveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.CartItemUncheckedUpdateManyWithoutCartNestedInput
@@ -271,6 +335,10 @@ export type CartCreateManyInput = {
   id?: string
   userId?: string | null
   sessionId?: string | null
+  email?: string | null
+  recoveryToken?: string | null
+  recoveryEmailSentAt?: Date | string | null
+  recoveredAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -278,6 +346,10 @@ export type CartCreateManyInput = {
 export type CartUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   sessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recoveryToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recoveryEmailSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  recoveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -286,6 +358,10 @@ export type CartUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recoveryToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recoveryEmailSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  recoveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -299,6 +375,10 @@ export type CartCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   sessionId?: Prisma.SortOrder
+  email?: Prisma.SortOrder
+  recoveryToken?: Prisma.SortOrder
+  recoveryEmailSentAt?: Prisma.SortOrder
+  recoveredAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -307,6 +387,10 @@ export type CartMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   sessionId?: Prisma.SortOrder
+  email?: Prisma.SortOrder
+  recoveryToken?: Prisma.SortOrder
+  recoveryEmailSentAt?: Prisma.SortOrder
+  recoveredAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -315,6 +399,10 @@ export type CartMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   sessionId?: Prisma.SortOrder
+  email?: Prisma.SortOrder
+  recoveryToken?: Prisma.SortOrder
+  recoveryEmailSentAt?: Prisma.SortOrder
+  recoveredAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -373,6 +461,10 @@ export type CartUpdateOneRequiredWithoutItemsNestedInput = {
 export type CartCreateWithoutUserInput = {
   id?: string
   sessionId?: string | null
+  email?: string | null
+  recoveryToken?: string | null
+  recoveryEmailSentAt?: Date | string | null
+  recoveredAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   items?: Prisma.CartItemCreateNestedManyWithoutCartInput
@@ -381,6 +473,10 @@ export type CartCreateWithoutUserInput = {
 export type CartUncheckedCreateWithoutUserInput = {
   id?: string
   sessionId?: string | null
+  email?: string | null
+  recoveryToken?: string | null
+  recoveryEmailSentAt?: Date | string | null
+  recoveredAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   items?: Prisma.CartItemUncheckedCreateNestedManyWithoutCartInput
@@ -405,6 +501,10 @@ export type CartUpdateToOneWithWhereWithoutUserInput = {
 export type CartUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   sessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recoveryToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recoveryEmailSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  recoveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.CartItemUpdateManyWithoutCartNestedInput
@@ -413,6 +513,10 @@ export type CartUpdateWithoutUserInput = {
 export type CartUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   sessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recoveryToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recoveryEmailSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  recoveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.CartItemUncheckedUpdateManyWithoutCartNestedInput
@@ -421,6 +525,10 @@ export type CartUncheckedUpdateWithoutUserInput = {
 export type CartCreateWithoutItemsInput = {
   id?: string
   sessionId?: string | null
+  email?: string | null
+  recoveryToken?: string | null
+  recoveryEmailSentAt?: Date | string | null
+  recoveredAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user?: Prisma.UserCreateNestedOneWithoutCartInput
@@ -430,6 +538,10 @@ export type CartUncheckedCreateWithoutItemsInput = {
   id?: string
   userId?: string | null
   sessionId?: string | null
+  email?: string | null
+  recoveryToken?: string | null
+  recoveryEmailSentAt?: Date | string | null
+  recoveredAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -453,6 +565,10 @@ export type CartUpdateToOneWithWhereWithoutItemsInput = {
 export type CartUpdateWithoutItemsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   sessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recoveryToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recoveryEmailSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  recoveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneWithoutCartNestedInput
@@ -462,6 +578,10 @@ export type CartUncheckedUpdateWithoutItemsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recoveryToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recoveryEmailSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  recoveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -501,6 +621,10 @@ export type CartSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   id?: boolean
   userId?: boolean
   sessionId?: boolean
+  email?: boolean
+  recoveryToken?: boolean
+  recoveryEmailSentAt?: boolean
+  recoveredAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.Cart$userArgs<ExtArgs>
@@ -512,6 +636,10 @@ export type CartSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   id?: boolean
   userId?: boolean
   sessionId?: boolean
+  email?: boolean
+  recoveryToken?: boolean
+  recoveryEmailSentAt?: boolean
+  recoveredAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.Cart$userArgs<ExtArgs>
@@ -521,6 +649,10 @@ export type CartSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   id?: boolean
   userId?: boolean
   sessionId?: boolean
+  email?: boolean
+  recoveryToken?: boolean
+  recoveryEmailSentAt?: boolean
+  recoveredAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.Cart$userArgs<ExtArgs>
@@ -530,11 +662,15 @@ export type CartSelectScalar = {
   id?: boolean
   userId?: boolean
   sessionId?: boolean
+  email?: boolean
+  recoveryToken?: boolean
+  recoveryEmailSentAt?: boolean
+  recoveredAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type CartOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "sessionId" | "createdAt" | "updatedAt", ExtArgs["result"]["cart"]>
+export type CartOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "sessionId" | "email" | "recoveryToken" | "recoveryEmailSentAt" | "recoveredAt" | "createdAt" | "updatedAt", ExtArgs["result"]["cart"]>
 export type CartInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.Cart$userArgs<ExtArgs>
   items?: boolean | Prisma.Cart$itemsArgs<ExtArgs>
@@ -557,6 +693,10 @@ export type $CartPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     id: string
     userId: string | null
     sessionId: string | null
+    email: string | null
+    recoveryToken: string | null
+    recoveryEmailSentAt: Date | null
+    recoveredAt: Date | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["cart"]>
@@ -987,6 +1127,10 @@ export interface CartFieldRefs {
   readonly id: Prisma.FieldRef<"Cart", 'String'>
   readonly userId: Prisma.FieldRef<"Cart", 'String'>
   readonly sessionId: Prisma.FieldRef<"Cart", 'String'>
+  readonly email: Prisma.FieldRef<"Cart", 'String'>
+  readonly recoveryToken: Prisma.FieldRef<"Cart", 'String'>
+  readonly recoveryEmailSentAt: Prisma.FieldRef<"Cart", 'DateTime'>
+  readonly recoveredAt: Prisma.FieldRef<"Cart", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"Cart", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Cart", 'DateTime'>
 }

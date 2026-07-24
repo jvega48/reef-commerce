@@ -34,6 +34,8 @@ export type OrderAvgAggregateOutputType = {
   tax: runtime.Decimal | null
   total: runtime.Decimal | null
   pointsRedeemed: number | null
+  giftCardAmount: runtime.Decimal | null
+  refundAmount: runtime.Decimal | null
 }
 
 export type OrderSumAggregateOutputType = {
@@ -44,6 +46,8 @@ export type OrderSumAggregateOutputType = {
   tax: runtime.Decimal | null
   total: runtime.Decimal | null
   pointsRedeemed: number | null
+  giftCardAmount: runtime.Decimal | null
+  refundAmount: runtime.Decimal | null
 }
 
 export type OrderMinAggregateOutputType = {
@@ -59,6 +63,12 @@ export type OrderMinAggregateOutputType = {
   total: runtime.Decimal | null
   couponId: string | null
   pointsRedeemed: number | null
+  giftCardId: string | null
+  giftCardAmount: runtime.Decimal | null
+  isGift: boolean | null
+  giftMessage: string | null
+  refundAmount: runtime.Decimal | null
+  refundReason: string | null
   stripePaymentIntentId: string | null
   stripeCheckoutSessionId: string | null
   shippingAddressId: string | null
@@ -80,6 +90,12 @@ export type OrderMaxAggregateOutputType = {
   total: runtime.Decimal | null
   couponId: string | null
   pointsRedeemed: number | null
+  giftCardId: string | null
+  giftCardAmount: runtime.Decimal | null
+  isGift: boolean | null
+  giftMessage: string | null
+  refundAmount: runtime.Decimal | null
+  refundReason: string | null
   stripePaymentIntentId: string | null
   stripeCheckoutSessionId: string | null
   shippingAddressId: string | null
@@ -101,6 +117,12 @@ export type OrderCountAggregateOutputType = {
   total: number
   couponId: number
   pointsRedeemed: number
+  giftCardId: number
+  giftCardAmount: number
+  isGift: number
+  giftMessage: number
+  refundAmount: number
+  refundReason: number
   stripePaymentIntentId: number
   stripeCheckoutSessionId: number
   shippingAddressId: number
@@ -119,6 +141,8 @@ export type OrderAvgAggregateInputType = {
   tax?: true
   total?: true
   pointsRedeemed?: true
+  giftCardAmount?: true
+  refundAmount?: true
 }
 
 export type OrderSumAggregateInputType = {
@@ -129,6 +153,8 @@ export type OrderSumAggregateInputType = {
   tax?: true
   total?: true
   pointsRedeemed?: true
+  giftCardAmount?: true
+  refundAmount?: true
 }
 
 export type OrderMinAggregateInputType = {
@@ -144,6 +170,12 @@ export type OrderMinAggregateInputType = {
   total?: true
   couponId?: true
   pointsRedeemed?: true
+  giftCardId?: true
+  giftCardAmount?: true
+  isGift?: true
+  giftMessage?: true
+  refundAmount?: true
+  refundReason?: true
   stripePaymentIntentId?: true
   stripeCheckoutSessionId?: true
   shippingAddressId?: true
@@ -165,6 +197,12 @@ export type OrderMaxAggregateInputType = {
   total?: true
   couponId?: true
   pointsRedeemed?: true
+  giftCardId?: true
+  giftCardAmount?: true
+  isGift?: true
+  giftMessage?: true
+  refundAmount?: true
+  refundReason?: true
   stripePaymentIntentId?: true
   stripeCheckoutSessionId?: true
   shippingAddressId?: true
@@ -186,6 +224,12 @@ export type OrderCountAggregateInputType = {
   total?: true
   couponId?: true
   pointsRedeemed?: true
+  giftCardId?: true
+  giftCardAmount?: true
+  isGift?: true
+  giftMessage?: true
+  refundAmount?: true
+  refundReason?: true
   stripePaymentIntentId?: true
   stripeCheckoutSessionId?: true
   shippingAddressId?: true
@@ -294,6 +338,12 @@ export type OrderGroupByOutputType = {
   total: runtime.Decimal
   couponId: string | null
   pointsRedeemed: number
+  giftCardId: string | null
+  giftCardAmount: runtime.Decimal
+  isGift: boolean
+  giftMessage: string | null
+  refundAmount: runtime.Decimal
+  refundReason: string | null
   stripePaymentIntentId: string | null
   stripeCheckoutSessionId: string | null
   shippingAddressId: string | null
@@ -338,6 +388,12 @@ export type OrderWhereInput = {
   total?: Prisma.DecimalFilter<"Order"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   couponId?: Prisma.StringNullableFilter<"Order"> | string | null
   pointsRedeemed?: Prisma.IntFilter<"Order"> | number
+  giftCardId?: Prisma.StringNullableFilter<"Order"> | string | null
+  giftCardAmount?: Prisma.DecimalFilter<"Order"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  isGift?: Prisma.BoolFilter<"Order"> | boolean
+  giftMessage?: Prisma.StringNullableFilter<"Order"> | string | null
+  refundAmount?: Prisma.DecimalFilter<"Order"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  refundReason?: Prisma.StringNullableFilter<"Order"> | string | null
   stripePaymentIntentId?: Prisma.StringNullableFilter<"Order"> | string | null
   stripeCheckoutSessionId?: Prisma.StringNullableFilter<"Order"> | string | null
   shippingAddressId?: Prisma.StringNullableFilter<"Order"> | string | null
@@ -346,9 +402,13 @@ export type OrderWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Order"> | Date | string
   user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   coupon?: Prisma.XOR<Prisma.CouponNullableScalarRelationFilter, Prisma.CouponWhereInput> | null
+  giftCard?: Prisma.XOR<Prisma.GiftCardNullableScalarRelationFilter, Prisma.GiftCardWhereInput> | null
   shippingAddress?: Prisma.XOR<Prisma.AddressNullableScalarRelationFilter, Prisma.AddressWhereInput> | null
   items?: Prisma.OrderItemListRelationFilter
   shipments?: Prisma.ShipmentListRelationFilter
+  events?: Prisma.OrderEventListRelationFilter
+  tickets?: Prisma.SupportTicketListRelationFilter
+  giftCardsIssued?: Prisma.GiftCardListRelationFilter
 }
 
 export type OrderOrderByWithRelationInput = {
@@ -364,6 +424,12 @@ export type OrderOrderByWithRelationInput = {
   total?: Prisma.SortOrder
   couponId?: Prisma.SortOrderInput | Prisma.SortOrder
   pointsRedeemed?: Prisma.SortOrder
+  giftCardId?: Prisma.SortOrderInput | Prisma.SortOrder
+  giftCardAmount?: Prisma.SortOrder
+  isGift?: Prisma.SortOrder
+  giftMessage?: Prisma.SortOrderInput | Prisma.SortOrder
+  refundAmount?: Prisma.SortOrder
+  refundReason?: Prisma.SortOrderInput | Prisma.SortOrder
   stripePaymentIntentId?: Prisma.SortOrderInput | Prisma.SortOrder
   stripeCheckoutSessionId?: Prisma.SortOrderInput | Prisma.SortOrder
   shippingAddressId?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -372,9 +438,13 @@ export type OrderOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
   coupon?: Prisma.CouponOrderByWithRelationInput
+  giftCard?: Prisma.GiftCardOrderByWithRelationInput
   shippingAddress?: Prisma.AddressOrderByWithRelationInput
   items?: Prisma.OrderItemOrderByRelationAggregateInput
   shipments?: Prisma.ShipmentOrderByRelationAggregateInput
+  events?: Prisma.OrderEventOrderByRelationAggregateInput
+  tickets?: Prisma.SupportTicketOrderByRelationAggregateInput
+  giftCardsIssued?: Prisma.GiftCardOrderByRelationAggregateInput
 }
 
 export type OrderWhereUniqueInput = Prisma.AtLeast<{
@@ -395,15 +465,25 @@ export type OrderWhereUniqueInput = Prisma.AtLeast<{
   total?: Prisma.DecimalFilter<"Order"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   couponId?: Prisma.StringNullableFilter<"Order"> | string | null
   pointsRedeemed?: Prisma.IntFilter<"Order"> | number
+  giftCardId?: Prisma.StringNullableFilter<"Order"> | string | null
+  giftCardAmount?: Prisma.DecimalFilter<"Order"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  isGift?: Prisma.BoolFilter<"Order"> | boolean
+  giftMessage?: Prisma.StringNullableFilter<"Order"> | string | null
+  refundAmount?: Prisma.DecimalFilter<"Order"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  refundReason?: Prisma.StringNullableFilter<"Order"> | string | null
   shippingAddressId?: Prisma.StringNullableFilter<"Order"> | string | null
   internalNotes?: Prisma.StringNullableFilter<"Order"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Order"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Order"> | Date | string
   user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   coupon?: Prisma.XOR<Prisma.CouponNullableScalarRelationFilter, Prisma.CouponWhereInput> | null
+  giftCard?: Prisma.XOR<Prisma.GiftCardNullableScalarRelationFilter, Prisma.GiftCardWhereInput> | null
   shippingAddress?: Prisma.XOR<Prisma.AddressNullableScalarRelationFilter, Prisma.AddressWhereInput> | null
   items?: Prisma.OrderItemListRelationFilter
   shipments?: Prisma.ShipmentListRelationFilter
+  events?: Prisma.OrderEventListRelationFilter
+  tickets?: Prisma.SupportTicketListRelationFilter
+  giftCardsIssued?: Prisma.GiftCardListRelationFilter
 }, "id" | "orderNumber" | "stripePaymentIntentId" | "stripeCheckoutSessionId">
 
 export type OrderOrderByWithAggregationInput = {
@@ -419,6 +499,12 @@ export type OrderOrderByWithAggregationInput = {
   total?: Prisma.SortOrder
   couponId?: Prisma.SortOrderInput | Prisma.SortOrder
   pointsRedeemed?: Prisma.SortOrder
+  giftCardId?: Prisma.SortOrderInput | Prisma.SortOrder
+  giftCardAmount?: Prisma.SortOrder
+  isGift?: Prisma.SortOrder
+  giftMessage?: Prisma.SortOrderInput | Prisma.SortOrder
+  refundAmount?: Prisma.SortOrder
+  refundReason?: Prisma.SortOrderInput | Prisma.SortOrder
   stripePaymentIntentId?: Prisma.SortOrderInput | Prisma.SortOrder
   stripeCheckoutSessionId?: Prisma.SortOrderInput | Prisma.SortOrder
   shippingAddressId?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -448,6 +534,12 @@ export type OrderScalarWhereWithAggregatesInput = {
   total?: Prisma.DecimalWithAggregatesFilter<"Order"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   couponId?: Prisma.StringNullableWithAggregatesFilter<"Order"> | string | null
   pointsRedeemed?: Prisma.IntWithAggregatesFilter<"Order"> | number
+  giftCardId?: Prisma.StringNullableWithAggregatesFilter<"Order"> | string | null
+  giftCardAmount?: Prisma.DecimalWithAggregatesFilter<"Order"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  isGift?: Prisma.BoolWithAggregatesFilter<"Order"> | boolean
+  giftMessage?: Prisma.StringNullableWithAggregatesFilter<"Order"> | string | null
+  refundAmount?: Prisma.DecimalWithAggregatesFilter<"Order"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  refundReason?: Prisma.StringNullableWithAggregatesFilter<"Order"> | string | null
   stripePaymentIntentId?: Prisma.StringNullableWithAggregatesFilter<"Order"> | string | null
   stripeCheckoutSessionId?: Prisma.StringNullableWithAggregatesFilter<"Order"> | string | null
   shippingAddressId?: Prisma.StringNullableWithAggregatesFilter<"Order"> | string | null
@@ -467,6 +559,11 @@ export type OrderCreateInput = {
   tax?: runtime.Decimal | runtime.DecimalJsLike | number | string
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   pointsRedeemed?: number
+  giftCardAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  isGift?: boolean
+  giftMessage?: string | null
+  refundAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  refundReason?: string | null
   stripePaymentIntentId?: string | null
   stripeCheckoutSessionId?: string | null
   internalNotes?: string | null
@@ -474,9 +571,13 @@ export type OrderCreateInput = {
   updatedAt?: Date | string
   user?: Prisma.UserCreateNestedOneWithoutOrdersInput
   coupon?: Prisma.CouponCreateNestedOneWithoutOrdersInput
+  giftCard?: Prisma.GiftCardCreateNestedOneWithoutOrdersRedeemedInput
   shippingAddress?: Prisma.AddressCreateNestedOneWithoutOrdersInput
   items?: Prisma.OrderItemCreateNestedManyWithoutOrderInput
   shipments?: Prisma.ShipmentCreateNestedManyWithoutOrderInput
+  events?: Prisma.OrderEventCreateNestedManyWithoutOrderInput
+  tickets?: Prisma.SupportTicketCreateNestedManyWithoutOrderInput
+  giftCardsIssued?: Prisma.GiftCardCreateNestedManyWithoutPurchaseOrderInput
 }
 
 export type OrderUncheckedCreateInput = {
@@ -492,6 +593,12 @@ export type OrderUncheckedCreateInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   couponId?: string | null
   pointsRedeemed?: number
+  giftCardId?: string | null
+  giftCardAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  isGift?: boolean
+  giftMessage?: string | null
+  refundAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  refundReason?: string | null
   stripePaymentIntentId?: string | null
   stripeCheckoutSessionId?: string | null
   shippingAddressId?: string | null
@@ -500,6 +607,9 @@ export type OrderUncheckedCreateInput = {
   updatedAt?: Date | string
   items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
   shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutOrderInput
+  events?: Prisma.OrderEventUncheckedCreateNestedManyWithoutOrderInput
+  tickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutOrderInput
+  giftCardsIssued?: Prisma.GiftCardUncheckedCreateNestedManyWithoutPurchaseOrderInput
 }
 
 export type OrderUpdateInput = {
@@ -512,6 +622,11 @@ export type OrderUpdateInput = {
   tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   pointsRedeemed?: Prisma.IntFieldUpdateOperationsInput | number
+  giftCardAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  isGift?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  giftMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  refundAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  refundReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stripePaymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stripeCheckoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -519,9 +634,13 @@ export type OrderUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneWithoutOrdersNestedInput
   coupon?: Prisma.CouponUpdateOneWithoutOrdersNestedInput
+  giftCard?: Prisma.GiftCardUpdateOneWithoutOrdersRedeemedNestedInput
   shippingAddress?: Prisma.AddressUpdateOneWithoutOrdersNestedInput
   items?: Prisma.OrderItemUpdateManyWithoutOrderNestedInput
   shipments?: Prisma.ShipmentUpdateManyWithoutOrderNestedInput
+  events?: Prisma.OrderEventUpdateManyWithoutOrderNestedInput
+  tickets?: Prisma.SupportTicketUpdateManyWithoutOrderNestedInput
+  giftCardsIssued?: Prisma.GiftCardUpdateManyWithoutPurchaseOrderNestedInput
 }
 
 export type OrderUncheckedUpdateInput = {
@@ -537,6 +656,12 @@ export type OrderUncheckedUpdateInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   couponId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pointsRedeemed?: Prisma.IntFieldUpdateOperationsInput | number
+  giftCardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  giftCardAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  isGift?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  giftMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  refundAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  refundReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stripePaymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stripeCheckoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shippingAddressId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -545,6 +670,9 @@ export type OrderUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
   shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutOrderNestedInput
+  events?: Prisma.OrderEventUncheckedUpdateManyWithoutOrderNestedInput
+  tickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutOrderNestedInput
+  giftCardsIssued?: Prisma.GiftCardUncheckedUpdateManyWithoutPurchaseOrderNestedInput
 }
 
 export type OrderCreateManyInput = {
@@ -560,6 +688,12 @@ export type OrderCreateManyInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   couponId?: string | null
   pointsRedeemed?: number
+  giftCardId?: string | null
+  giftCardAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  isGift?: boolean
+  giftMessage?: string | null
+  refundAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  refundReason?: string | null
   stripePaymentIntentId?: string | null
   stripeCheckoutSessionId?: string | null
   shippingAddressId?: string | null
@@ -578,6 +712,11 @@ export type OrderUpdateManyMutationInput = {
   tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   pointsRedeemed?: Prisma.IntFieldUpdateOperationsInput | number
+  giftCardAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  isGift?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  giftMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  refundAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  refundReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stripePaymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stripeCheckoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -598,6 +737,12 @@ export type OrderUncheckedUpdateManyInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   couponId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pointsRedeemed?: Prisma.IntFieldUpdateOperationsInput | number
+  giftCardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  giftCardAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  isGift?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  giftMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  refundAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  refundReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stripePaymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stripeCheckoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shippingAddressId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -629,6 +774,12 @@ export type OrderCountOrderByAggregateInput = {
   total?: Prisma.SortOrder
   couponId?: Prisma.SortOrder
   pointsRedeemed?: Prisma.SortOrder
+  giftCardId?: Prisma.SortOrder
+  giftCardAmount?: Prisma.SortOrder
+  isGift?: Prisma.SortOrder
+  giftMessage?: Prisma.SortOrder
+  refundAmount?: Prisma.SortOrder
+  refundReason?: Prisma.SortOrder
   stripePaymentIntentId?: Prisma.SortOrder
   stripeCheckoutSessionId?: Prisma.SortOrder
   shippingAddressId?: Prisma.SortOrder
@@ -645,6 +796,8 @@ export type OrderAvgOrderByAggregateInput = {
   tax?: Prisma.SortOrder
   total?: Prisma.SortOrder
   pointsRedeemed?: Prisma.SortOrder
+  giftCardAmount?: Prisma.SortOrder
+  refundAmount?: Prisma.SortOrder
 }
 
 export type OrderMaxOrderByAggregateInput = {
@@ -660,6 +813,12 @@ export type OrderMaxOrderByAggregateInput = {
   total?: Prisma.SortOrder
   couponId?: Prisma.SortOrder
   pointsRedeemed?: Prisma.SortOrder
+  giftCardId?: Prisma.SortOrder
+  giftCardAmount?: Prisma.SortOrder
+  isGift?: Prisma.SortOrder
+  giftMessage?: Prisma.SortOrder
+  refundAmount?: Prisma.SortOrder
+  refundReason?: Prisma.SortOrder
   stripePaymentIntentId?: Prisma.SortOrder
   stripeCheckoutSessionId?: Prisma.SortOrder
   shippingAddressId?: Prisma.SortOrder
@@ -681,6 +840,12 @@ export type OrderMinOrderByAggregateInput = {
   total?: Prisma.SortOrder
   couponId?: Prisma.SortOrder
   pointsRedeemed?: Prisma.SortOrder
+  giftCardId?: Prisma.SortOrder
+  giftCardAmount?: Prisma.SortOrder
+  isGift?: Prisma.SortOrder
+  giftMessage?: Prisma.SortOrder
+  refundAmount?: Prisma.SortOrder
+  refundReason?: Prisma.SortOrder
   stripePaymentIntentId?: Prisma.SortOrder
   stripeCheckoutSessionId?: Prisma.SortOrder
   shippingAddressId?: Prisma.SortOrder
@@ -697,11 +862,18 @@ export type OrderSumOrderByAggregateInput = {
   tax?: Prisma.SortOrder
   total?: Prisma.SortOrder
   pointsRedeemed?: Prisma.SortOrder
+  giftCardAmount?: Prisma.SortOrder
+  refundAmount?: Prisma.SortOrder
 }
 
 export type OrderScalarRelationFilter = {
   is?: Prisma.OrderWhereInput
   isNot?: Prisma.OrderWhereInput
+}
+
+export type OrderNullableScalarRelationFilter = {
+  is?: Prisma.OrderWhereInput | null
+  isNot?: Prisma.OrderWhereInput | null
 }
 
 export type OrderCreateNestedManyWithoutUserInput = {
@@ -862,6 +1034,94 @@ export type OrderUncheckedUpdateManyWithoutCouponNestedInput = {
   deleteMany?: Prisma.OrderScalarWhereInput | Prisma.OrderScalarWhereInput[]
 }
 
+export type OrderCreateNestedOneWithoutEventsInput = {
+  create?: Prisma.XOR<Prisma.OrderCreateWithoutEventsInput, Prisma.OrderUncheckedCreateWithoutEventsInput>
+  connectOrCreate?: Prisma.OrderCreateOrConnectWithoutEventsInput
+  connect?: Prisma.OrderWhereUniqueInput
+}
+
+export type OrderUpdateOneRequiredWithoutEventsNestedInput = {
+  create?: Prisma.XOR<Prisma.OrderCreateWithoutEventsInput, Prisma.OrderUncheckedCreateWithoutEventsInput>
+  connectOrCreate?: Prisma.OrderCreateOrConnectWithoutEventsInput
+  upsert?: Prisma.OrderUpsertWithoutEventsInput
+  connect?: Prisma.OrderWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.OrderUpdateToOneWithWhereWithoutEventsInput, Prisma.OrderUpdateWithoutEventsInput>, Prisma.OrderUncheckedUpdateWithoutEventsInput>
+}
+
+export type OrderCreateNestedOneWithoutGiftCardsIssuedInput = {
+  create?: Prisma.XOR<Prisma.OrderCreateWithoutGiftCardsIssuedInput, Prisma.OrderUncheckedCreateWithoutGiftCardsIssuedInput>
+  connectOrCreate?: Prisma.OrderCreateOrConnectWithoutGiftCardsIssuedInput
+  connect?: Prisma.OrderWhereUniqueInput
+}
+
+export type OrderCreateNestedManyWithoutGiftCardInput = {
+  create?: Prisma.XOR<Prisma.OrderCreateWithoutGiftCardInput, Prisma.OrderUncheckedCreateWithoutGiftCardInput> | Prisma.OrderCreateWithoutGiftCardInput[] | Prisma.OrderUncheckedCreateWithoutGiftCardInput[]
+  connectOrCreate?: Prisma.OrderCreateOrConnectWithoutGiftCardInput | Prisma.OrderCreateOrConnectWithoutGiftCardInput[]
+  createMany?: Prisma.OrderCreateManyGiftCardInputEnvelope
+  connect?: Prisma.OrderWhereUniqueInput | Prisma.OrderWhereUniqueInput[]
+}
+
+export type OrderUncheckedCreateNestedManyWithoutGiftCardInput = {
+  create?: Prisma.XOR<Prisma.OrderCreateWithoutGiftCardInput, Prisma.OrderUncheckedCreateWithoutGiftCardInput> | Prisma.OrderCreateWithoutGiftCardInput[] | Prisma.OrderUncheckedCreateWithoutGiftCardInput[]
+  connectOrCreate?: Prisma.OrderCreateOrConnectWithoutGiftCardInput | Prisma.OrderCreateOrConnectWithoutGiftCardInput[]
+  createMany?: Prisma.OrderCreateManyGiftCardInputEnvelope
+  connect?: Prisma.OrderWhereUniqueInput | Prisma.OrderWhereUniqueInput[]
+}
+
+export type OrderUpdateOneWithoutGiftCardsIssuedNestedInput = {
+  create?: Prisma.XOR<Prisma.OrderCreateWithoutGiftCardsIssuedInput, Prisma.OrderUncheckedCreateWithoutGiftCardsIssuedInput>
+  connectOrCreate?: Prisma.OrderCreateOrConnectWithoutGiftCardsIssuedInput
+  upsert?: Prisma.OrderUpsertWithoutGiftCardsIssuedInput
+  disconnect?: Prisma.OrderWhereInput | boolean
+  delete?: Prisma.OrderWhereInput | boolean
+  connect?: Prisma.OrderWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.OrderUpdateToOneWithWhereWithoutGiftCardsIssuedInput, Prisma.OrderUpdateWithoutGiftCardsIssuedInput>, Prisma.OrderUncheckedUpdateWithoutGiftCardsIssuedInput>
+}
+
+export type OrderUpdateManyWithoutGiftCardNestedInput = {
+  create?: Prisma.XOR<Prisma.OrderCreateWithoutGiftCardInput, Prisma.OrderUncheckedCreateWithoutGiftCardInput> | Prisma.OrderCreateWithoutGiftCardInput[] | Prisma.OrderUncheckedCreateWithoutGiftCardInput[]
+  connectOrCreate?: Prisma.OrderCreateOrConnectWithoutGiftCardInput | Prisma.OrderCreateOrConnectWithoutGiftCardInput[]
+  upsert?: Prisma.OrderUpsertWithWhereUniqueWithoutGiftCardInput | Prisma.OrderUpsertWithWhereUniqueWithoutGiftCardInput[]
+  createMany?: Prisma.OrderCreateManyGiftCardInputEnvelope
+  set?: Prisma.OrderWhereUniqueInput | Prisma.OrderWhereUniqueInput[]
+  disconnect?: Prisma.OrderWhereUniqueInput | Prisma.OrderWhereUniqueInput[]
+  delete?: Prisma.OrderWhereUniqueInput | Prisma.OrderWhereUniqueInput[]
+  connect?: Prisma.OrderWhereUniqueInput | Prisma.OrderWhereUniqueInput[]
+  update?: Prisma.OrderUpdateWithWhereUniqueWithoutGiftCardInput | Prisma.OrderUpdateWithWhereUniqueWithoutGiftCardInput[]
+  updateMany?: Prisma.OrderUpdateManyWithWhereWithoutGiftCardInput | Prisma.OrderUpdateManyWithWhereWithoutGiftCardInput[]
+  deleteMany?: Prisma.OrderScalarWhereInput | Prisma.OrderScalarWhereInput[]
+}
+
+export type OrderUncheckedUpdateManyWithoutGiftCardNestedInput = {
+  create?: Prisma.XOR<Prisma.OrderCreateWithoutGiftCardInput, Prisma.OrderUncheckedCreateWithoutGiftCardInput> | Prisma.OrderCreateWithoutGiftCardInput[] | Prisma.OrderUncheckedCreateWithoutGiftCardInput[]
+  connectOrCreate?: Prisma.OrderCreateOrConnectWithoutGiftCardInput | Prisma.OrderCreateOrConnectWithoutGiftCardInput[]
+  upsert?: Prisma.OrderUpsertWithWhereUniqueWithoutGiftCardInput | Prisma.OrderUpsertWithWhereUniqueWithoutGiftCardInput[]
+  createMany?: Prisma.OrderCreateManyGiftCardInputEnvelope
+  set?: Prisma.OrderWhereUniqueInput | Prisma.OrderWhereUniqueInput[]
+  disconnect?: Prisma.OrderWhereUniqueInput | Prisma.OrderWhereUniqueInput[]
+  delete?: Prisma.OrderWhereUniqueInput | Prisma.OrderWhereUniqueInput[]
+  connect?: Prisma.OrderWhereUniqueInput | Prisma.OrderWhereUniqueInput[]
+  update?: Prisma.OrderUpdateWithWhereUniqueWithoutGiftCardInput | Prisma.OrderUpdateWithWhereUniqueWithoutGiftCardInput[]
+  updateMany?: Prisma.OrderUpdateManyWithWhereWithoutGiftCardInput | Prisma.OrderUpdateManyWithWhereWithoutGiftCardInput[]
+  deleteMany?: Prisma.OrderScalarWhereInput | Prisma.OrderScalarWhereInput[]
+}
+
+export type OrderCreateNestedOneWithoutTicketsInput = {
+  create?: Prisma.XOR<Prisma.OrderCreateWithoutTicketsInput, Prisma.OrderUncheckedCreateWithoutTicketsInput>
+  connectOrCreate?: Prisma.OrderCreateOrConnectWithoutTicketsInput
+  connect?: Prisma.OrderWhereUniqueInput
+}
+
+export type OrderUpdateOneWithoutTicketsNestedInput = {
+  create?: Prisma.XOR<Prisma.OrderCreateWithoutTicketsInput, Prisma.OrderUncheckedCreateWithoutTicketsInput>
+  connectOrCreate?: Prisma.OrderCreateOrConnectWithoutTicketsInput
+  upsert?: Prisma.OrderUpsertWithoutTicketsInput
+  disconnect?: Prisma.OrderWhereInput | boolean
+  delete?: Prisma.OrderWhereInput | boolean
+  connect?: Prisma.OrderWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.OrderUpdateToOneWithWhereWithoutTicketsInput, Prisma.OrderUpdateWithoutTicketsInput>, Prisma.OrderUncheckedUpdateWithoutTicketsInput>
+}
+
 export type OrderCreateWithoutUserInput = {
   id?: string
   orderNumber?: number
@@ -873,15 +1133,24 @@ export type OrderCreateWithoutUserInput = {
   tax?: runtime.Decimal | runtime.DecimalJsLike | number | string
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   pointsRedeemed?: number
+  giftCardAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  isGift?: boolean
+  giftMessage?: string | null
+  refundAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  refundReason?: string | null
   stripePaymentIntentId?: string | null
   stripeCheckoutSessionId?: string | null
   internalNotes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   coupon?: Prisma.CouponCreateNestedOneWithoutOrdersInput
+  giftCard?: Prisma.GiftCardCreateNestedOneWithoutOrdersRedeemedInput
   shippingAddress?: Prisma.AddressCreateNestedOneWithoutOrdersInput
   items?: Prisma.OrderItemCreateNestedManyWithoutOrderInput
   shipments?: Prisma.ShipmentCreateNestedManyWithoutOrderInput
+  events?: Prisma.OrderEventCreateNestedManyWithoutOrderInput
+  tickets?: Prisma.SupportTicketCreateNestedManyWithoutOrderInput
+  giftCardsIssued?: Prisma.GiftCardCreateNestedManyWithoutPurchaseOrderInput
 }
 
 export type OrderUncheckedCreateWithoutUserInput = {
@@ -896,6 +1165,12 @@ export type OrderUncheckedCreateWithoutUserInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   couponId?: string | null
   pointsRedeemed?: number
+  giftCardId?: string | null
+  giftCardAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  isGift?: boolean
+  giftMessage?: string | null
+  refundAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  refundReason?: string | null
   stripePaymentIntentId?: string | null
   stripeCheckoutSessionId?: string | null
   shippingAddressId?: string | null
@@ -904,6 +1179,9 @@ export type OrderUncheckedCreateWithoutUserInput = {
   updatedAt?: Date | string
   items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
   shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutOrderInput
+  events?: Prisma.OrderEventUncheckedCreateNestedManyWithoutOrderInput
+  tickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutOrderInput
+  giftCardsIssued?: Prisma.GiftCardUncheckedCreateNestedManyWithoutPurchaseOrderInput
 }
 
 export type OrderCreateOrConnectWithoutUserInput = {
@@ -948,6 +1226,12 @@ export type OrderScalarWhereInput = {
   total?: Prisma.DecimalFilter<"Order"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   couponId?: Prisma.StringNullableFilter<"Order"> | string | null
   pointsRedeemed?: Prisma.IntFilter<"Order"> | number
+  giftCardId?: Prisma.StringNullableFilter<"Order"> | string | null
+  giftCardAmount?: Prisma.DecimalFilter<"Order"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  isGift?: Prisma.BoolFilter<"Order"> | boolean
+  giftMessage?: Prisma.StringNullableFilter<"Order"> | string | null
+  refundAmount?: Prisma.DecimalFilter<"Order"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  refundReason?: Prisma.StringNullableFilter<"Order"> | string | null
   stripePaymentIntentId?: Prisma.StringNullableFilter<"Order"> | string | null
   stripeCheckoutSessionId?: Prisma.StringNullableFilter<"Order"> | string | null
   shippingAddressId?: Prisma.StringNullableFilter<"Order"> | string | null
@@ -967,6 +1251,11 @@ export type OrderCreateWithoutItemsInput = {
   tax?: runtime.Decimal | runtime.DecimalJsLike | number | string
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   pointsRedeemed?: number
+  giftCardAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  isGift?: boolean
+  giftMessage?: string | null
+  refundAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  refundReason?: string | null
   stripePaymentIntentId?: string | null
   stripeCheckoutSessionId?: string | null
   internalNotes?: string | null
@@ -974,8 +1263,12 @@ export type OrderCreateWithoutItemsInput = {
   updatedAt?: Date | string
   user?: Prisma.UserCreateNestedOneWithoutOrdersInput
   coupon?: Prisma.CouponCreateNestedOneWithoutOrdersInput
+  giftCard?: Prisma.GiftCardCreateNestedOneWithoutOrdersRedeemedInput
   shippingAddress?: Prisma.AddressCreateNestedOneWithoutOrdersInput
   shipments?: Prisma.ShipmentCreateNestedManyWithoutOrderInput
+  events?: Prisma.OrderEventCreateNestedManyWithoutOrderInput
+  tickets?: Prisma.SupportTicketCreateNestedManyWithoutOrderInput
+  giftCardsIssued?: Prisma.GiftCardCreateNestedManyWithoutPurchaseOrderInput
 }
 
 export type OrderUncheckedCreateWithoutItemsInput = {
@@ -991,6 +1284,12 @@ export type OrderUncheckedCreateWithoutItemsInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   couponId?: string | null
   pointsRedeemed?: number
+  giftCardId?: string | null
+  giftCardAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  isGift?: boolean
+  giftMessage?: string | null
+  refundAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  refundReason?: string | null
   stripePaymentIntentId?: string | null
   stripeCheckoutSessionId?: string | null
   shippingAddressId?: string | null
@@ -998,6 +1297,9 @@ export type OrderUncheckedCreateWithoutItemsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutOrderInput
+  events?: Prisma.OrderEventUncheckedCreateNestedManyWithoutOrderInput
+  tickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutOrderInput
+  giftCardsIssued?: Prisma.GiftCardUncheckedCreateNestedManyWithoutPurchaseOrderInput
 }
 
 export type OrderCreateOrConnectWithoutItemsInput = {
@@ -1026,6 +1328,11 @@ export type OrderUpdateWithoutItemsInput = {
   tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   pointsRedeemed?: Prisma.IntFieldUpdateOperationsInput | number
+  giftCardAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  isGift?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  giftMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  refundAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  refundReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stripePaymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stripeCheckoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1033,8 +1340,12 @@ export type OrderUpdateWithoutItemsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneWithoutOrdersNestedInput
   coupon?: Prisma.CouponUpdateOneWithoutOrdersNestedInput
+  giftCard?: Prisma.GiftCardUpdateOneWithoutOrdersRedeemedNestedInput
   shippingAddress?: Prisma.AddressUpdateOneWithoutOrdersNestedInput
   shipments?: Prisma.ShipmentUpdateManyWithoutOrderNestedInput
+  events?: Prisma.OrderEventUpdateManyWithoutOrderNestedInput
+  tickets?: Prisma.SupportTicketUpdateManyWithoutOrderNestedInput
+  giftCardsIssued?: Prisma.GiftCardUpdateManyWithoutPurchaseOrderNestedInput
 }
 
 export type OrderUncheckedUpdateWithoutItemsInput = {
@@ -1050,6 +1361,12 @@ export type OrderUncheckedUpdateWithoutItemsInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   couponId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pointsRedeemed?: Prisma.IntFieldUpdateOperationsInput | number
+  giftCardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  giftCardAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  isGift?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  giftMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  refundAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  refundReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stripePaymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stripeCheckoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shippingAddressId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1057,6 +1374,9 @@ export type OrderUncheckedUpdateWithoutItemsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutOrderNestedInput
+  events?: Prisma.OrderEventUncheckedUpdateManyWithoutOrderNestedInput
+  tickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutOrderNestedInput
+  giftCardsIssued?: Prisma.GiftCardUncheckedUpdateManyWithoutPurchaseOrderNestedInput
 }
 
 export type OrderCreateWithoutShipmentsInput = {
@@ -1070,6 +1390,11 @@ export type OrderCreateWithoutShipmentsInput = {
   tax?: runtime.Decimal | runtime.DecimalJsLike | number | string
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   pointsRedeemed?: number
+  giftCardAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  isGift?: boolean
+  giftMessage?: string | null
+  refundAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  refundReason?: string | null
   stripePaymentIntentId?: string | null
   stripeCheckoutSessionId?: string | null
   internalNotes?: string | null
@@ -1077,8 +1402,12 @@ export type OrderCreateWithoutShipmentsInput = {
   updatedAt?: Date | string
   user?: Prisma.UserCreateNestedOneWithoutOrdersInput
   coupon?: Prisma.CouponCreateNestedOneWithoutOrdersInput
+  giftCard?: Prisma.GiftCardCreateNestedOneWithoutOrdersRedeemedInput
   shippingAddress?: Prisma.AddressCreateNestedOneWithoutOrdersInput
   items?: Prisma.OrderItemCreateNestedManyWithoutOrderInput
+  events?: Prisma.OrderEventCreateNestedManyWithoutOrderInput
+  tickets?: Prisma.SupportTicketCreateNestedManyWithoutOrderInput
+  giftCardsIssued?: Prisma.GiftCardCreateNestedManyWithoutPurchaseOrderInput
 }
 
 export type OrderUncheckedCreateWithoutShipmentsInput = {
@@ -1094,6 +1423,12 @@ export type OrderUncheckedCreateWithoutShipmentsInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   couponId?: string | null
   pointsRedeemed?: number
+  giftCardId?: string | null
+  giftCardAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  isGift?: boolean
+  giftMessage?: string | null
+  refundAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  refundReason?: string | null
   stripePaymentIntentId?: string | null
   stripeCheckoutSessionId?: string | null
   shippingAddressId?: string | null
@@ -1101,6 +1436,9 @@ export type OrderUncheckedCreateWithoutShipmentsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
+  events?: Prisma.OrderEventUncheckedCreateNestedManyWithoutOrderInput
+  tickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutOrderInput
+  giftCardsIssued?: Prisma.GiftCardUncheckedCreateNestedManyWithoutPurchaseOrderInput
 }
 
 export type OrderCreateOrConnectWithoutShipmentsInput = {
@@ -1129,6 +1467,11 @@ export type OrderUpdateWithoutShipmentsInput = {
   tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   pointsRedeemed?: Prisma.IntFieldUpdateOperationsInput | number
+  giftCardAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  isGift?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  giftMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  refundAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  refundReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stripePaymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stripeCheckoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1136,8 +1479,12 @@ export type OrderUpdateWithoutShipmentsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneWithoutOrdersNestedInput
   coupon?: Prisma.CouponUpdateOneWithoutOrdersNestedInput
+  giftCard?: Prisma.GiftCardUpdateOneWithoutOrdersRedeemedNestedInput
   shippingAddress?: Prisma.AddressUpdateOneWithoutOrdersNestedInput
   items?: Prisma.OrderItemUpdateManyWithoutOrderNestedInput
+  events?: Prisma.OrderEventUpdateManyWithoutOrderNestedInput
+  tickets?: Prisma.SupportTicketUpdateManyWithoutOrderNestedInput
+  giftCardsIssued?: Prisma.GiftCardUpdateManyWithoutPurchaseOrderNestedInput
 }
 
 export type OrderUncheckedUpdateWithoutShipmentsInput = {
@@ -1153,6 +1500,12 @@ export type OrderUncheckedUpdateWithoutShipmentsInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   couponId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pointsRedeemed?: Prisma.IntFieldUpdateOperationsInput | number
+  giftCardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  giftCardAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  isGift?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  giftMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  refundAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  refundReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stripePaymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stripeCheckoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shippingAddressId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1160,6 +1513,9 @@ export type OrderUncheckedUpdateWithoutShipmentsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
+  events?: Prisma.OrderEventUncheckedUpdateManyWithoutOrderNestedInput
+  tickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutOrderNestedInput
+  giftCardsIssued?: Prisma.GiftCardUncheckedUpdateManyWithoutPurchaseOrderNestedInput
 }
 
 export type OrderCreateWithoutShippingAddressInput = {
@@ -1173,6 +1529,11 @@ export type OrderCreateWithoutShippingAddressInput = {
   tax?: runtime.Decimal | runtime.DecimalJsLike | number | string
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   pointsRedeemed?: number
+  giftCardAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  isGift?: boolean
+  giftMessage?: string | null
+  refundAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  refundReason?: string | null
   stripePaymentIntentId?: string | null
   stripeCheckoutSessionId?: string | null
   internalNotes?: string | null
@@ -1180,8 +1541,12 @@ export type OrderCreateWithoutShippingAddressInput = {
   updatedAt?: Date | string
   user?: Prisma.UserCreateNestedOneWithoutOrdersInput
   coupon?: Prisma.CouponCreateNestedOneWithoutOrdersInput
+  giftCard?: Prisma.GiftCardCreateNestedOneWithoutOrdersRedeemedInput
   items?: Prisma.OrderItemCreateNestedManyWithoutOrderInput
   shipments?: Prisma.ShipmentCreateNestedManyWithoutOrderInput
+  events?: Prisma.OrderEventCreateNestedManyWithoutOrderInput
+  tickets?: Prisma.SupportTicketCreateNestedManyWithoutOrderInput
+  giftCardsIssued?: Prisma.GiftCardCreateNestedManyWithoutPurchaseOrderInput
 }
 
 export type OrderUncheckedCreateWithoutShippingAddressInput = {
@@ -1197,6 +1562,12 @@ export type OrderUncheckedCreateWithoutShippingAddressInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   couponId?: string | null
   pointsRedeemed?: number
+  giftCardId?: string | null
+  giftCardAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  isGift?: boolean
+  giftMessage?: string | null
+  refundAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  refundReason?: string | null
   stripePaymentIntentId?: string | null
   stripeCheckoutSessionId?: string | null
   internalNotes?: string | null
@@ -1204,6 +1575,9 @@ export type OrderUncheckedCreateWithoutShippingAddressInput = {
   updatedAt?: Date | string
   items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
   shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutOrderInput
+  events?: Prisma.OrderEventUncheckedCreateNestedManyWithoutOrderInput
+  tickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutOrderInput
+  giftCardsIssued?: Prisma.GiftCardUncheckedCreateNestedManyWithoutPurchaseOrderInput
 }
 
 export type OrderCreateOrConnectWithoutShippingAddressInput = {
@@ -1243,15 +1617,24 @@ export type OrderCreateWithoutCouponInput = {
   tax?: runtime.Decimal | runtime.DecimalJsLike | number | string
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   pointsRedeemed?: number
+  giftCardAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  isGift?: boolean
+  giftMessage?: string | null
+  refundAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  refundReason?: string | null
   stripePaymentIntentId?: string | null
   stripeCheckoutSessionId?: string | null
   internalNotes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user?: Prisma.UserCreateNestedOneWithoutOrdersInput
+  giftCard?: Prisma.GiftCardCreateNestedOneWithoutOrdersRedeemedInput
   shippingAddress?: Prisma.AddressCreateNestedOneWithoutOrdersInput
   items?: Prisma.OrderItemCreateNestedManyWithoutOrderInput
   shipments?: Prisma.ShipmentCreateNestedManyWithoutOrderInput
+  events?: Prisma.OrderEventCreateNestedManyWithoutOrderInput
+  tickets?: Prisma.SupportTicketCreateNestedManyWithoutOrderInput
+  giftCardsIssued?: Prisma.GiftCardCreateNestedManyWithoutPurchaseOrderInput
 }
 
 export type OrderUncheckedCreateWithoutCouponInput = {
@@ -1266,6 +1649,12 @@ export type OrderUncheckedCreateWithoutCouponInput = {
   tax?: runtime.Decimal | runtime.DecimalJsLike | number | string
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   pointsRedeemed?: number
+  giftCardId?: string | null
+  giftCardAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  isGift?: boolean
+  giftMessage?: string | null
+  refundAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  refundReason?: string | null
   stripePaymentIntentId?: string | null
   stripeCheckoutSessionId?: string | null
   shippingAddressId?: string | null
@@ -1274,6 +1663,9 @@ export type OrderUncheckedCreateWithoutCouponInput = {
   updatedAt?: Date | string
   items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
   shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutOrderInput
+  events?: Prisma.OrderEventUncheckedCreateNestedManyWithoutOrderInput
+  tickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutOrderInput
+  giftCardsIssued?: Prisma.GiftCardUncheckedCreateNestedManyWithoutPurchaseOrderInput
 }
 
 export type OrderCreateOrConnectWithoutCouponInput = {
@@ -1302,6 +1694,511 @@ export type OrderUpdateManyWithWhereWithoutCouponInput = {
   data: Prisma.XOR<Prisma.OrderUpdateManyMutationInput, Prisma.OrderUncheckedUpdateManyWithoutCouponInput>
 }
 
+export type OrderCreateWithoutEventsInput = {
+  id?: string
+  orderNumber?: number
+  email: string
+  status?: $Enums.OrderStatus
+  subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  shippingCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  pointsRedeemed?: number
+  giftCardAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  isGift?: boolean
+  giftMessage?: string | null
+  refundAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  refundReason?: string | null
+  stripePaymentIntentId?: string | null
+  stripeCheckoutSessionId?: string | null
+  internalNotes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  user?: Prisma.UserCreateNestedOneWithoutOrdersInput
+  coupon?: Prisma.CouponCreateNestedOneWithoutOrdersInput
+  giftCard?: Prisma.GiftCardCreateNestedOneWithoutOrdersRedeemedInput
+  shippingAddress?: Prisma.AddressCreateNestedOneWithoutOrdersInput
+  items?: Prisma.OrderItemCreateNestedManyWithoutOrderInput
+  shipments?: Prisma.ShipmentCreateNestedManyWithoutOrderInput
+  tickets?: Prisma.SupportTicketCreateNestedManyWithoutOrderInput
+  giftCardsIssued?: Prisma.GiftCardCreateNestedManyWithoutPurchaseOrderInput
+}
+
+export type OrderUncheckedCreateWithoutEventsInput = {
+  id?: string
+  orderNumber?: number
+  userId?: string | null
+  email: string
+  status?: $Enums.OrderStatus
+  subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  shippingCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  couponId?: string | null
+  pointsRedeemed?: number
+  giftCardId?: string | null
+  giftCardAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  isGift?: boolean
+  giftMessage?: string | null
+  refundAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  refundReason?: string | null
+  stripePaymentIntentId?: string | null
+  stripeCheckoutSessionId?: string | null
+  shippingAddressId?: string | null
+  internalNotes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
+  shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutOrderInput
+  tickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutOrderInput
+  giftCardsIssued?: Prisma.GiftCardUncheckedCreateNestedManyWithoutPurchaseOrderInput
+}
+
+export type OrderCreateOrConnectWithoutEventsInput = {
+  where: Prisma.OrderWhereUniqueInput
+  create: Prisma.XOR<Prisma.OrderCreateWithoutEventsInput, Prisma.OrderUncheckedCreateWithoutEventsInput>
+}
+
+export type OrderUpsertWithoutEventsInput = {
+  update: Prisma.XOR<Prisma.OrderUpdateWithoutEventsInput, Prisma.OrderUncheckedUpdateWithoutEventsInput>
+  create: Prisma.XOR<Prisma.OrderCreateWithoutEventsInput, Prisma.OrderUncheckedCreateWithoutEventsInput>
+  where?: Prisma.OrderWhereInput
+}
+
+export type OrderUpdateToOneWithWhereWithoutEventsInput = {
+  where?: Prisma.OrderWhereInput
+  data: Prisma.XOR<Prisma.OrderUpdateWithoutEventsInput, Prisma.OrderUncheckedUpdateWithoutEventsInput>
+}
+
+export type OrderUpdateWithoutEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  shippingCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  pointsRedeemed?: Prisma.IntFieldUpdateOperationsInput | number
+  giftCardAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  isGift?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  giftMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  refundAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  refundReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripePaymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCheckoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneWithoutOrdersNestedInput
+  coupon?: Prisma.CouponUpdateOneWithoutOrdersNestedInput
+  giftCard?: Prisma.GiftCardUpdateOneWithoutOrdersRedeemedNestedInput
+  shippingAddress?: Prisma.AddressUpdateOneWithoutOrdersNestedInput
+  items?: Prisma.OrderItemUpdateManyWithoutOrderNestedInput
+  shipments?: Prisma.ShipmentUpdateManyWithoutOrderNestedInput
+  tickets?: Prisma.SupportTicketUpdateManyWithoutOrderNestedInput
+  giftCardsIssued?: Prisma.GiftCardUpdateManyWithoutPurchaseOrderNestedInput
+}
+
+export type OrderUncheckedUpdateWithoutEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  orderNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  shippingCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  couponId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pointsRedeemed?: Prisma.IntFieldUpdateOperationsInput | number
+  giftCardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  giftCardAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  isGift?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  giftMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  refundAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  refundReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripePaymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCheckoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingAddressId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
+  shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutOrderNestedInput
+  tickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutOrderNestedInput
+  giftCardsIssued?: Prisma.GiftCardUncheckedUpdateManyWithoutPurchaseOrderNestedInput
+}
+
+export type OrderCreateWithoutGiftCardsIssuedInput = {
+  id?: string
+  orderNumber?: number
+  email: string
+  status?: $Enums.OrderStatus
+  subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  shippingCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  pointsRedeemed?: number
+  giftCardAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  isGift?: boolean
+  giftMessage?: string | null
+  refundAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  refundReason?: string | null
+  stripePaymentIntentId?: string | null
+  stripeCheckoutSessionId?: string | null
+  internalNotes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  user?: Prisma.UserCreateNestedOneWithoutOrdersInput
+  coupon?: Prisma.CouponCreateNestedOneWithoutOrdersInput
+  giftCard?: Prisma.GiftCardCreateNestedOneWithoutOrdersRedeemedInput
+  shippingAddress?: Prisma.AddressCreateNestedOneWithoutOrdersInput
+  items?: Prisma.OrderItemCreateNestedManyWithoutOrderInput
+  shipments?: Prisma.ShipmentCreateNestedManyWithoutOrderInput
+  events?: Prisma.OrderEventCreateNestedManyWithoutOrderInput
+  tickets?: Prisma.SupportTicketCreateNestedManyWithoutOrderInput
+}
+
+export type OrderUncheckedCreateWithoutGiftCardsIssuedInput = {
+  id?: string
+  orderNumber?: number
+  userId?: string | null
+  email: string
+  status?: $Enums.OrderStatus
+  subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  shippingCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  couponId?: string | null
+  pointsRedeemed?: number
+  giftCardId?: string | null
+  giftCardAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  isGift?: boolean
+  giftMessage?: string | null
+  refundAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  refundReason?: string | null
+  stripePaymentIntentId?: string | null
+  stripeCheckoutSessionId?: string | null
+  shippingAddressId?: string | null
+  internalNotes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
+  shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutOrderInput
+  events?: Prisma.OrderEventUncheckedCreateNestedManyWithoutOrderInput
+  tickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutOrderInput
+}
+
+export type OrderCreateOrConnectWithoutGiftCardsIssuedInput = {
+  where: Prisma.OrderWhereUniqueInput
+  create: Prisma.XOR<Prisma.OrderCreateWithoutGiftCardsIssuedInput, Prisma.OrderUncheckedCreateWithoutGiftCardsIssuedInput>
+}
+
+export type OrderCreateWithoutGiftCardInput = {
+  id?: string
+  orderNumber?: number
+  email: string
+  status?: $Enums.OrderStatus
+  subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  shippingCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  pointsRedeemed?: number
+  giftCardAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  isGift?: boolean
+  giftMessage?: string | null
+  refundAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  refundReason?: string | null
+  stripePaymentIntentId?: string | null
+  stripeCheckoutSessionId?: string | null
+  internalNotes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  user?: Prisma.UserCreateNestedOneWithoutOrdersInput
+  coupon?: Prisma.CouponCreateNestedOneWithoutOrdersInput
+  shippingAddress?: Prisma.AddressCreateNestedOneWithoutOrdersInput
+  items?: Prisma.OrderItemCreateNestedManyWithoutOrderInput
+  shipments?: Prisma.ShipmentCreateNestedManyWithoutOrderInput
+  events?: Prisma.OrderEventCreateNestedManyWithoutOrderInput
+  tickets?: Prisma.SupportTicketCreateNestedManyWithoutOrderInput
+  giftCardsIssued?: Prisma.GiftCardCreateNestedManyWithoutPurchaseOrderInput
+}
+
+export type OrderUncheckedCreateWithoutGiftCardInput = {
+  id?: string
+  orderNumber?: number
+  userId?: string | null
+  email: string
+  status?: $Enums.OrderStatus
+  subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  shippingCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  couponId?: string | null
+  pointsRedeemed?: number
+  giftCardAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  isGift?: boolean
+  giftMessage?: string | null
+  refundAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  refundReason?: string | null
+  stripePaymentIntentId?: string | null
+  stripeCheckoutSessionId?: string | null
+  shippingAddressId?: string | null
+  internalNotes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
+  shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutOrderInput
+  events?: Prisma.OrderEventUncheckedCreateNestedManyWithoutOrderInput
+  tickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutOrderInput
+  giftCardsIssued?: Prisma.GiftCardUncheckedCreateNestedManyWithoutPurchaseOrderInput
+}
+
+export type OrderCreateOrConnectWithoutGiftCardInput = {
+  where: Prisma.OrderWhereUniqueInput
+  create: Prisma.XOR<Prisma.OrderCreateWithoutGiftCardInput, Prisma.OrderUncheckedCreateWithoutGiftCardInput>
+}
+
+export type OrderCreateManyGiftCardInputEnvelope = {
+  data: Prisma.OrderCreateManyGiftCardInput | Prisma.OrderCreateManyGiftCardInput[]
+  skipDuplicates?: boolean
+}
+
+export type OrderUpsertWithoutGiftCardsIssuedInput = {
+  update: Prisma.XOR<Prisma.OrderUpdateWithoutGiftCardsIssuedInput, Prisma.OrderUncheckedUpdateWithoutGiftCardsIssuedInput>
+  create: Prisma.XOR<Prisma.OrderCreateWithoutGiftCardsIssuedInput, Prisma.OrderUncheckedCreateWithoutGiftCardsIssuedInput>
+  where?: Prisma.OrderWhereInput
+}
+
+export type OrderUpdateToOneWithWhereWithoutGiftCardsIssuedInput = {
+  where?: Prisma.OrderWhereInput
+  data: Prisma.XOR<Prisma.OrderUpdateWithoutGiftCardsIssuedInput, Prisma.OrderUncheckedUpdateWithoutGiftCardsIssuedInput>
+}
+
+export type OrderUpdateWithoutGiftCardsIssuedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  shippingCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  pointsRedeemed?: Prisma.IntFieldUpdateOperationsInput | number
+  giftCardAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  isGift?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  giftMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  refundAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  refundReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripePaymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCheckoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneWithoutOrdersNestedInput
+  coupon?: Prisma.CouponUpdateOneWithoutOrdersNestedInput
+  giftCard?: Prisma.GiftCardUpdateOneWithoutOrdersRedeemedNestedInput
+  shippingAddress?: Prisma.AddressUpdateOneWithoutOrdersNestedInput
+  items?: Prisma.OrderItemUpdateManyWithoutOrderNestedInput
+  shipments?: Prisma.ShipmentUpdateManyWithoutOrderNestedInput
+  events?: Prisma.OrderEventUpdateManyWithoutOrderNestedInput
+  tickets?: Prisma.SupportTicketUpdateManyWithoutOrderNestedInput
+}
+
+export type OrderUncheckedUpdateWithoutGiftCardsIssuedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  orderNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  shippingCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  couponId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pointsRedeemed?: Prisma.IntFieldUpdateOperationsInput | number
+  giftCardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  giftCardAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  isGift?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  giftMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  refundAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  refundReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripePaymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCheckoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingAddressId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
+  shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutOrderNestedInput
+  events?: Prisma.OrderEventUncheckedUpdateManyWithoutOrderNestedInput
+  tickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutOrderNestedInput
+}
+
+export type OrderUpsertWithWhereUniqueWithoutGiftCardInput = {
+  where: Prisma.OrderWhereUniqueInput
+  update: Prisma.XOR<Prisma.OrderUpdateWithoutGiftCardInput, Prisma.OrderUncheckedUpdateWithoutGiftCardInput>
+  create: Prisma.XOR<Prisma.OrderCreateWithoutGiftCardInput, Prisma.OrderUncheckedCreateWithoutGiftCardInput>
+}
+
+export type OrderUpdateWithWhereUniqueWithoutGiftCardInput = {
+  where: Prisma.OrderWhereUniqueInput
+  data: Prisma.XOR<Prisma.OrderUpdateWithoutGiftCardInput, Prisma.OrderUncheckedUpdateWithoutGiftCardInput>
+}
+
+export type OrderUpdateManyWithWhereWithoutGiftCardInput = {
+  where: Prisma.OrderScalarWhereInput
+  data: Prisma.XOR<Prisma.OrderUpdateManyMutationInput, Prisma.OrderUncheckedUpdateManyWithoutGiftCardInput>
+}
+
+export type OrderCreateWithoutTicketsInput = {
+  id?: string
+  orderNumber?: number
+  email: string
+  status?: $Enums.OrderStatus
+  subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  shippingCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  pointsRedeemed?: number
+  giftCardAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  isGift?: boolean
+  giftMessage?: string | null
+  refundAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  refundReason?: string | null
+  stripePaymentIntentId?: string | null
+  stripeCheckoutSessionId?: string | null
+  internalNotes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  user?: Prisma.UserCreateNestedOneWithoutOrdersInput
+  coupon?: Prisma.CouponCreateNestedOneWithoutOrdersInput
+  giftCard?: Prisma.GiftCardCreateNestedOneWithoutOrdersRedeemedInput
+  shippingAddress?: Prisma.AddressCreateNestedOneWithoutOrdersInput
+  items?: Prisma.OrderItemCreateNestedManyWithoutOrderInput
+  shipments?: Prisma.ShipmentCreateNestedManyWithoutOrderInput
+  events?: Prisma.OrderEventCreateNestedManyWithoutOrderInput
+  giftCardsIssued?: Prisma.GiftCardCreateNestedManyWithoutPurchaseOrderInput
+}
+
+export type OrderUncheckedCreateWithoutTicketsInput = {
+  id?: string
+  orderNumber?: number
+  userId?: string | null
+  email: string
+  status?: $Enums.OrderStatus
+  subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  shippingCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  couponId?: string | null
+  pointsRedeemed?: number
+  giftCardId?: string | null
+  giftCardAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  isGift?: boolean
+  giftMessage?: string | null
+  refundAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  refundReason?: string | null
+  stripePaymentIntentId?: string | null
+  stripeCheckoutSessionId?: string | null
+  shippingAddressId?: string | null
+  internalNotes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
+  shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutOrderInput
+  events?: Prisma.OrderEventUncheckedCreateNestedManyWithoutOrderInput
+  giftCardsIssued?: Prisma.GiftCardUncheckedCreateNestedManyWithoutPurchaseOrderInput
+}
+
+export type OrderCreateOrConnectWithoutTicketsInput = {
+  where: Prisma.OrderWhereUniqueInput
+  create: Prisma.XOR<Prisma.OrderCreateWithoutTicketsInput, Prisma.OrderUncheckedCreateWithoutTicketsInput>
+}
+
+export type OrderUpsertWithoutTicketsInput = {
+  update: Prisma.XOR<Prisma.OrderUpdateWithoutTicketsInput, Prisma.OrderUncheckedUpdateWithoutTicketsInput>
+  create: Prisma.XOR<Prisma.OrderCreateWithoutTicketsInput, Prisma.OrderUncheckedCreateWithoutTicketsInput>
+  where?: Prisma.OrderWhereInput
+}
+
+export type OrderUpdateToOneWithWhereWithoutTicketsInput = {
+  where?: Prisma.OrderWhereInput
+  data: Prisma.XOR<Prisma.OrderUpdateWithoutTicketsInput, Prisma.OrderUncheckedUpdateWithoutTicketsInput>
+}
+
+export type OrderUpdateWithoutTicketsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  shippingCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  pointsRedeemed?: Prisma.IntFieldUpdateOperationsInput | number
+  giftCardAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  isGift?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  giftMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  refundAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  refundReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripePaymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCheckoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneWithoutOrdersNestedInput
+  coupon?: Prisma.CouponUpdateOneWithoutOrdersNestedInput
+  giftCard?: Prisma.GiftCardUpdateOneWithoutOrdersRedeemedNestedInput
+  shippingAddress?: Prisma.AddressUpdateOneWithoutOrdersNestedInput
+  items?: Prisma.OrderItemUpdateManyWithoutOrderNestedInput
+  shipments?: Prisma.ShipmentUpdateManyWithoutOrderNestedInput
+  events?: Prisma.OrderEventUpdateManyWithoutOrderNestedInput
+  giftCardsIssued?: Prisma.GiftCardUpdateManyWithoutPurchaseOrderNestedInput
+}
+
+export type OrderUncheckedUpdateWithoutTicketsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  orderNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  shippingCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  couponId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pointsRedeemed?: Prisma.IntFieldUpdateOperationsInput | number
+  giftCardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  giftCardAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  isGift?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  giftMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  refundAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  refundReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripePaymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCheckoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingAddressId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
+  shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutOrderNestedInput
+  events?: Prisma.OrderEventUncheckedUpdateManyWithoutOrderNestedInput
+  giftCardsIssued?: Prisma.GiftCardUncheckedUpdateManyWithoutPurchaseOrderNestedInput
+}
+
 export type OrderCreateManyUserInput = {
   id?: string
   orderNumber?: number
@@ -1314,6 +2211,12 @@ export type OrderCreateManyUserInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   couponId?: string | null
   pointsRedeemed?: number
+  giftCardId?: string | null
+  giftCardAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  isGift?: boolean
+  giftMessage?: string | null
+  refundAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  refundReason?: string | null
   stripePaymentIntentId?: string | null
   stripeCheckoutSessionId?: string | null
   shippingAddressId?: string | null
@@ -1332,15 +2235,24 @@ export type OrderUpdateWithoutUserInput = {
   tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   pointsRedeemed?: Prisma.IntFieldUpdateOperationsInput | number
+  giftCardAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  isGift?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  giftMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  refundAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  refundReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stripePaymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stripeCheckoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   coupon?: Prisma.CouponUpdateOneWithoutOrdersNestedInput
+  giftCard?: Prisma.GiftCardUpdateOneWithoutOrdersRedeemedNestedInput
   shippingAddress?: Prisma.AddressUpdateOneWithoutOrdersNestedInput
   items?: Prisma.OrderItemUpdateManyWithoutOrderNestedInput
   shipments?: Prisma.ShipmentUpdateManyWithoutOrderNestedInput
+  events?: Prisma.OrderEventUpdateManyWithoutOrderNestedInput
+  tickets?: Prisma.SupportTicketUpdateManyWithoutOrderNestedInput
+  giftCardsIssued?: Prisma.GiftCardUpdateManyWithoutPurchaseOrderNestedInput
 }
 
 export type OrderUncheckedUpdateWithoutUserInput = {
@@ -1355,6 +2267,12 @@ export type OrderUncheckedUpdateWithoutUserInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   couponId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pointsRedeemed?: Prisma.IntFieldUpdateOperationsInput | number
+  giftCardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  giftCardAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  isGift?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  giftMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  refundAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  refundReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stripePaymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stripeCheckoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shippingAddressId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1363,6 +2281,9 @@ export type OrderUncheckedUpdateWithoutUserInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
   shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutOrderNestedInput
+  events?: Prisma.OrderEventUncheckedUpdateManyWithoutOrderNestedInput
+  tickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutOrderNestedInput
+  giftCardsIssued?: Prisma.GiftCardUncheckedUpdateManyWithoutPurchaseOrderNestedInput
 }
 
 export type OrderUncheckedUpdateManyWithoutUserInput = {
@@ -1377,6 +2298,12 @@ export type OrderUncheckedUpdateManyWithoutUserInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   couponId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pointsRedeemed?: Prisma.IntFieldUpdateOperationsInput | number
+  giftCardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  giftCardAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  isGift?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  giftMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  refundAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  refundReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stripePaymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stripeCheckoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shippingAddressId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1398,6 +2325,12 @@ export type OrderCreateManyShippingAddressInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   couponId?: string | null
   pointsRedeemed?: number
+  giftCardId?: string | null
+  giftCardAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  isGift?: boolean
+  giftMessage?: string | null
+  refundAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  refundReason?: string | null
   stripePaymentIntentId?: string | null
   stripeCheckoutSessionId?: string | null
   internalNotes?: string | null
@@ -1415,6 +2348,11 @@ export type OrderUpdateWithoutShippingAddressInput = {
   tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   pointsRedeemed?: Prisma.IntFieldUpdateOperationsInput | number
+  giftCardAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  isGift?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  giftMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  refundAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  refundReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stripePaymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stripeCheckoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1422,8 +2360,12 @@ export type OrderUpdateWithoutShippingAddressInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneWithoutOrdersNestedInput
   coupon?: Prisma.CouponUpdateOneWithoutOrdersNestedInput
+  giftCard?: Prisma.GiftCardUpdateOneWithoutOrdersRedeemedNestedInput
   items?: Prisma.OrderItemUpdateManyWithoutOrderNestedInput
   shipments?: Prisma.ShipmentUpdateManyWithoutOrderNestedInput
+  events?: Prisma.OrderEventUpdateManyWithoutOrderNestedInput
+  tickets?: Prisma.SupportTicketUpdateManyWithoutOrderNestedInput
+  giftCardsIssued?: Prisma.GiftCardUpdateManyWithoutPurchaseOrderNestedInput
 }
 
 export type OrderUncheckedUpdateWithoutShippingAddressInput = {
@@ -1439,6 +2381,12 @@ export type OrderUncheckedUpdateWithoutShippingAddressInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   couponId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pointsRedeemed?: Prisma.IntFieldUpdateOperationsInput | number
+  giftCardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  giftCardAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  isGift?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  giftMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  refundAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  refundReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stripePaymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stripeCheckoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1446,6 +2394,9 @@ export type OrderUncheckedUpdateWithoutShippingAddressInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
   shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutOrderNestedInput
+  events?: Prisma.OrderEventUncheckedUpdateManyWithoutOrderNestedInput
+  tickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutOrderNestedInput
+  giftCardsIssued?: Prisma.GiftCardUncheckedUpdateManyWithoutPurchaseOrderNestedInput
 }
 
 export type OrderUncheckedUpdateManyWithoutShippingAddressInput = {
@@ -1461,6 +2412,12 @@ export type OrderUncheckedUpdateManyWithoutShippingAddressInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   couponId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pointsRedeemed?: Prisma.IntFieldUpdateOperationsInput | number
+  giftCardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  giftCardAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  isGift?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  giftMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  refundAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  refundReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stripePaymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stripeCheckoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1480,6 +2437,12 @@ export type OrderCreateManyCouponInput = {
   tax?: runtime.Decimal | runtime.DecimalJsLike | number | string
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   pointsRedeemed?: number
+  giftCardId?: string | null
+  giftCardAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  isGift?: boolean
+  giftMessage?: string | null
+  refundAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  refundReason?: string | null
   stripePaymentIntentId?: string | null
   stripeCheckoutSessionId?: string | null
   shippingAddressId?: string | null
@@ -1498,15 +2461,24 @@ export type OrderUpdateWithoutCouponInput = {
   tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   pointsRedeemed?: Prisma.IntFieldUpdateOperationsInput | number
+  giftCardAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  isGift?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  giftMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  refundAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  refundReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stripePaymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stripeCheckoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneWithoutOrdersNestedInput
+  giftCard?: Prisma.GiftCardUpdateOneWithoutOrdersRedeemedNestedInput
   shippingAddress?: Prisma.AddressUpdateOneWithoutOrdersNestedInput
   items?: Prisma.OrderItemUpdateManyWithoutOrderNestedInput
   shipments?: Prisma.ShipmentUpdateManyWithoutOrderNestedInput
+  events?: Prisma.OrderEventUpdateManyWithoutOrderNestedInput
+  tickets?: Prisma.SupportTicketUpdateManyWithoutOrderNestedInput
+  giftCardsIssued?: Prisma.GiftCardUpdateManyWithoutPurchaseOrderNestedInput
 }
 
 export type OrderUncheckedUpdateWithoutCouponInput = {
@@ -1521,6 +2493,12 @@ export type OrderUncheckedUpdateWithoutCouponInput = {
   tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   pointsRedeemed?: Prisma.IntFieldUpdateOperationsInput | number
+  giftCardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  giftCardAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  isGift?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  giftMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  refundAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  refundReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stripePaymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stripeCheckoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shippingAddressId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1529,6 +2507,9 @@ export type OrderUncheckedUpdateWithoutCouponInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
   shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutOrderNestedInput
+  events?: Prisma.OrderEventUncheckedUpdateManyWithoutOrderNestedInput
+  tickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutOrderNestedInput
+  giftCardsIssued?: Prisma.GiftCardUncheckedUpdateManyWithoutPurchaseOrderNestedInput
 }
 
 export type OrderUncheckedUpdateManyWithoutCouponInput = {
@@ -1543,6 +2524,125 @@ export type OrderUncheckedUpdateManyWithoutCouponInput = {
   tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   pointsRedeemed?: Prisma.IntFieldUpdateOperationsInput | number
+  giftCardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  giftCardAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  isGift?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  giftMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  refundAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  refundReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripePaymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCheckoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingAddressId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type OrderCreateManyGiftCardInput = {
+  id?: string
+  orderNumber?: number
+  userId?: string | null
+  email: string
+  status?: $Enums.OrderStatus
+  subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  shippingCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  couponId?: string | null
+  pointsRedeemed?: number
+  giftCardAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  isGift?: boolean
+  giftMessage?: string | null
+  refundAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  refundReason?: string | null
+  stripePaymentIntentId?: string | null
+  stripeCheckoutSessionId?: string | null
+  shippingAddressId?: string | null
+  internalNotes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type OrderUpdateWithoutGiftCardInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  shippingCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  pointsRedeemed?: Prisma.IntFieldUpdateOperationsInput | number
+  giftCardAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  isGift?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  giftMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  refundAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  refundReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripePaymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCheckoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneWithoutOrdersNestedInput
+  coupon?: Prisma.CouponUpdateOneWithoutOrdersNestedInput
+  shippingAddress?: Prisma.AddressUpdateOneWithoutOrdersNestedInput
+  items?: Prisma.OrderItemUpdateManyWithoutOrderNestedInput
+  shipments?: Prisma.ShipmentUpdateManyWithoutOrderNestedInput
+  events?: Prisma.OrderEventUpdateManyWithoutOrderNestedInput
+  tickets?: Prisma.SupportTicketUpdateManyWithoutOrderNestedInput
+  giftCardsIssued?: Prisma.GiftCardUpdateManyWithoutPurchaseOrderNestedInput
+}
+
+export type OrderUncheckedUpdateWithoutGiftCardInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  orderNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  shippingCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  couponId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pointsRedeemed?: Prisma.IntFieldUpdateOperationsInput | number
+  giftCardAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  isGift?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  giftMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  refundAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  refundReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripePaymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCheckoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shippingAddressId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
+  shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutOrderNestedInput
+  events?: Prisma.OrderEventUncheckedUpdateManyWithoutOrderNestedInput
+  tickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutOrderNestedInput
+  giftCardsIssued?: Prisma.GiftCardUncheckedUpdateManyWithoutPurchaseOrderNestedInput
+}
+
+export type OrderUncheckedUpdateManyWithoutGiftCardInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  orderNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  shippingCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  couponId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pointsRedeemed?: Prisma.IntFieldUpdateOperationsInput | number
+  giftCardAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  isGift?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  giftMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  refundAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  refundReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stripePaymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stripeCheckoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shippingAddressId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1559,11 +2659,17 @@ export type OrderUncheckedUpdateManyWithoutCouponInput = {
 export type OrderCountOutputType = {
   items: number
   shipments: number
+  events: number
+  tickets: number
+  giftCardsIssued: number
 }
 
 export type OrderCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   items?: boolean | OrderCountOutputTypeCountItemsArgs
   shipments?: boolean | OrderCountOutputTypeCountShipmentsArgs
+  events?: boolean | OrderCountOutputTypeCountEventsArgs
+  tickets?: boolean | OrderCountOutputTypeCountTicketsArgs
+  giftCardsIssued?: boolean | OrderCountOutputTypeCountGiftCardsIssuedArgs
 }
 
 /**
@@ -1590,6 +2696,27 @@ export type OrderCountOutputTypeCountShipmentsArgs<ExtArgs extends runtime.Types
   where?: Prisma.ShipmentWhereInput
 }
 
+/**
+ * OrderCountOutputType without action
+ */
+export type OrderCountOutputTypeCountEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.OrderEventWhereInput
+}
+
+/**
+ * OrderCountOutputType without action
+ */
+export type OrderCountOutputTypeCountTicketsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SupportTicketWhereInput
+}
+
+/**
+ * OrderCountOutputType without action
+ */
+export type OrderCountOutputTypeCountGiftCardsIssuedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.GiftCardWhereInput
+}
+
 
 export type OrderSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1604,6 +2731,12 @@ export type OrderSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   total?: boolean
   couponId?: boolean
   pointsRedeemed?: boolean
+  giftCardId?: boolean
+  giftCardAmount?: boolean
+  isGift?: boolean
+  giftMessage?: boolean
+  refundAmount?: boolean
+  refundReason?: boolean
   stripePaymentIntentId?: boolean
   stripeCheckoutSessionId?: boolean
   shippingAddressId?: boolean
@@ -1612,9 +2745,13 @@ export type OrderSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   updatedAt?: boolean
   user?: boolean | Prisma.Order$userArgs<ExtArgs>
   coupon?: boolean | Prisma.Order$couponArgs<ExtArgs>
+  giftCard?: boolean | Prisma.Order$giftCardArgs<ExtArgs>
   shippingAddress?: boolean | Prisma.Order$shippingAddressArgs<ExtArgs>
   items?: boolean | Prisma.Order$itemsArgs<ExtArgs>
   shipments?: boolean | Prisma.Order$shipmentsArgs<ExtArgs>
+  events?: boolean | Prisma.Order$eventsArgs<ExtArgs>
+  tickets?: boolean | Prisma.Order$ticketsArgs<ExtArgs>
+  giftCardsIssued?: boolean | Prisma.Order$giftCardsIssuedArgs<ExtArgs>
   _count?: boolean | Prisma.OrderCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["order"]>
 
@@ -1631,6 +2768,12 @@ export type OrderSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   total?: boolean
   couponId?: boolean
   pointsRedeemed?: boolean
+  giftCardId?: boolean
+  giftCardAmount?: boolean
+  isGift?: boolean
+  giftMessage?: boolean
+  refundAmount?: boolean
+  refundReason?: boolean
   stripePaymentIntentId?: boolean
   stripeCheckoutSessionId?: boolean
   shippingAddressId?: boolean
@@ -1639,6 +2782,7 @@ export type OrderSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   updatedAt?: boolean
   user?: boolean | Prisma.Order$userArgs<ExtArgs>
   coupon?: boolean | Prisma.Order$couponArgs<ExtArgs>
+  giftCard?: boolean | Prisma.Order$giftCardArgs<ExtArgs>
   shippingAddress?: boolean | Prisma.Order$shippingAddressArgs<ExtArgs>
 }, ExtArgs["result"]["order"]>
 
@@ -1655,6 +2799,12 @@ export type OrderSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   total?: boolean
   couponId?: boolean
   pointsRedeemed?: boolean
+  giftCardId?: boolean
+  giftCardAmount?: boolean
+  isGift?: boolean
+  giftMessage?: boolean
+  refundAmount?: boolean
+  refundReason?: boolean
   stripePaymentIntentId?: boolean
   stripeCheckoutSessionId?: boolean
   shippingAddressId?: boolean
@@ -1663,6 +2813,7 @@ export type OrderSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   updatedAt?: boolean
   user?: boolean | Prisma.Order$userArgs<ExtArgs>
   coupon?: boolean | Prisma.Order$couponArgs<ExtArgs>
+  giftCard?: boolean | Prisma.Order$giftCardArgs<ExtArgs>
   shippingAddress?: boolean | Prisma.Order$shippingAddressArgs<ExtArgs>
 }, ExtArgs["result"]["order"]>
 
@@ -1679,6 +2830,12 @@ export type OrderSelectScalar = {
   total?: boolean
   couponId?: boolean
   pointsRedeemed?: boolean
+  giftCardId?: boolean
+  giftCardAmount?: boolean
+  isGift?: boolean
+  giftMessage?: boolean
+  refundAmount?: boolean
+  refundReason?: boolean
   stripePaymentIntentId?: boolean
   stripeCheckoutSessionId?: boolean
   shippingAddressId?: boolean
@@ -1687,23 +2844,29 @@ export type OrderSelectScalar = {
   updatedAt?: boolean
 }
 
-export type OrderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "orderNumber" | "userId" | "email" | "status" | "subtotal" | "discount" | "shippingCost" | "tax" | "total" | "couponId" | "pointsRedeemed" | "stripePaymentIntentId" | "stripeCheckoutSessionId" | "shippingAddressId" | "internalNotes" | "createdAt" | "updatedAt", ExtArgs["result"]["order"]>
+export type OrderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "orderNumber" | "userId" | "email" | "status" | "subtotal" | "discount" | "shippingCost" | "tax" | "total" | "couponId" | "pointsRedeemed" | "giftCardId" | "giftCardAmount" | "isGift" | "giftMessage" | "refundAmount" | "refundReason" | "stripePaymentIntentId" | "stripeCheckoutSessionId" | "shippingAddressId" | "internalNotes" | "createdAt" | "updatedAt", ExtArgs["result"]["order"]>
 export type OrderInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.Order$userArgs<ExtArgs>
   coupon?: boolean | Prisma.Order$couponArgs<ExtArgs>
+  giftCard?: boolean | Prisma.Order$giftCardArgs<ExtArgs>
   shippingAddress?: boolean | Prisma.Order$shippingAddressArgs<ExtArgs>
   items?: boolean | Prisma.Order$itemsArgs<ExtArgs>
   shipments?: boolean | Prisma.Order$shipmentsArgs<ExtArgs>
+  events?: boolean | Prisma.Order$eventsArgs<ExtArgs>
+  tickets?: boolean | Prisma.Order$ticketsArgs<ExtArgs>
+  giftCardsIssued?: boolean | Prisma.Order$giftCardsIssuedArgs<ExtArgs>
   _count?: boolean | Prisma.OrderCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type OrderIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.Order$userArgs<ExtArgs>
   coupon?: boolean | Prisma.Order$couponArgs<ExtArgs>
+  giftCard?: boolean | Prisma.Order$giftCardArgs<ExtArgs>
   shippingAddress?: boolean | Prisma.Order$shippingAddressArgs<ExtArgs>
 }
 export type OrderIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.Order$userArgs<ExtArgs>
   coupon?: boolean | Prisma.Order$couponArgs<ExtArgs>
+  giftCard?: boolean | Prisma.Order$giftCardArgs<ExtArgs>
   shippingAddress?: boolean | Prisma.Order$shippingAddressArgs<ExtArgs>
 }
 
@@ -1712,9 +2875,13 @@ export type $OrderPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   objects: {
     user: Prisma.$UserPayload<ExtArgs> | null
     coupon: Prisma.$CouponPayload<ExtArgs> | null
+    giftCard: Prisma.$GiftCardPayload<ExtArgs> | null
     shippingAddress: Prisma.$AddressPayload<ExtArgs> | null
     items: Prisma.$OrderItemPayload<ExtArgs>[]
     shipments: Prisma.$ShipmentPayload<ExtArgs>[]
+    events: Prisma.$OrderEventPayload<ExtArgs>[]
+    tickets: Prisma.$SupportTicketPayload<ExtArgs>[]
+    giftCardsIssued: Prisma.$GiftCardPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1729,6 +2896,12 @@ export type $OrderPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     total: runtime.Decimal
     couponId: string | null
     pointsRedeemed: number
+    giftCardId: string | null
+    giftCardAmount: runtime.Decimal
+    isGift: boolean
+    giftMessage: string | null
+    refundAmount: runtime.Decimal
+    refundReason: string | null
     stripePaymentIntentId: string | null
     stripeCheckoutSessionId: string | null
     shippingAddressId: string | null
@@ -2131,9 +3304,13 @@ export interface Prisma__OrderClient<T, Null = never, ExtArgs extends runtime.Ty
   readonly [Symbol.toStringTag]: "PrismaPromise"
   user<T extends Prisma.Order$userArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Order$userArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   coupon<T extends Prisma.Order$couponArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Order$couponArgs<ExtArgs>>): Prisma.Prisma__CouponClient<runtime.Types.Result.GetResult<Prisma.$CouponPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  giftCard<T extends Prisma.Order$giftCardArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Order$giftCardArgs<ExtArgs>>): Prisma.Prisma__GiftCardClient<runtime.Types.Result.GetResult<Prisma.$GiftCardPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   shippingAddress<T extends Prisma.Order$shippingAddressArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Order$shippingAddressArgs<ExtArgs>>): Prisma.Prisma__AddressClient<runtime.Types.Result.GetResult<Prisma.$AddressPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   items<T extends Prisma.Order$itemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Order$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrderItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   shipments<T extends Prisma.Order$shipmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Order$shipmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ShipmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  events<T extends Prisma.Order$eventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Order$eventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrderEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  tickets<T extends Prisma.Order$ticketsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Order$ticketsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SupportTicketPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  giftCardsIssued<T extends Prisma.Order$giftCardsIssuedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Order$giftCardsIssuedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GiftCardPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2175,6 +3352,12 @@ export interface OrderFieldRefs {
   readonly total: Prisma.FieldRef<"Order", 'Decimal'>
   readonly couponId: Prisma.FieldRef<"Order", 'String'>
   readonly pointsRedeemed: Prisma.FieldRef<"Order", 'Int'>
+  readonly giftCardId: Prisma.FieldRef<"Order", 'String'>
+  readonly giftCardAmount: Prisma.FieldRef<"Order", 'Decimal'>
+  readonly isGift: Prisma.FieldRef<"Order", 'Boolean'>
+  readonly giftMessage: Prisma.FieldRef<"Order", 'String'>
+  readonly refundAmount: Prisma.FieldRef<"Order", 'Decimal'>
+  readonly refundReason: Prisma.FieldRef<"Order", 'String'>
   readonly stripePaymentIntentId: Prisma.FieldRef<"Order", 'String'>
   readonly stripeCheckoutSessionId: Prisma.FieldRef<"Order", 'String'>
   readonly shippingAddressId: Prisma.FieldRef<"Order", 'String'>
@@ -2620,6 +3803,25 @@ export type Order$couponArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
 }
 
 /**
+ * Order.giftCard
+ */
+export type Order$giftCardArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the GiftCard
+   */
+  select?: Prisma.GiftCardSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the GiftCard
+   */
+  omit?: Prisma.GiftCardOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.GiftCardInclude<ExtArgs> | null
+  where?: Prisma.GiftCardWhereInput
+}
+
+/**
  * Order.shippingAddress
  */
 export type Order$shippingAddressArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2684,6 +3886,78 @@ export type Order$shipmentsArgs<ExtArgs extends runtime.Types.Extensions.Interna
   take?: number
   skip?: number
   distinct?: Prisma.ShipmentScalarFieldEnum | Prisma.ShipmentScalarFieldEnum[]
+}
+
+/**
+ * Order.events
+ */
+export type Order$eventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the OrderEvent
+   */
+  select?: Prisma.OrderEventSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the OrderEvent
+   */
+  omit?: Prisma.OrderEventOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OrderEventInclude<ExtArgs> | null
+  where?: Prisma.OrderEventWhereInput
+  orderBy?: Prisma.OrderEventOrderByWithRelationInput | Prisma.OrderEventOrderByWithRelationInput[]
+  cursor?: Prisma.OrderEventWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.OrderEventScalarFieldEnum | Prisma.OrderEventScalarFieldEnum[]
+}
+
+/**
+ * Order.tickets
+ */
+export type Order$ticketsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SupportTicket
+   */
+  select?: Prisma.SupportTicketSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the SupportTicket
+   */
+  omit?: Prisma.SupportTicketOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SupportTicketInclude<ExtArgs> | null
+  where?: Prisma.SupportTicketWhereInput
+  orderBy?: Prisma.SupportTicketOrderByWithRelationInput | Prisma.SupportTicketOrderByWithRelationInput[]
+  cursor?: Prisma.SupportTicketWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SupportTicketScalarFieldEnum | Prisma.SupportTicketScalarFieldEnum[]
+}
+
+/**
+ * Order.giftCardsIssued
+ */
+export type Order$giftCardsIssuedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the GiftCard
+   */
+  select?: Prisma.GiftCardSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the GiftCard
+   */
+  omit?: Prisma.GiftCardOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.GiftCardInclude<ExtArgs> | null
+  where?: Prisma.GiftCardWhereInput
+  orderBy?: Prisma.GiftCardOrderByWithRelationInput | Prisma.GiftCardOrderByWithRelationInput[]
+  cursor?: Prisma.GiftCardWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.GiftCardScalarFieldEnum | Prisma.GiftCardScalarFieldEnum[]
 }
 
 /**

@@ -53,6 +53,10 @@ export type UserMinAggregateOutputType = {
   createdAt: Date | null
   updatedAt: Date | null
   lastLoginAt: Date | null
+  notifyOrderUpdates: boolean | null
+  notifyRestock: boolean | null
+  referralCode: string | null
+  referredById: string | null
 }
 
 export type UserMaxAggregateOutputType = {
@@ -72,6 +76,10 @@ export type UserMaxAggregateOutputType = {
   createdAt: Date | null
   updatedAt: Date | null
   lastLoginAt: Date | null
+  notifyOrderUpdates: boolean | null
+  notifyRestock: boolean | null
+  referralCode: string | null
+  referredById: string | null
 }
 
 export type UserCountAggregateOutputType = {
@@ -92,6 +100,10 @@ export type UserCountAggregateOutputType = {
   createdAt: number
   updatedAt: number
   lastLoginAt: number
+  notifyOrderUpdates: number
+  notifyRestock: number
+  referralCode: number
+  referredById: number
   _all: number
 }
 
@@ -123,6 +135,10 @@ export type UserMinAggregateInputType = {
   createdAt?: true
   updatedAt?: true
   lastLoginAt?: true
+  notifyOrderUpdates?: true
+  notifyRestock?: true
+  referralCode?: true
+  referredById?: true
 }
 
 export type UserMaxAggregateInputType = {
@@ -142,6 +158,10 @@ export type UserMaxAggregateInputType = {
   createdAt?: true
   updatedAt?: true
   lastLoginAt?: true
+  notifyOrderUpdates?: true
+  notifyRestock?: true
+  referralCode?: true
+  referredById?: true
 }
 
 export type UserCountAggregateInputType = {
@@ -162,6 +182,10 @@ export type UserCountAggregateInputType = {
   createdAt?: true
   updatedAt?: true
   lastLoginAt?: true
+  notifyOrderUpdates?: true
+  notifyRestock?: true
+  referralCode?: true
+  referredById?: true
   _all?: true
 }
 
@@ -269,6 +293,10 @@ export type UserGroupByOutputType = {
   createdAt: Date
   updatedAt: Date
   lastLoginAt: Date | null
+  notifyOrderUpdates: boolean
+  notifyRestock: boolean
+  referralCode: string | null
+  referredById: string | null
   _count: UserCountAggregateOutputType | null
   _avg: UserAvgAggregateOutputType | null
   _sum: UserSumAggregateOutputType | null
@@ -312,6 +340,10 @@ export type UserWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   lastLoginAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  notifyOrderUpdates?: Prisma.BoolFilter<"User"> | boolean
+  notifyRestock?: Prisma.BoolFilter<"User"> | boolean
+  referralCode?: Prisma.StringNullableFilter<"User"> | string | null
+  referredById?: Prisma.StringNullableFilter<"User"> | string | null
   accounts?: Prisma.AccountListRelationFilter
   sessions?: Prisma.SessionListRelationFilter
   addresses?: Prisma.AddressListRelationFilter
@@ -322,6 +354,9 @@ export type UserWhereInput = {
   pointsTransactions?: Prisma.PointsTransactionListRelationFilter
   stockAlerts?: Prisma.StockAlertListRelationFilter
   auditLogs?: Prisma.AuditLogListRelationFilter
+  supportTickets?: Prisma.SupportTicketListRelationFilter
+  ticketMessages?: Prisma.TicketMessageListRelationFilter
+  giftCardsBought?: Prisma.GiftCardListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -342,6 +377,10 @@ export type UserOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   lastLoginAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  notifyOrderUpdates?: Prisma.SortOrder
+  notifyRestock?: Prisma.SortOrder
+  referralCode?: Prisma.SortOrderInput | Prisma.SortOrder
+  referredById?: Prisma.SortOrderInput | Prisma.SortOrder
   accounts?: Prisma.AccountOrderByRelationAggregateInput
   sessions?: Prisma.SessionOrderByRelationAggregateInput
   addresses?: Prisma.AddressOrderByRelationAggregateInput
@@ -352,11 +391,15 @@ export type UserOrderByWithRelationInput = {
   pointsTransactions?: Prisma.PointsTransactionOrderByRelationAggregateInput
   stockAlerts?: Prisma.StockAlertOrderByRelationAggregateInput
   auditLogs?: Prisma.AuditLogOrderByRelationAggregateInput
+  supportTickets?: Prisma.SupportTicketOrderByRelationAggregateInput
+  ticketMessages?: Prisma.TicketMessageOrderByRelationAggregateInput
+  giftCardsBought?: Prisma.GiftCardOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
   id?: string
   email?: string
+  referralCode?: string
   AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
@@ -375,6 +418,9 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   lastLoginAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  notifyOrderUpdates?: Prisma.BoolFilter<"User"> | boolean
+  notifyRestock?: Prisma.BoolFilter<"User"> | boolean
+  referredById?: Prisma.StringNullableFilter<"User"> | string | null
   accounts?: Prisma.AccountListRelationFilter
   sessions?: Prisma.SessionListRelationFilter
   addresses?: Prisma.AddressListRelationFilter
@@ -385,7 +431,10 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   pointsTransactions?: Prisma.PointsTransactionListRelationFilter
   stockAlerts?: Prisma.StockAlertListRelationFilter
   auditLogs?: Prisma.AuditLogListRelationFilter
-}, "id" | "email">
+  supportTickets?: Prisma.SupportTicketListRelationFilter
+  ticketMessages?: Prisma.TicketMessageListRelationFilter
+  giftCardsBought?: Prisma.GiftCardListRelationFilter
+}, "id" | "email" | "referralCode">
 
 export type UserOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -405,6 +454,10 @@ export type UserOrderByWithAggregationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   lastLoginAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  notifyOrderUpdates?: Prisma.SortOrder
+  notifyRestock?: Prisma.SortOrder
+  referralCode?: Prisma.SortOrderInput | Prisma.SortOrder
+  referredById?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _avg?: Prisma.UserAvgOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
@@ -433,6 +486,10 @@ export type UserScalarWhereWithAggregatesInput = {
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   lastLoginAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
+  notifyOrderUpdates?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
+  notifyRestock?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
+  referralCode?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  referredById?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
 }
 
 export type UserCreateInput = {
@@ -453,6 +510,10 @@ export type UserCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   lastLoginAt?: Date | string | null
+  notifyOrderUpdates?: boolean
+  notifyRestock?: boolean
+  referralCode?: string | null
+  referredById?: string | null
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   addresses?: Prisma.AddressCreateNestedManyWithoutUserInput
@@ -463,6 +524,9 @@ export type UserCreateInput = {
   pointsTransactions?: Prisma.PointsTransactionCreateNestedManyWithoutUserInput
   stockAlerts?: Prisma.StockAlertCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
+  ticketMessages?: Prisma.TicketMessageCreateNestedManyWithoutAuthorInput
+  giftCardsBought?: Prisma.GiftCardCreateNestedManyWithoutPurchasedByInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -483,6 +547,10 @@ export type UserUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   lastLoginAt?: Date | string | null
+  notifyOrderUpdates?: boolean
+  notifyRestock?: boolean
+  referralCode?: string | null
+  referredById?: string | null
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   addresses?: Prisma.AddressUncheckedCreateNestedManyWithoutUserInput
@@ -493,6 +561,9 @@ export type UserUncheckedCreateInput = {
   pointsTransactions?: Prisma.PointsTransactionUncheckedCreateNestedManyWithoutUserInput
   stockAlerts?: Prisma.StockAlertUncheckedCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
+  ticketMessages?: Prisma.TicketMessageUncheckedCreateNestedManyWithoutAuthorInput
+  giftCardsBought?: Prisma.GiftCardUncheckedCreateNestedManyWithoutPurchasedByInput
 }
 
 export type UserUpdateInput = {
@@ -513,6 +584,10 @@ export type UserUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notifyOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notifyRestock?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referredById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   addresses?: Prisma.AddressUpdateManyWithoutUserNestedInput
@@ -523,6 +598,9 @@ export type UserUpdateInput = {
   pointsTransactions?: Prisma.PointsTransactionUpdateManyWithoutUserNestedInput
   stockAlerts?: Prisma.StockAlertUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
+  ticketMessages?: Prisma.TicketMessageUpdateManyWithoutAuthorNestedInput
+  giftCardsBought?: Prisma.GiftCardUpdateManyWithoutPurchasedByNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -543,6 +621,10 @@ export type UserUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notifyOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notifyRestock?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referredById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   addresses?: Prisma.AddressUncheckedUpdateManyWithoutUserNestedInput
@@ -553,6 +635,9 @@ export type UserUncheckedUpdateInput = {
   pointsTransactions?: Prisma.PointsTransactionUncheckedUpdateManyWithoutUserNestedInput
   stockAlerts?: Prisma.StockAlertUncheckedUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+  ticketMessages?: Prisma.TicketMessageUncheckedUpdateManyWithoutAuthorNestedInput
+  giftCardsBought?: Prisma.GiftCardUncheckedUpdateManyWithoutPurchasedByNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -573,6 +658,10 @@ export type UserCreateManyInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   lastLoginAt?: Date | string | null
+  notifyOrderUpdates?: boolean
+  notifyRestock?: boolean
+  referralCode?: string | null
+  referredById?: string | null
 }
 
 export type UserUpdateManyMutationInput = {
@@ -593,6 +682,10 @@ export type UserUpdateManyMutationInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notifyOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notifyRestock?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referredById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type UserUncheckedUpdateManyInput = {
@@ -613,6 +706,10 @@ export type UserUncheckedUpdateManyInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notifyOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notifyRestock?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referredById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type StringNullableListFilter<$PrismaModel = never> = {
@@ -641,6 +738,10 @@ export type UserCountOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   lastLoginAt?: Prisma.SortOrder
+  notifyOrderUpdates?: Prisma.SortOrder
+  notifyRestock?: Prisma.SortOrder
+  referralCode?: Prisma.SortOrder
+  referredById?: Prisma.SortOrder
 }
 
 export type UserAvgOrderByAggregateInput = {
@@ -665,6 +766,10 @@ export type UserMaxOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   lastLoginAt?: Prisma.SortOrder
+  notifyOrderUpdates?: Prisma.SortOrder
+  notifyRestock?: Prisma.SortOrder
+  referralCode?: Prisma.SortOrder
+  referredById?: Prisma.SortOrder
 }
 
 export type UserMinOrderByAggregateInput = {
@@ -684,6 +789,10 @@ export type UserMinOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   lastLoginAt?: Prisma.SortOrder
+  notifyOrderUpdates?: Prisma.SortOrder
+  notifyRestock?: Prisma.SortOrder
+  referralCode?: Prisma.SortOrder
+  referredById?: Prisma.SortOrder
 }
 
 export type UserSumOrderByAggregateInput = {
@@ -886,6 +995,54 @@ export type UserUpdateOneRequiredWithoutStockAlertsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutStockAlertsInput, Prisma.UserUpdateWithoutStockAlertsInput>, Prisma.UserUncheckedUpdateWithoutStockAlertsInput>
 }
 
+export type UserCreateNestedOneWithoutGiftCardsBoughtInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutGiftCardsBoughtInput, Prisma.UserUncheckedCreateWithoutGiftCardsBoughtInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutGiftCardsBoughtInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneWithoutGiftCardsBoughtNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutGiftCardsBoughtInput, Prisma.UserUncheckedCreateWithoutGiftCardsBoughtInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutGiftCardsBoughtInput
+  upsert?: Prisma.UserUpsertWithoutGiftCardsBoughtInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutGiftCardsBoughtInput, Prisma.UserUpdateWithoutGiftCardsBoughtInput>, Prisma.UserUncheckedUpdateWithoutGiftCardsBoughtInput>
+}
+
+export type UserCreateNestedOneWithoutSupportTicketsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSupportTicketsInput, Prisma.UserUncheckedCreateWithoutSupportTicketsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSupportTicketsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneWithoutSupportTicketsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSupportTicketsInput, Prisma.UserUncheckedCreateWithoutSupportTicketsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSupportTicketsInput
+  upsert?: Prisma.UserUpsertWithoutSupportTicketsInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSupportTicketsInput, Prisma.UserUpdateWithoutSupportTicketsInput>, Prisma.UserUncheckedUpdateWithoutSupportTicketsInput>
+}
+
+export type UserCreateNestedOneWithoutTicketMessagesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutTicketMessagesInput, Prisma.UserUncheckedCreateWithoutTicketMessagesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTicketMessagesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneWithoutTicketMessagesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutTicketMessagesInput, Prisma.UserUncheckedCreateWithoutTicketMessagesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTicketMessagesInput
+  upsert?: Prisma.UserUpsertWithoutTicketMessagesInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutTicketMessagesInput, Prisma.UserUpdateWithoutTicketMessagesInput>, Prisma.UserUncheckedUpdateWithoutTicketMessagesInput>
+}
+
 export type UserCreateNestedOneWithoutAuditLogsInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutAuditLogsInput, Prisma.UserUncheckedCreateWithoutAuditLogsInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutAuditLogsInput
@@ -920,6 +1077,10 @@ export type UserCreateWithoutAccountsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   lastLoginAt?: Date | string | null
+  notifyOrderUpdates?: boolean
+  notifyRestock?: boolean
+  referralCode?: string | null
+  referredById?: string | null
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   addresses?: Prisma.AddressCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
@@ -929,6 +1090,9 @@ export type UserCreateWithoutAccountsInput = {
   pointsTransactions?: Prisma.PointsTransactionCreateNestedManyWithoutUserInput
   stockAlerts?: Prisma.StockAlertCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
+  ticketMessages?: Prisma.TicketMessageCreateNestedManyWithoutAuthorInput
+  giftCardsBought?: Prisma.GiftCardCreateNestedManyWithoutPurchasedByInput
 }
 
 export type UserUncheckedCreateWithoutAccountsInput = {
@@ -949,6 +1113,10 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   lastLoginAt?: Date | string | null
+  notifyOrderUpdates?: boolean
+  notifyRestock?: boolean
+  referralCode?: string | null
+  referredById?: string | null
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   addresses?: Prisma.AddressUncheckedCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
@@ -958,6 +1126,9 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   pointsTransactions?: Prisma.PointsTransactionUncheckedCreateNestedManyWithoutUserInput
   stockAlerts?: Prisma.StockAlertUncheckedCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
+  ticketMessages?: Prisma.TicketMessageUncheckedCreateNestedManyWithoutAuthorInput
+  giftCardsBought?: Prisma.GiftCardUncheckedCreateNestedManyWithoutPurchasedByInput
 }
 
 export type UserCreateOrConnectWithoutAccountsInput = {
@@ -994,6 +1165,10 @@ export type UserUpdateWithoutAccountsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notifyOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notifyRestock?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referredById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   addresses?: Prisma.AddressUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
@@ -1003,6 +1178,9 @@ export type UserUpdateWithoutAccountsInput = {
   pointsTransactions?: Prisma.PointsTransactionUpdateManyWithoutUserNestedInput
   stockAlerts?: Prisma.StockAlertUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
+  ticketMessages?: Prisma.TicketMessageUpdateManyWithoutAuthorNestedInput
+  giftCardsBought?: Prisma.GiftCardUpdateManyWithoutPurchasedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -1023,6 +1201,10 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notifyOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notifyRestock?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referredById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   addresses?: Prisma.AddressUncheckedUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
@@ -1032,6 +1214,9 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   pointsTransactions?: Prisma.PointsTransactionUncheckedUpdateManyWithoutUserNestedInput
   stockAlerts?: Prisma.StockAlertUncheckedUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+  ticketMessages?: Prisma.TicketMessageUncheckedUpdateManyWithoutAuthorNestedInput
+  giftCardsBought?: Prisma.GiftCardUncheckedUpdateManyWithoutPurchasedByNestedInput
 }
 
 export type UserCreateWithoutSessionsInput = {
@@ -1052,6 +1237,10 @@ export type UserCreateWithoutSessionsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   lastLoginAt?: Date | string | null
+  notifyOrderUpdates?: boolean
+  notifyRestock?: boolean
+  referralCode?: string | null
+  referredById?: string | null
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   addresses?: Prisma.AddressCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
@@ -1061,6 +1250,9 @@ export type UserCreateWithoutSessionsInput = {
   pointsTransactions?: Prisma.PointsTransactionCreateNestedManyWithoutUserInput
   stockAlerts?: Prisma.StockAlertCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
+  ticketMessages?: Prisma.TicketMessageCreateNestedManyWithoutAuthorInput
+  giftCardsBought?: Prisma.GiftCardCreateNestedManyWithoutPurchasedByInput
 }
 
 export type UserUncheckedCreateWithoutSessionsInput = {
@@ -1081,6 +1273,10 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   lastLoginAt?: Date | string | null
+  notifyOrderUpdates?: boolean
+  notifyRestock?: boolean
+  referralCode?: string | null
+  referredById?: string | null
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   addresses?: Prisma.AddressUncheckedCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
@@ -1090,6 +1286,9 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   pointsTransactions?: Prisma.PointsTransactionUncheckedCreateNestedManyWithoutUserInput
   stockAlerts?: Prisma.StockAlertUncheckedCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
+  ticketMessages?: Prisma.TicketMessageUncheckedCreateNestedManyWithoutAuthorInput
+  giftCardsBought?: Prisma.GiftCardUncheckedCreateNestedManyWithoutPurchasedByInput
 }
 
 export type UserCreateOrConnectWithoutSessionsInput = {
@@ -1126,6 +1325,10 @@ export type UserUpdateWithoutSessionsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notifyOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notifyRestock?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referredById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   addresses?: Prisma.AddressUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
@@ -1135,6 +1338,9 @@ export type UserUpdateWithoutSessionsInput = {
   pointsTransactions?: Prisma.PointsTransactionUpdateManyWithoutUserNestedInput
   stockAlerts?: Prisma.StockAlertUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
+  ticketMessages?: Prisma.TicketMessageUpdateManyWithoutAuthorNestedInput
+  giftCardsBought?: Prisma.GiftCardUpdateManyWithoutPurchasedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -1155,6 +1361,10 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notifyOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notifyRestock?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referredById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   addresses?: Prisma.AddressUncheckedUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
@@ -1164,6 +1374,9 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   pointsTransactions?: Prisma.PointsTransactionUncheckedUpdateManyWithoutUserNestedInput
   stockAlerts?: Prisma.StockAlertUncheckedUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+  ticketMessages?: Prisma.TicketMessageUncheckedUpdateManyWithoutAuthorNestedInput
+  giftCardsBought?: Prisma.GiftCardUncheckedUpdateManyWithoutPurchasedByNestedInput
 }
 
 export type UserCreateWithoutCartInput = {
@@ -1184,6 +1397,10 @@ export type UserCreateWithoutCartInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   lastLoginAt?: Date | string | null
+  notifyOrderUpdates?: boolean
+  notifyRestock?: boolean
+  referralCode?: string | null
+  referredById?: string | null
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   addresses?: Prisma.AddressCreateNestedManyWithoutUserInput
@@ -1193,6 +1410,9 @@ export type UserCreateWithoutCartInput = {
   pointsTransactions?: Prisma.PointsTransactionCreateNestedManyWithoutUserInput
   stockAlerts?: Prisma.StockAlertCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
+  ticketMessages?: Prisma.TicketMessageCreateNestedManyWithoutAuthorInput
+  giftCardsBought?: Prisma.GiftCardCreateNestedManyWithoutPurchasedByInput
 }
 
 export type UserUncheckedCreateWithoutCartInput = {
@@ -1213,6 +1433,10 @@ export type UserUncheckedCreateWithoutCartInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   lastLoginAt?: Date | string | null
+  notifyOrderUpdates?: boolean
+  notifyRestock?: boolean
+  referralCode?: string | null
+  referredById?: string | null
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   addresses?: Prisma.AddressUncheckedCreateNestedManyWithoutUserInput
@@ -1222,6 +1446,9 @@ export type UserUncheckedCreateWithoutCartInput = {
   pointsTransactions?: Prisma.PointsTransactionUncheckedCreateNestedManyWithoutUserInput
   stockAlerts?: Prisma.StockAlertUncheckedCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
+  ticketMessages?: Prisma.TicketMessageUncheckedCreateNestedManyWithoutAuthorInput
+  giftCardsBought?: Prisma.GiftCardUncheckedCreateNestedManyWithoutPurchasedByInput
 }
 
 export type UserCreateOrConnectWithoutCartInput = {
@@ -1258,6 +1485,10 @@ export type UserUpdateWithoutCartInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notifyOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notifyRestock?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referredById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   addresses?: Prisma.AddressUpdateManyWithoutUserNestedInput
@@ -1267,6 +1498,9 @@ export type UserUpdateWithoutCartInput = {
   pointsTransactions?: Prisma.PointsTransactionUpdateManyWithoutUserNestedInput
   stockAlerts?: Prisma.StockAlertUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
+  ticketMessages?: Prisma.TicketMessageUpdateManyWithoutAuthorNestedInput
+  giftCardsBought?: Prisma.GiftCardUpdateManyWithoutPurchasedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCartInput = {
@@ -1287,6 +1521,10 @@ export type UserUncheckedUpdateWithoutCartInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notifyOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notifyRestock?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referredById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   addresses?: Prisma.AddressUncheckedUpdateManyWithoutUserNestedInput
@@ -1296,6 +1534,9 @@ export type UserUncheckedUpdateWithoutCartInput = {
   pointsTransactions?: Prisma.PointsTransactionUncheckedUpdateManyWithoutUserNestedInput
   stockAlerts?: Prisma.StockAlertUncheckedUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+  ticketMessages?: Prisma.TicketMessageUncheckedUpdateManyWithoutAuthorNestedInput
+  giftCardsBought?: Prisma.GiftCardUncheckedUpdateManyWithoutPurchasedByNestedInput
 }
 
 export type UserCreateWithoutOrdersInput = {
@@ -1316,6 +1557,10 @@ export type UserCreateWithoutOrdersInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   lastLoginAt?: Date | string | null
+  notifyOrderUpdates?: boolean
+  notifyRestock?: boolean
+  referralCode?: string | null
+  referredById?: string | null
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   addresses?: Prisma.AddressCreateNestedManyWithoutUserInput
@@ -1325,6 +1570,9 @@ export type UserCreateWithoutOrdersInput = {
   pointsTransactions?: Prisma.PointsTransactionCreateNestedManyWithoutUserInput
   stockAlerts?: Prisma.StockAlertCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
+  ticketMessages?: Prisma.TicketMessageCreateNestedManyWithoutAuthorInput
+  giftCardsBought?: Prisma.GiftCardCreateNestedManyWithoutPurchasedByInput
 }
 
 export type UserUncheckedCreateWithoutOrdersInput = {
@@ -1345,6 +1593,10 @@ export type UserUncheckedCreateWithoutOrdersInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   lastLoginAt?: Date | string | null
+  notifyOrderUpdates?: boolean
+  notifyRestock?: boolean
+  referralCode?: string | null
+  referredById?: string | null
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   addresses?: Prisma.AddressUncheckedCreateNestedManyWithoutUserInput
@@ -1354,6 +1606,9 @@ export type UserUncheckedCreateWithoutOrdersInput = {
   pointsTransactions?: Prisma.PointsTransactionUncheckedCreateNestedManyWithoutUserInput
   stockAlerts?: Prisma.StockAlertUncheckedCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
+  ticketMessages?: Prisma.TicketMessageUncheckedCreateNestedManyWithoutAuthorInput
+  giftCardsBought?: Prisma.GiftCardUncheckedCreateNestedManyWithoutPurchasedByInput
 }
 
 export type UserCreateOrConnectWithoutOrdersInput = {
@@ -1390,6 +1645,10 @@ export type UserUpdateWithoutOrdersInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notifyOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notifyRestock?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referredById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   addresses?: Prisma.AddressUpdateManyWithoutUserNestedInput
@@ -1399,6 +1658,9 @@ export type UserUpdateWithoutOrdersInput = {
   pointsTransactions?: Prisma.PointsTransactionUpdateManyWithoutUserNestedInput
   stockAlerts?: Prisma.StockAlertUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
+  ticketMessages?: Prisma.TicketMessageUpdateManyWithoutAuthorNestedInput
+  giftCardsBought?: Prisma.GiftCardUpdateManyWithoutPurchasedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutOrdersInput = {
@@ -1419,6 +1681,10 @@ export type UserUncheckedUpdateWithoutOrdersInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notifyOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notifyRestock?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referredById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   addresses?: Prisma.AddressUncheckedUpdateManyWithoutUserNestedInput
@@ -1428,6 +1694,9 @@ export type UserUncheckedUpdateWithoutOrdersInput = {
   pointsTransactions?: Prisma.PointsTransactionUncheckedUpdateManyWithoutUserNestedInput
   stockAlerts?: Prisma.StockAlertUncheckedUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+  ticketMessages?: Prisma.TicketMessageUncheckedUpdateManyWithoutAuthorNestedInput
+  giftCardsBought?: Prisma.GiftCardUncheckedUpdateManyWithoutPurchasedByNestedInput
 }
 
 export type UserCreateWithoutAddressesInput = {
@@ -1448,6 +1717,10 @@ export type UserCreateWithoutAddressesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   lastLoginAt?: Date | string | null
+  notifyOrderUpdates?: boolean
+  notifyRestock?: boolean
+  referralCode?: string | null
+  referredById?: string | null
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
@@ -1457,6 +1730,9 @@ export type UserCreateWithoutAddressesInput = {
   pointsTransactions?: Prisma.PointsTransactionCreateNestedManyWithoutUserInput
   stockAlerts?: Prisma.StockAlertCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
+  ticketMessages?: Prisma.TicketMessageCreateNestedManyWithoutAuthorInput
+  giftCardsBought?: Prisma.GiftCardCreateNestedManyWithoutPurchasedByInput
 }
 
 export type UserUncheckedCreateWithoutAddressesInput = {
@@ -1477,6 +1753,10 @@ export type UserUncheckedCreateWithoutAddressesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   lastLoginAt?: Date | string | null
+  notifyOrderUpdates?: boolean
+  notifyRestock?: boolean
+  referralCode?: string | null
+  referredById?: string | null
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
@@ -1486,6 +1766,9 @@ export type UserUncheckedCreateWithoutAddressesInput = {
   pointsTransactions?: Prisma.PointsTransactionUncheckedCreateNestedManyWithoutUserInput
   stockAlerts?: Prisma.StockAlertUncheckedCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
+  ticketMessages?: Prisma.TicketMessageUncheckedCreateNestedManyWithoutAuthorInput
+  giftCardsBought?: Prisma.GiftCardUncheckedCreateNestedManyWithoutPurchasedByInput
 }
 
 export type UserCreateOrConnectWithoutAddressesInput = {
@@ -1522,6 +1805,10 @@ export type UserUpdateWithoutAddressesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notifyOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notifyRestock?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referredById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
@@ -1531,6 +1818,9 @@ export type UserUpdateWithoutAddressesInput = {
   pointsTransactions?: Prisma.PointsTransactionUpdateManyWithoutUserNestedInput
   stockAlerts?: Prisma.StockAlertUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
+  ticketMessages?: Prisma.TicketMessageUpdateManyWithoutAuthorNestedInput
+  giftCardsBought?: Prisma.GiftCardUpdateManyWithoutPurchasedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAddressesInput = {
@@ -1551,6 +1841,10 @@ export type UserUncheckedUpdateWithoutAddressesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notifyOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notifyRestock?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referredById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
@@ -1560,6 +1854,9 @@ export type UserUncheckedUpdateWithoutAddressesInput = {
   pointsTransactions?: Prisma.PointsTransactionUncheckedUpdateManyWithoutUserNestedInput
   stockAlerts?: Prisma.StockAlertUncheckedUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+  ticketMessages?: Prisma.TicketMessageUncheckedUpdateManyWithoutAuthorNestedInput
+  giftCardsBought?: Prisma.GiftCardUncheckedUpdateManyWithoutPurchasedByNestedInput
 }
 
 export type UserCreateWithoutPointsTransactionsInput = {
@@ -1580,6 +1877,10 @@ export type UserCreateWithoutPointsTransactionsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   lastLoginAt?: Date | string | null
+  notifyOrderUpdates?: boolean
+  notifyRestock?: boolean
+  referralCode?: string | null
+  referredById?: string | null
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   addresses?: Prisma.AddressCreateNestedManyWithoutUserInput
@@ -1589,6 +1890,9 @@ export type UserCreateWithoutPointsTransactionsInput = {
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   stockAlerts?: Prisma.StockAlertCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
+  ticketMessages?: Prisma.TicketMessageCreateNestedManyWithoutAuthorInput
+  giftCardsBought?: Prisma.GiftCardCreateNestedManyWithoutPurchasedByInput
 }
 
 export type UserUncheckedCreateWithoutPointsTransactionsInput = {
@@ -1609,6 +1913,10 @@ export type UserUncheckedCreateWithoutPointsTransactionsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   lastLoginAt?: Date | string | null
+  notifyOrderUpdates?: boolean
+  notifyRestock?: boolean
+  referralCode?: string | null
+  referredById?: string | null
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   addresses?: Prisma.AddressUncheckedCreateNestedManyWithoutUserInput
@@ -1618,6 +1926,9 @@ export type UserUncheckedCreateWithoutPointsTransactionsInput = {
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   stockAlerts?: Prisma.StockAlertUncheckedCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
+  ticketMessages?: Prisma.TicketMessageUncheckedCreateNestedManyWithoutAuthorInput
+  giftCardsBought?: Prisma.GiftCardUncheckedCreateNestedManyWithoutPurchasedByInput
 }
 
 export type UserCreateOrConnectWithoutPointsTransactionsInput = {
@@ -1654,6 +1965,10 @@ export type UserUpdateWithoutPointsTransactionsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notifyOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notifyRestock?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referredById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   addresses?: Prisma.AddressUpdateManyWithoutUserNestedInput
@@ -1663,6 +1978,9 @@ export type UserUpdateWithoutPointsTransactionsInput = {
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   stockAlerts?: Prisma.StockAlertUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
+  ticketMessages?: Prisma.TicketMessageUpdateManyWithoutAuthorNestedInput
+  giftCardsBought?: Prisma.GiftCardUpdateManyWithoutPurchasedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPointsTransactionsInput = {
@@ -1683,6 +2001,10 @@ export type UserUncheckedUpdateWithoutPointsTransactionsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notifyOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notifyRestock?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referredById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   addresses?: Prisma.AddressUncheckedUpdateManyWithoutUserNestedInput
@@ -1692,6 +2014,9 @@ export type UserUncheckedUpdateWithoutPointsTransactionsInput = {
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   stockAlerts?: Prisma.StockAlertUncheckedUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+  ticketMessages?: Prisma.TicketMessageUncheckedUpdateManyWithoutAuthorNestedInput
+  giftCardsBought?: Prisma.GiftCardUncheckedUpdateManyWithoutPurchasedByNestedInput
 }
 
 export type UserCreateWithoutWishlistItemsInput = {
@@ -1712,6 +2037,10 @@ export type UserCreateWithoutWishlistItemsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   lastLoginAt?: Date | string | null
+  notifyOrderUpdates?: boolean
+  notifyRestock?: boolean
+  referralCode?: string | null
+  referredById?: string | null
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   addresses?: Prisma.AddressCreateNestedManyWithoutUserInput
@@ -1721,6 +2050,9 @@ export type UserCreateWithoutWishlistItemsInput = {
   pointsTransactions?: Prisma.PointsTransactionCreateNestedManyWithoutUserInput
   stockAlerts?: Prisma.StockAlertCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
+  ticketMessages?: Prisma.TicketMessageCreateNestedManyWithoutAuthorInput
+  giftCardsBought?: Prisma.GiftCardCreateNestedManyWithoutPurchasedByInput
 }
 
 export type UserUncheckedCreateWithoutWishlistItemsInput = {
@@ -1741,6 +2073,10 @@ export type UserUncheckedCreateWithoutWishlistItemsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   lastLoginAt?: Date | string | null
+  notifyOrderUpdates?: boolean
+  notifyRestock?: boolean
+  referralCode?: string | null
+  referredById?: string | null
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   addresses?: Prisma.AddressUncheckedCreateNestedManyWithoutUserInput
@@ -1750,6 +2086,9 @@ export type UserUncheckedCreateWithoutWishlistItemsInput = {
   pointsTransactions?: Prisma.PointsTransactionUncheckedCreateNestedManyWithoutUserInput
   stockAlerts?: Prisma.StockAlertUncheckedCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
+  ticketMessages?: Prisma.TicketMessageUncheckedCreateNestedManyWithoutAuthorInput
+  giftCardsBought?: Prisma.GiftCardUncheckedCreateNestedManyWithoutPurchasedByInput
 }
 
 export type UserCreateOrConnectWithoutWishlistItemsInput = {
@@ -1786,6 +2125,10 @@ export type UserUpdateWithoutWishlistItemsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notifyOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notifyRestock?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referredById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   addresses?: Prisma.AddressUpdateManyWithoutUserNestedInput
@@ -1795,6 +2138,9 @@ export type UserUpdateWithoutWishlistItemsInput = {
   pointsTransactions?: Prisma.PointsTransactionUpdateManyWithoutUserNestedInput
   stockAlerts?: Prisma.StockAlertUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
+  ticketMessages?: Prisma.TicketMessageUpdateManyWithoutAuthorNestedInput
+  giftCardsBought?: Prisma.GiftCardUpdateManyWithoutPurchasedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutWishlistItemsInput = {
@@ -1815,6 +2161,10 @@ export type UserUncheckedUpdateWithoutWishlistItemsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notifyOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notifyRestock?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referredById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   addresses?: Prisma.AddressUncheckedUpdateManyWithoutUserNestedInput
@@ -1824,6 +2174,9 @@ export type UserUncheckedUpdateWithoutWishlistItemsInput = {
   pointsTransactions?: Prisma.PointsTransactionUncheckedUpdateManyWithoutUserNestedInput
   stockAlerts?: Prisma.StockAlertUncheckedUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+  ticketMessages?: Prisma.TicketMessageUncheckedUpdateManyWithoutAuthorNestedInput
+  giftCardsBought?: Prisma.GiftCardUncheckedUpdateManyWithoutPurchasedByNestedInput
 }
 
 export type UserCreateWithoutReviewsInput = {
@@ -1844,6 +2197,10 @@ export type UserCreateWithoutReviewsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   lastLoginAt?: Date | string | null
+  notifyOrderUpdates?: boolean
+  notifyRestock?: boolean
+  referralCode?: string | null
+  referredById?: string | null
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   addresses?: Prisma.AddressCreateNestedManyWithoutUserInput
@@ -1853,6 +2210,9 @@ export type UserCreateWithoutReviewsInput = {
   pointsTransactions?: Prisma.PointsTransactionCreateNestedManyWithoutUserInput
   stockAlerts?: Prisma.StockAlertCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
+  ticketMessages?: Prisma.TicketMessageCreateNestedManyWithoutAuthorInput
+  giftCardsBought?: Prisma.GiftCardCreateNestedManyWithoutPurchasedByInput
 }
 
 export type UserUncheckedCreateWithoutReviewsInput = {
@@ -1873,6 +2233,10 @@ export type UserUncheckedCreateWithoutReviewsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   lastLoginAt?: Date | string | null
+  notifyOrderUpdates?: boolean
+  notifyRestock?: boolean
+  referralCode?: string | null
+  referredById?: string | null
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   addresses?: Prisma.AddressUncheckedCreateNestedManyWithoutUserInput
@@ -1882,6 +2246,9 @@ export type UserUncheckedCreateWithoutReviewsInput = {
   pointsTransactions?: Prisma.PointsTransactionUncheckedCreateNestedManyWithoutUserInput
   stockAlerts?: Prisma.StockAlertUncheckedCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
+  ticketMessages?: Prisma.TicketMessageUncheckedCreateNestedManyWithoutAuthorInput
+  giftCardsBought?: Prisma.GiftCardUncheckedCreateNestedManyWithoutPurchasedByInput
 }
 
 export type UserCreateOrConnectWithoutReviewsInput = {
@@ -1918,6 +2285,10 @@ export type UserUpdateWithoutReviewsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notifyOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notifyRestock?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referredById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   addresses?: Prisma.AddressUpdateManyWithoutUserNestedInput
@@ -1927,6 +2298,9 @@ export type UserUpdateWithoutReviewsInput = {
   pointsTransactions?: Prisma.PointsTransactionUpdateManyWithoutUserNestedInput
   stockAlerts?: Prisma.StockAlertUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
+  ticketMessages?: Prisma.TicketMessageUpdateManyWithoutAuthorNestedInput
+  giftCardsBought?: Prisma.GiftCardUpdateManyWithoutPurchasedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReviewsInput = {
@@ -1947,6 +2321,10 @@ export type UserUncheckedUpdateWithoutReviewsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notifyOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notifyRestock?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referredById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   addresses?: Prisma.AddressUncheckedUpdateManyWithoutUserNestedInput
@@ -1956,6 +2334,9 @@ export type UserUncheckedUpdateWithoutReviewsInput = {
   pointsTransactions?: Prisma.PointsTransactionUncheckedUpdateManyWithoutUserNestedInput
   stockAlerts?: Prisma.StockAlertUncheckedUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+  ticketMessages?: Prisma.TicketMessageUncheckedUpdateManyWithoutAuthorNestedInput
+  giftCardsBought?: Prisma.GiftCardUncheckedUpdateManyWithoutPurchasedByNestedInput
 }
 
 export type UserCreateWithoutStockAlertsInput = {
@@ -1976,6 +2357,10 @@ export type UserCreateWithoutStockAlertsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   lastLoginAt?: Date | string | null
+  notifyOrderUpdates?: boolean
+  notifyRestock?: boolean
+  referralCode?: string | null
+  referredById?: string | null
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   addresses?: Prisma.AddressCreateNestedManyWithoutUserInput
@@ -1985,6 +2370,9 @@ export type UserCreateWithoutStockAlertsInput = {
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   pointsTransactions?: Prisma.PointsTransactionCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
+  ticketMessages?: Prisma.TicketMessageCreateNestedManyWithoutAuthorInput
+  giftCardsBought?: Prisma.GiftCardCreateNestedManyWithoutPurchasedByInput
 }
 
 export type UserUncheckedCreateWithoutStockAlertsInput = {
@@ -2005,6 +2393,10 @@ export type UserUncheckedCreateWithoutStockAlertsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   lastLoginAt?: Date | string | null
+  notifyOrderUpdates?: boolean
+  notifyRestock?: boolean
+  referralCode?: string | null
+  referredById?: string | null
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   addresses?: Prisma.AddressUncheckedCreateNestedManyWithoutUserInput
@@ -2014,6 +2406,9 @@ export type UserUncheckedCreateWithoutStockAlertsInput = {
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   pointsTransactions?: Prisma.PointsTransactionUncheckedCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
+  ticketMessages?: Prisma.TicketMessageUncheckedCreateNestedManyWithoutAuthorInput
+  giftCardsBought?: Prisma.GiftCardUncheckedCreateNestedManyWithoutPurchasedByInput
 }
 
 export type UserCreateOrConnectWithoutStockAlertsInput = {
@@ -2050,6 +2445,10 @@ export type UserUpdateWithoutStockAlertsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notifyOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notifyRestock?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referredById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   addresses?: Prisma.AddressUpdateManyWithoutUserNestedInput
@@ -2059,6 +2458,9 @@ export type UserUpdateWithoutStockAlertsInput = {
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   pointsTransactions?: Prisma.PointsTransactionUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
+  ticketMessages?: Prisma.TicketMessageUpdateManyWithoutAuthorNestedInput
+  giftCardsBought?: Prisma.GiftCardUpdateManyWithoutPurchasedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutStockAlertsInput = {
@@ -2079,6 +2481,10 @@ export type UserUncheckedUpdateWithoutStockAlertsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notifyOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notifyRestock?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referredById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   addresses?: Prisma.AddressUncheckedUpdateManyWithoutUserNestedInput
@@ -2088,6 +2494,489 @@ export type UserUncheckedUpdateWithoutStockAlertsInput = {
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   pointsTransactions?: Prisma.PointsTransactionUncheckedUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+  ticketMessages?: Prisma.TicketMessageUncheckedUpdateManyWithoutAuthorNestedInput
+  giftCardsBought?: Prisma.GiftCardUncheckedUpdateManyWithoutPurchasedByNestedInput
+}
+
+export type UserCreateWithoutGiftCardsBoughtInput = {
+  id?: string
+  email: string
+  name?: string | null
+  passwordHash?: string | null
+  role?: $Enums.Role
+  emailVerified?: Date | string | null
+  image?: string | null
+  phone?: string | null
+  marketingOptIn?: boolean
+  vipTier?: $Enums.VipTier
+  reefPoints?: number
+  storeCredit?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  notes?: string | null
+  tags?: Prisma.UserCreatetagsInput | string[]
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  lastLoginAt?: Date | string | null
+  notifyOrderUpdates?: boolean
+  notifyRestock?: boolean
+  referralCode?: string | null
+  referredById?: string | null
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  addresses?: Prisma.AddressCreateNestedManyWithoutUserInput
+  orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  cart?: Prisma.CartCreateNestedOneWithoutUserInput
+  wishlistItems?: Prisma.WishlistItemCreateNestedManyWithoutUserInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
+  pointsTransactions?: Prisma.PointsTransactionCreateNestedManyWithoutUserInput
+  stockAlerts?: Prisma.StockAlertCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
+  ticketMessages?: Prisma.TicketMessageCreateNestedManyWithoutAuthorInput
+}
+
+export type UserUncheckedCreateWithoutGiftCardsBoughtInput = {
+  id?: string
+  email: string
+  name?: string | null
+  passwordHash?: string | null
+  role?: $Enums.Role
+  emailVerified?: Date | string | null
+  image?: string | null
+  phone?: string | null
+  marketingOptIn?: boolean
+  vipTier?: $Enums.VipTier
+  reefPoints?: number
+  storeCredit?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  notes?: string | null
+  tags?: Prisma.UserCreatetagsInput | string[]
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  lastLoginAt?: Date | string | null
+  notifyOrderUpdates?: boolean
+  notifyRestock?: boolean
+  referralCode?: string | null
+  referredById?: string | null
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  addresses?: Prisma.AddressUncheckedCreateNestedManyWithoutUserInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
+  wishlistItems?: Prisma.WishlistItemUncheckedCreateNestedManyWithoutUserInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
+  pointsTransactions?: Prisma.PointsTransactionUncheckedCreateNestedManyWithoutUserInput
+  stockAlerts?: Prisma.StockAlertUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
+  ticketMessages?: Prisma.TicketMessageUncheckedCreateNestedManyWithoutAuthorInput
+}
+
+export type UserCreateOrConnectWithoutGiftCardsBoughtInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutGiftCardsBoughtInput, Prisma.UserUncheckedCreateWithoutGiftCardsBoughtInput>
+}
+
+export type UserUpsertWithoutGiftCardsBoughtInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutGiftCardsBoughtInput, Prisma.UserUncheckedUpdateWithoutGiftCardsBoughtInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutGiftCardsBoughtInput, Prisma.UserUncheckedCreateWithoutGiftCardsBoughtInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutGiftCardsBoughtInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutGiftCardsBoughtInput, Prisma.UserUncheckedUpdateWithoutGiftCardsBoughtInput>
+}
+
+export type UserUpdateWithoutGiftCardsBoughtInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  marketingOptIn?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  vipTier?: Prisma.EnumVipTierFieldUpdateOperationsInput | $Enums.VipTier
+  reefPoints?: Prisma.IntFieldUpdateOperationsInput | number
+  storeCredit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.UserUpdatetagsInput | string[]
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notifyOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notifyRestock?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referredById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  addresses?: Prisma.AddressUpdateManyWithoutUserNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  cart?: Prisma.CartUpdateOneWithoutUserNestedInput
+  wishlistItems?: Prisma.WishlistItemUpdateManyWithoutUserNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
+  pointsTransactions?: Prisma.PointsTransactionUpdateManyWithoutUserNestedInput
+  stockAlerts?: Prisma.StockAlertUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
+  ticketMessages?: Prisma.TicketMessageUpdateManyWithoutAuthorNestedInput
+}
+
+export type UserUncheckedUpdateWithoutGiftCardsBoughtInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  marketingOptIn?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  vipTier?: Prisma.EnumVipTierFieldUpdateOperationsInput | $Enums.VipTier
+  reefPoints?: Prisma.IntFieldUpdateOperationsInput | number
+  storeCredit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.UserUpdatetagsInput | string[]
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notifyOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notifyRestock?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referredById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  addresses?: Prisma.AddressUncheckedUpdateManyWithoutUserNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
+  wishlistItems?: Prisma.WishlistItemUncheckedUpdateManyWithoutUserNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
+  pointsTransactions?: Prisma.PointsTransactionUncheckedUpdateManyWithoutUserNestedInput
+  stockAlerts?: Prisma.StockAlertUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+  ticketMessages?: Prisma.TicketMessageUncheckedUpdateManyWithoutAuthorNestedInput
+}
+
+export type UserCreateWithoutSupportTicketsInput = {
+  id?: string
+  email: string
+  name?: string | null
+  passwordHash?: string | null
+  role?: $Enums.Role
+  emailVerified?: Date | string | null
+  image?: string | null
+  phone?: string | null
+  marketingOptIn?: boolean
+  vipTier?: $Enums.VipTier
+  reefPoints?: number
+  storeCredit?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  notes?: string | null
+  tags?: Prisma.UserCreatetagsInput | string[]
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  lastLoginAt?: Date | string | null
+  notifyOrderUpdates?: boolean
+  notifyRestock?: boolean
+  referralCode?: string | null
+  referredById?: string | null
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  addresses?: Prisma.AddressCreateNestedManyWithoutUserInput
+  orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  cart?: Prisma.CartCreateNestedOneWithoutUserInput
+  wishlistItems?: Prisma.WishlistItemCreateNestedManyWithoutUserInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
+  pointsTransactions?: Prisma.PointsTransactionCreateNestedManyWithoutUserInput
+  stockAlerts?: Prisma.StockAlertCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+  ticketMessages?: Prisma.TicketMessageCreateNestedManyWithoutAuthorInput
+  giftCardsBought?: Prisma.GiftCardCreateNestedManyWithoutPurchasedByInput
+}
+
+export type UserUncheckedCreateWithoutSupportTicketsInput = {
+  id?: string
+  email: string
+  name?: string | null
+  passwordHash?: string | null
+  role?: $Enums.Role
+  emailVerified?: Date | string | null
+  image?: string | null
+  phone?: string | null
+  marketingOptIn?: boolean
+  vipTier?: $Enums.VipTier
+  reefPoints?: number
+  storeCredit?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  notes?: string | null
+  tags?: Prisma.UserCreatetagsInput | string[]
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  lastLoginAt?: Date | string | null
+  notifyOrderUpdates?: boolean
+  notifyRestock?: boolean
+  referralCode?: string | null
+  referredById?: string | null
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  addresses?: Prisma.AddressUncheckedCreateNestedManyWithoutUserInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
+  wishlistItems?: Prisma.WishlistItemUncheckedCreateNestedManyWithoutUserInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
+  pointsTransactions?: Prisma.PointsTransactionUncheckedCreateNestedManyWithoutUserInput
+  stockAlerts?: Prisma.StockAlertUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+  ticketMessages?: Prisma.TicketMessageUncheckedCreateNestedManyWithoutAuthorInput
+  giftCardsBought?: Prisma.GiftCardUncheckedCreateNestedManyWithoutPurchasedByInput
+}
+
+export type UserCreateOrConnectWithoutSupportTicketsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutSupportTicketsInput, Prisma.UserUncheckedCreateWithoutSupportTicketsInput>
+}
+
+export type UserUpsertWithoutSupportTicketsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutSupportTicketsInput, Prisma.UserUncheckedUpdateWithoutSupportTicketsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutSupportTicketsInput, Prisma.UserUncheckedCreateWithoutSupportTicketsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutSupportTicketsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutSupportTicketsInput, Prisma.UserUncheckedUpdateWithoutSupportTicketsInput>
+}
+
+export type UserUpdateWithoutSupportTicketsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  marketingOptIn?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  vipTier?: Prisma.EnumVipTierFieldUpdateOperationsInput | $Enums.VipTier
+  reefPoints?: Prisma.IntFieldUpdateOperationsInput | number
+  storeCredit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.UserUpdatetagsInput | string[]
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notifyOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notifyRestock?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referredById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  addresses?: Prisma.AddressUpdateManyWithoutUserNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  cart?: Prisma.CartUpdateOneWithoutUserNestedInput
+  wishlistItems?: Prisma.WishlistItemUpdateManyWithoutUserNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
+  pointsTransactions?: Prisma.PointsTransactionUpdateManyWithoutUserNestedInput
+  stockAlerts?: Prisma.StockAlertUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+  ticketMessages?: Prisma.TicketMessageUpdateManyWithoutAuthorNestedInput
+  giftCardsBought?: Prisma.GiftCardUpdateManyWithoutPurchasedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutSupportTicketsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  marketingOptIn?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  vipTier?: Prisma.EnumVipTierFieldUpdateOperationsInput | $Enums.VipTier
+  reefPoints?: Prisma.IntFieldUpdateOperationsInput | number
+  storeCredit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.UserUpdatetagsInput | string[]
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notifyOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notifyRestock?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referredById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  addresses?: Prisma.AddressUncheckedUpdateManyWithoutUserNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
+  wishlistItems?: Prisma.WishlistItemUncheckedUpdateManyWithoutUserNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
+  pointsTransactions?: Prisma.PointsTransactionUncheckedUpdateManyWithoutUserNestedInput
+  stockAlerts?: Prisma.StockAlertUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+  ticketMessages?: Prisma.TicketMessageUncheckedUpdateManyWithoutAuthorNestedInput
+  giftCardsBought?: Prisma.GiftCardUncheckedUpdateManyWithoutPurchasedByNestedInput
+}
+
+export type UserCreateWithoutTicketMessagesInput = {
+  id?: string
+  email: string
+  name?: string | null
+  passwordHash?: string | null
+  role?: $Enums.Role
+  emailVerified?: Date | string | null
+  image?: string | null
+  phone?: string | null
+  marketingOptIn?: boolean
+  vipTier?: $Enums.VipTier
+  reefPoints?: number
+  storeCredit?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  notes?: string | null
+  tags?: Prisma.UserCreatetagsInput | string[]
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  lastLoginAt?: Date | string | null
+  notifyOrderUpdates?: boolean
+  notifyRestock?: boolean
+  referralCode?: string | null
+  referredById?: string | null
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  addresses?: Prisma.AddressCreateNestedManyWithoutUserInput
+  orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  cart?: Prisma.CartCreateNestedOneWithoutUserInput
+  wishlistItems?: Prisma.WishlistItemCreateNestedManyWithoutUserInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
+  pointsTransactions?: Prisma.PointsTransactionCreateNestedManyWithoutUserInput
+  stockAlerts?: Prisma.StockAlertCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
+  giftCardsBought?: Prisma.GiftCardCreateNestedManyWithoutPurchasedByInput
+}
+
+export type UserUncheckedCreateWithoutTicketMessagesInput = {
+  id?: string
+  email: string
+  name?: string | null
+  passwordHash?: string | null
+  role?: $Enums.Role
+  emailVerified?: Date | string | null
+  image?: string | null
+  phone?: string | null
+  marketingOptIn?: boolean
+  vipTier?: $Enums.VipTier
+  reefPoints?: number
+  storeCredit?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  notes?: string | null
+  tags?: Prisma.UserCreatetagsInput | string[]
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  lastLoginAt?: Date | string | null
+  notifyOrderUpdates?: boolean
+  notifyRestock?: boolean
+  referralCode?: string | null
+  referredById?: string | null
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  addresses?: Prisma.AddressUncheckedCreateNestedManyWithoutUserInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
+  wishlistItems?: Prisma.WishlistItemUncheckedCreateNestedManyWithoutUserInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
+  pointsTransactions?: Prisma.PointsTransactionUncheckedCreateNestedManyWithoutUserInput
+  stockAlerts?: Prisma.StockAlertUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
+  giftCardsBought?: Prisma.GiftCardUncheckedCreateNestedManyWithoutPurchasedByInput
+}
+
+export type UserCreateOrConnectWithoutTicketMessagesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutTicketMessagesInput, Prisma.UserUncheckedCreateWithoutTicketMessagesInput>
+}
+
+export type UserUpsertWithoutTicketMessagesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutTicketMessagesInput, Prisma.UserUncheckedUpdateWithoutTicketMessagesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutTicketMessagesInput, Prisma.UserUncheckedCreateWithoutTicketMessagesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutTicketMessagesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutTicketMessagesInput, Prisma.UserUncheckedUpdateWithoutTicketMessagesInput>
+}
+
+export type UserUpdateWithoutTicketMessagesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  marketingOptIn?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  vipTier?: Prisma.EnumVipTierFieldUpdateOperationsInput | $Enums.VipTier
+  reefPoints?: Prisma.IntFieldUpdateOperationsInput | number
+  storeCredit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.UserUpdatetagsInput | string[]
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notifyOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notifyRestock?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referredById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  addresses?: Prisma.AddressUpdateManyWithoutUserNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  cart?: Prisma.CartUpdateOneWithoutUserNestedInput
+  wishlistItems?: Prisma.WishlistItemUpdateManyWithoutUserNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
+  pointsTransactions?: Prisma.PointsTransactionUpdateManyWithoutUserNestedInput
+  stockAlerts?: Prisma.StockAlertUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
+  giftCardsBought?: Prisma.GiftCardUpdateManyWithoutPurchasedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutTicketMessagesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  marketingOptIn?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  vipTier?: Prisma.EnumVipTierFieldUpdateOperationsInput | $Enums.VipTier
+  reefPoints?: Prisma.IntFieldUpdateOperationsInput | number
+  storeCredit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.UserUpdatetagsInput | string[]
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notifyOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notifyRestock?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referredById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  addresses?: Prisma.AddressUncheckedUpdateManyWithoutUserNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
+  wishlistItems?: Prisma.WishlistItemUncheckedUpdateManyWithoutUserNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
+  pointsTransactions?: Prisma.PointsTransactionUncheckedUpdateManyWithoutUserNestedInput
+  stockAlerts?: Prisma.StockAlertUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+  giftCardsBought?: Prisma.GiftCardUncheckedUpdateManyWithoutPurchasedByNestedInput
 }
 
 export type UserCreateWithoutAuditLogsInput = {
@@ -2108,6 +2997,10 @@ export type UserCreateWithoutAuditLogsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   lastLoginAt?: Date | string | null
+  notifyOrderUpdates?: boolean
+  notifyRestock?: boolean
+  referralCode?: string | null
+  referredById?: string | null
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   addresses?: Prisma.AddressCreateNestedManyWithoutUserInput
@@ -2117,6 +3010,9 @@ export type UserCreateWithoutAuditLogsInput = {
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   pointsTransactions?: Prisma.PointsTransactionCreateNestedManyWithoutUserInput
   stockAlerts?: Prisma.StockAlertCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
+  ticketMessages?: Prisma.TicketMessageCreateNestedManyWithoutAuthorInput
+  giftCardsBought?: Prisma.GiftCardCreateNestedManyWithoutPurchasedByInput
 }
 
 export type UserUncheckedCreateWithoutAuditLogsInput = {
@@ -2137,6 +3033,10 @@ export type UserUncheckedCreateWithoutAuditLogsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   lastLoginAt?: Date | string | null
+  notifyOrderUpdates?: boolean
+  notifyRestock?: boolean
+  referralCode?: string | null
+  referredById?: string | null
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   addresses?: Prisma.AddressUncheckedCreateNestedManyWithoutUserInput
@@ -2146,6 +3046,9 @@ export type UserUncheckedCreateWithoutAuditLogsInput = {
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   pointsTransactions?: Prisma.PointsTransactionUncheckedCreateNestedManyWithoutUserInput
   stockAlerts?: Prisma.StockAlertUncheckedCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
+  ticketMessages?: Prisma.TicketMessageUncheckedCreateNestedManyWithoutAuthorInput
+  giftCardsBought?: Prisma.GiftCardUncheckedCreateNestedManyWithoutPurchasedByInput
 }
 
 export type UserCreateOrConnectWithoutAuditLogsInput = {
@@ -2182,6 +3085,10 @@ export type UserUpdateWithoutAuditLogsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notifyOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notifyRestock?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referredById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   addresses?: Prisma.AddressUpdateManyWithoutUserNestedInput
@@ -2191,6 +3098,9 @@ export type UserUpdateWithoutAuditLogsInput = {
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   pointsTransactions?: Prisma.PointsTransactionUpdateManyWithoutUserNestedInput
   stockAlerts?: Prisma.StockAlertUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
+  ticketMessages?: Prisma.TicketMessageUpdateManyWithoutAuthorNestedInput
+  giftCardsBought?: Prisma.GiftCardUpdateManyWithoutPurchasedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAuditLogsInput = {
@@ -2211,6 +3121,10 @@ export type UserUncheckedUpdateWithoutAuditLogsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notifyOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notifyRestock?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referredById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   addresses?: Prisma.AddressUncheckedUpdateManyWithoutUserNestedInput
@@ -2220,6 +3134,9 @@ export type UserUncheckedUpdateWithoutAuditLogsInput = {
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   pointsTransactions?: Prisma.PointsTransactionUncheckedUpdateManyWithoutUserNestedInput
   stockAlerts?: Prisma.StockAlertUncheckedUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+  ticketMessages?: Prisma.TicketMessageUncheckedUpdateManyWithoutAuthorNestedInput
+  giftCardsBought?: Prisma.GiftCardUncheckedUpdateManyWithoutPurchasedByNestedInput
 }
 
 
@@ -2237,6 +3154,9 @@ export type UserCountOutputType = {
   pointsTransactions: number
   stockAlerts: number
   auditLogs: number
+  supportTickets: number
+  ticketMessages: number
+  giftCardsBought: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2249,6 +3169,9 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   pointsTransactions?: boolean | UserCountOutputTypeCountPointsTransactionsArgs
   stockAlerts?: boolean | UserCountOutputTypeCountStockAlertsArgs
   auditLogs?: boolean | UserCountOutputTypeCountAuditLogsArgs
+  supportTickets?: boolean | UserCountOutputTypeCountSupportTicketsArgs
+  ticketMessages?: boolean | UserCountOutputTypeCountTicketMessagesArgs
+  giftCardsBought?: boolean | UserCountOutputTypeCountGiftCardsBoughtArgs
 }
 
 /**
@@ -2324,6 +3247,27 @@ export type UserCountOutputTypeCountAuditLogsArgs<ExtArgs extends runtime.Types.
   where?: Prisma.AuditLogWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountSupportTicketsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SupportTicketWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountTicketMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TicketMessageWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountGiftCardsBoughtArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.GiftCardWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -2343,6 +3287,10 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   createdAt?: boolean
   updatedAt?: boolean
   lastLoginAt?: boolean
+  notifyOrderUpdates?: boolean
+  notifyRestock?: boolean
+  referralCode?: boolean
+  referredById?: boolean
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   addresses?: boolean | Prisma.User$addressesArgs<ExtArgs>
@@ -2353,6 +3301,9 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   pointsTransactions?: boolean | Prisma.User$pointsTransactionsArgs<ExtArgs>
   stockAlerts?: boolean | Prisma.User$stockAlertsArgs<ExtArgs>
   auditLogs?: boolean | Prisma.User$auditLogsArgs<ExtArgs>
+  supportTickets?: boolean | Prisma.User$supportTicketsArgs<ExtArgs>
+  ticketMessages?: boolean | Prisma.User$ticketMessagesArgs<ExtArgs>
+  giftCardsBought?: boolean | Prisma.User$giftCardsBoughtArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -2374,6 +3325,10 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   createdAt?: boolean
   updatedAt?: boolean
   lastLoginAt?: boolean
+  notifyOrderUpdates?: boolean
+  notifyRestock?: boolean
+  referralCode?: boolean
+  referredById?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -2394,6 +3349,10 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   createdAt?: boolean
   updatedAt?: boolean
   lastLoginAt?: boolean
+  notifyOrderUpdates?: boolean
+  notifyRestock?: boolean
+  referralCode?: boolean
+  referredById?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectScalar = {
@@ -2414,9 +3373,13 @@ export type UserSelectScalar = {
   createdAt?: boolean
   updatedAt?: boolean
   lastLoginAt?: boolean
+  notifyOrderUpdates?: boolean
+  notifyRestock?: boolean
+  referralCode?: boolean
+  referredById?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "passwordHash" | "role" | "emailVerified" | "image" | "phone" | "marketingOptIn" | "vipTier" | "reefPoints" | "storeCredit" | "notes" | "tags" | "createdAt" | "updatedAt" | "lastLoginAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "passwordHash" | "role" | "emailVerified" | "image" | "phone" | "marketingOptIn" | "vipTier" | "reefPoints" | "storeCredit" | "notes" | "tags" | "createdAt" | "updatedAt" | "lastLoginAt" | "notifyOrderUpdates" | "notifyRestock" | "referralCode" | "referredById", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
@@ -2428,6 +3391,9 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   pointsTransactions?: boolean | Prisma.User$pointsTransactionsArgs<ExtArgs>
   stockAlerts?: boolean | Prisma.User$stockAlertsArgs<ExtArgs>
   auditLogs?: boolean | Prisma.User$auditLogsArgs<ExtArgs>
+  supportTickets?: boolean | Prisma.User$supportTicketsArgs<ExtArgs>
+  ticketMessages?: boolean | Prisma.User$ticketMessagesArgs<ExtArgs>
+  giftCardsBought?: boolean | Prisma.User$giftCardsBoughtArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -2446,6 +3412,9 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     pointsTransactions: Prisma.$PointsTransactionPayload<ExtArgs>[]
     stockAlerts: Prisma.$StockAlertPayload<ExtArgs>[]
     auditLogs: Prisma.$AuditLogPayload<ExtArgs>[]
+    supportTickets: Prisma.$SupportTicketPayload<ExtArgs>[]
+    ticketMessages: Prisma.$TicketMessagePayload<ExtArgs>[]
+    giftCardsBought: Prisma.$GiftCardPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2465,6 +3434,10 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     createdAt: Date
     updatedAt: Date
     lastLoginAt: Date | null
+    notifyOrderUpdates: boolean
+    notifyRestock: boolean
+    referralCode: string | null
+    referredById: string | null
   }, ExtArgs["result"]["user"]>
   composites: {}
 }
@@ -2869,6 +3842,9 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   pointsTransactions<T extends Prisma.User$pointsTransactionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$pointsTransactionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PointsTransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   stockAlerts<T extends Prisma.User$stockAlertsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$stockAlertsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StockAlertPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   auditLogs<T extends Prisma.User$auditLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$auditLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  supportTickets<T extends Prisma.User$supportTicketsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$supportTicketsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SupportTicketPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  ticketMessages<T extends Prisma.User$ticketMessagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$ticketMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TicketMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  giftCardsBought<T extends Prisma.User$giftCardsBoughtArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$giftCardsBoughtArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GiftCardPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2915,6 +3891,10 @@ export interface UserFieldRefs {
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly lastLoginAt: Prisma.FieldRef<"User", 'DateTime'>
+  readonly notifyOrderUpdates: Prisma.FieldRef<"User", 'Boolean'>
+  readonly notifyRestock: Prisma.FieldRef<"User", 'Boolean'>
+  readonly referralCode: Prisma.FieldRef<"User", 'String'>
+  readonly referredById: Prisma.FieldRef<"User", 'String'>
 }
     
 
@@ -3540,6 +4520,78 @@ export type User$auditLogsArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   distinct?: Prisma.AuditLogScalarFieldEnum | Prisma.AuditLogScalarFieldEnum[]
+}
+
+/**
+ * User.supportTickets
+ */
+export type User$supportTicketsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SupportTicket
+   */
+  select?: Prisma.SupportTicketSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the SupportTicket
+   */
+  omit?: Prisma.SupportTicketOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SupportTicketInclude<ExtArgs> | null
+  where?: Prisma.SupportTicketWhereInput
+  orderBy?: Prisma.SupportTicketOrderByWithRelationInput | Prisma.SupportTicketOrderByWithRelationInput[]
+  cursor?: Prisma.SupportTicketWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SupportTicketScalarFieldEnum | Prisma.SupportTicketScalarFieldEnum[]
+}
+
+/**
+ * User.ticketMessages
+ */
+export type User$ticketMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TicketMessage
+   */
+  select?: Prisma.TicketMessageSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the TicketMessage
+   */
+  omit?: Prisma.TicketMessageOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TicketMessageInclude<ExtArgs> | null
+  where?: Prisma.TicketMessageWhereInput
+  orderBy?: Prisma.TicketMessageOrderByWithRelationInput | Prisma.TicketMessageOrderByWithRelationInput[]
+  cursor?: Prisma.TicketMessageWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TicketMessageScalarFieldEnum | Prisma.TicketMessageScalarFieldEnum[]
+}
+
+/**
+ * User.giftCardsBought
+ */
+export type User$giftCardsBoughtArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the GiftCard
+   */
+  select?: Prisma.GiftCardSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the GiftCard
+   */
+  omit?: Prisma.GiftCardOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.GiftCardInclude<ExtArgs> | null
+  where?: Prisma.GiftCardWhereInput
+  orderBy?: Prisma.GiftCardOrderByWithRelationInput | Prisma.GiftCardOrderByWithRelationInput[]
+  cursor?: Prisma.GiftCardWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.GiftCardScalarFieldEnum | Prisma.GiftCardScalarFieldEnum[]
 }
 
 /**

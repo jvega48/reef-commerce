@@ -70,6 +70,14 @@ export const ModelName = {
   WishlistItem: 'WishlistItem',
   Review: 'Review',
   StockAlert: 'StockAlert',
+  OrderEvent: 'OrderEvent',
+  GiftCard: 'GiftCard',
+  SupportTicket: 'SupportTicket',
+  TicketMessage: 'TicketMessage',
+  Article: 'Article',
+  NewsletterSubscriber: 'NewsletterSubscriber',
+  PasswordResetToken: 'PasswordResetToken',
+  EmailLog: 'EmailLog',
   StoreSetting: 'StoreSetting',
   AuditLog: 'AuditLog'
 } as const
@@ -107,7 +115,11 @@ export const UserScalarFieldEnum = {
   tags: 'tags',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  lastLoginAt: 'lastLoginAt'
+  lastLoginAt: 'lastLoginAt',
+  notifyOrderUpdates: 'notifyOrderUpdates',
+  notifyRestock: 'notifyRestock',
+  referralCode: 'referralCode',
+  referredById: 'referredById'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -200,6 +212,9 @@ export const ProductScalarFieldEnum = {
   featured: 'featured',
   metaTitle: 'metaTitle',
   metaDescription: 'metaDescription',
+  ratingAvg: 'ratingAvg',
+  ratingCount: 'ratingCount',
+  soldCount: 'soldCount',
   shopifyId: 'shopifyId',
   shopifyHandle: 'shopifyHandle',
   createdAt: 'createdAt',
@@ -235,6 +250,10 @@ export const CartScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   sessionId: 'sessionId',
+  email: 'email',
+  recoveryToken: 'recoveryToken',
+  recoveryEmailSentAt: 'recoveryEmailSentAt',
+  recoveredAt: 'recoveredAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -265,6 +284,12 @@ export const OrderScalarFieldEnum = {
   total: 'total',
   couponId: 'couponId',
   pointsRedeemed: 'pointsRedeemed',
+  giftCardId: 'giftCardId',
+  giftCardAmount: 'giftCardAmount',
+  isGift: 'isGift',
+  giftMessage: 'giftMessage',
+  refundAmount: 'refundAmount',
+  refundReason: 'refundReason',
   stripePaymentIntentId: 'stripePaymentIntentId',
   stripeCheckoutSessionId: 'stripeCheckoutSessionId',
   shippingAddressId: 'shippingAddressId',
@@ -374,6 +399,8 @@ export const ReviewScalarFieldEnum = {
   title: 'title',
   body: 'body',
   approved: 'approved',
+  verified: 'verified',
+  adminReply: 'adminReply',
   createdAt: 'createdAt'
 } as const
 
@@ -389,6 +416,125 @@ export const StockAlertScalarFieldEnum = {
 } as const
 
 export type StockAlertScalarFieldEnum = (typeof StockAlertScalarFieldEnum)[keyof typeof StockAlertScalarFieldEnum]
+
+
+export const OrderEventScalarFieldEnum = {
+  id: 'id',
+  orderId: 'orderId',
+  type: 'type',
+  message: 'message',
+  visibleToCustomer: 'visibleToCustomer',
+  createdById: 'createdById',
+  createdAt: 'createdAt'
+} as const
+
+export type OrderEventScalarFieldEnum = (typeof OrderEventScalarFieldEnum)[keyof typeof OrderEventScalarFieldEnum]
+
+
+export const GiftCardScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  initialBalance: 'initialBalance',
+  balance: 'balance',
+  active: 'active',
+  purchasedById: 'purchasedById',
+  purchaseOrderId: 'purchaseOrderId',
+  recipientEmail: 'recipientEmail',
+  recipientName: 'recipientName',
+  message: 'message',
+  deliveredAt: 'deliveredAt',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type GiftCardScalarFieldEnum = (typeof GiftCardScalarFieldEnum)[keyof typeof GiftCardScalarFieldEnum]
+
+
+export const SupportTicketScalarFieldEnum = {
+  id: 'id',
+  number: 'number',
+  userId: 'userId',
+  email: 'email',
+  name: 'name',
+  subject: 'subject',
+  topic: 'topic',
+  status: 'status',
+  orderId: 'orderId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SupportTicketScalarFieldEnum = (typeof SupportTicketScalarFieldEnum)[keyof typeof SupportTicketScalarFieldEnum]
+
+
+export const TicketMessageScalarFieldEnum = {
+  id: 'id',
+  ticketId: 'ticketId',
+  authorId: 'authorId',
+  fromStaff: 'fromStaff',
+  body: 'body',
+  createdAt: 'createdAt'
+} as const
+
+export type TicketMessageScalarFieldEnum = (typeof TicketMessageScalarFieldEnum)[keyof typeof TicketMessageScalarFieldEnum]
+
+
+export const ArticleScalarFieldEnum = {
+  id: 'id',
+  slug: 'slug',
+  title: 'title',
+  excerpt: 'excerpt',
+  body: 'body',
+  category: 'category',
+  heroImageUrl: 'heroImageUrl',
+  tags: 'tags',
+  readMinutes: 'readMinutes',
+  published: 'published',
+  publishedAt: 'publishedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ArticleScalarFieldEnum = (typeof ArticleScalarFieldEnum)[keyof typeof ArticleScalarFieldEnum]
+
+
+export const NewsletterSubscriberScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  source: 'source',
+  unsubscribeToken: 'unsubscribeToken',
+  unsubscribedAt: 'unsubscribedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type NewsletterSubscriberScalarFieldEnum = (typeof NewsletterSubscriberScalarFieldEnum)[keyof typeof NewsletterSubscriberScalarFieldEnum]
+
+
+export const PasswordResetTokenScalarFieldEnum = {
+  id: 'id',
+  tokenHash: 'tokenHash',
+  email: 'email',
+  expires: 'expires',
+  usedAt: 'usedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type PasswordResetTokenScalarFieldEnum = (typeof PasswordResetTokenScalarFieldEnum)[keyof typeof PasswordResetTokenScalarFieldEnum]
+
+
+export const EmailLogScalarFieldEnum = {
+  id: 'id',
+  to: 'to',
+  subject: 'subject',
+  template: 'template',
+  status: 'status',
+  error: 'error',
+  meta: 'meta',
+  createdAt: 'createdAt'
+} as const
+
+export type EmailLogScalarFieldEnum = (typeof EmailLogScalarFieldEnum)[keyof typeof EmailLogScalarFieldEnum]
 
 
 export const StoreSettingScalarFieldEnum = {
@@ -420,19 +566,19 @@ export const SortOrder = {
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
-export const JsonNullValueInput = {
-  JsonNull: JsonNull
-} as const
-
-export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
-
-
 export const NullableJsonNullValueInput = {
   DbNull: DbNull,
   JsonNull: JsonNull
 } as const
 
 export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const QueryMode = {
