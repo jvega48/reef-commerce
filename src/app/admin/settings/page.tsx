@@ -4,6 +4,7 @@ import {
   getGuaranteeSettings,
   getShippingSettings,
   getStoreInfoSettings,
+  getTaxSettings,
 } from "@/lib/settings";
 import { saveSettings } from "@/lib/settings-actions";
 
@@ -24,10 +25,11 @@ export default async function SettingsPage({
     redirect("/admin");
   }
 
-  const [shipping, storeInfo, guarantee, { saved, error }] = await Promise.all([
+  const [shipping, storeInfo, guarantee, tax, { saved, error }] = await Promise.all([
     getShippingSettings(),
     getStoreInfoSettings(),
     getGuaranteeSettings(),
+    getTaxSettings(),
     searchParams,
   ]);
 
@@ -129,6 +131,42 @@ export default async function SettingsPage({
             <div>
               <label className={label}>Fish hold limit (business days)</label>
               <input name="fishHoldBusinessDays" type="number" min="0" defaultValue={guarantee.fishHoldBusinessDays} className={input} />
+            </div>
+          </div>
+        </section>
+
+        <section className={section}>
+          <h2 className="mb-1 font-semibold text-slate-200">Sales Tax</h2>
+          <p className="mb-4 text-xs text-slate-500">
+            Off by default — livestock is untaxed in many states. Turn on when you have
+            nexus and a rate to collect.
+          </p>
+          <div className="grid gap-4 md:grid-cols-3">
+            <div className="flex items-end pb-2">
+              <label className="flex cursor-pointer items-center gap-2 text-sm text-slate-300">
+                <input type="checkbox" name="taxEnabled" defaultChecked={tax.enabled} className="accent-[#14b5c8]" />
+                Collect sales tax
+              </label>
+            </div>
+            <div>
+              <label className={label}>Rate (%)</label>
+              <input name="taxRatePct" type="number" step="0.001" min="0" max="30" defaultValue={tax.ratePct} className={input} />
+            </div>
+            <div>
+              <label className={label}>Line-item label</label>
+              <input name="taxLabel" defaultValue={tax.label} className={input} />
+            </div>
+            <div className="flex items-end pb-2">
+              <label className="flex cursor-pointer items-center gap-2 text-sm text-slate-300">
+                <input type="checkbox" name="taxHomeStateOnly" defaultChecked={tax.homeStateOnly} className="accent-[#14b5c8]" />
+                Home state only (nexus)
+              </label>
+            </div>
+            <div className="flex items-end pb-2">
+              <label className="flex cursor-pointer items-center gap-2 text-sm text-slate-300">
+                <input type="checkbox" name="taxShipping" defaultChecked={tax.taxShipping} className="accent-[#14b5c8]" />
+                Tax shipping too
+              </label>
             </div>
           </div>
         </section>

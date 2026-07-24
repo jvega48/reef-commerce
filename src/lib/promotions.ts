@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import { prisma } from "./prisma";
 import { calcShipping, money, type ShippingMethod } from "./checkout";
-import type { ShippingSettings } from "./settings";
+import { calcTax, getTaxSettings, type ShippingSettings } from "./settings";
 import type { Coupon, GiftCard } from "@/generated/prisma/client";
 
 // ---------------------------------------------------------------------------
@@ -123,7 +123,13 @@ export async function computeCheckout(opts: {
   let shippingCost = calcShipping(shipping, method, subtotal, state);
   if (coupon?.type === "FREE_SHIPPING") shippingCost = 0;
 
-  const tax = 0; // configurable tax lands via settings; livestock is untaxed default
+  // Tax applies to the discounted merchandise total (admin-configurable; off by
+  // default since AquaVida365 currently collects no sales tax on livestock).
+  const taxCfg = await getTaxSettings();
+  const tax = calcTax(taxCfg, Math.max(0, subtotal - couponDiscount), shippingCost, {
+    state,
+    homeState: shipping.homeState,
+  });
   let remaining = money(Math.max(0, subtotal - couponDiscount + shippingCost + tax));
 
   // Reef Points next (customer's own balance before touching the gift card).

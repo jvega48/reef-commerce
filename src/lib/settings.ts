@@ -57,6 +57,25 @@ export const STORE_INFO_DEFAULTS: StoreInfoSettings = {
   supportEmail: "",
 };
 
+export const taxSettingsSchema = z.object({
+  enabled: z.boolean(),
+  ratePct: z.number().min(0).max(30),
+  homeStateOnly: z.boolean(), // only tax orders shipping to the home state (nexus)
+  taxShipping: z.boolean(),
+  label: z.string(),
+});
+export type TaxSettings = z.infer<typeof taxSettingsSchema>;
+
+// Livestock is untaxed in many states and AquaVida365 currently collects no
+// sales tax — off by default, fully configurable when nexus requires it.
+export const TAX_DEFAULTS: TaxSettings = {
+  enabled: false,
+  ratePct: 0,
+  homeStateOnly: true,
+  taxShipping: false,
+  label: "Sales tax",
+};
+
 export const guaranteeSettingsSchema = z.object({
   guaranteeDays: z.number().min(0),
   reportWindowDays: z.number().min(0),
@@ -94,6 +113,25 @@ export const getStoreInfoSettings = cache(() =>
 export const getGuaranteeSettings = cache(() =>
   loadGroup("guarantee", GUARANTEE_DEFAULTS),
 );
+export const getTaxSettings = cache(() => loadGroup("tax", TAX_DEFAULTS));
+
+/** Sales tax on an order, honoring the nexus + shipping-taxable toggles. */
+export function calcTax(
+  cfg: TaxSettings,
+  taxableBase: number,
+  shippingCost: number,
+  opts: { state?: string | null; homeState: string },
+): number {
+  if (!cfg.enabled || cfg.ratePct <= 0) return 0;
+  if (
+    cfg.homeStateOnly &&
+    (opts.state ?? "").trim().toUpperCase() !== opts.homeState.toUpperCase()
+  ) {
+    return 0;
+  }
+  const base = taxableBase + (cfg.taxShipping ? shippingCost : 0);
+  return Math.round(base * (cfg.ratePct / 100) * 100) / 100;
+}
 
 export async function saveSettingsGroup(key: string, value: object) {
   await prisma.storeSetting.upsert({

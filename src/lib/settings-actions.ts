@@ -10,6 +10,7 @@ import {
   saveSettingsGroup,
   shippingSettingsSchema,
   storeInfoSettingsSchema,
+  taxSettingsSchema,
 } from "./settings";
 
 const SETTINGS_ROLES: Role[] = ["OWNER", "ADMIN"];
@@ -55,20 +56,29 @@ export async function saveSettings(formData: FormData) {
     fishHoldBusinessDays: num(formData, "fishHoldBusinessDays"),
   });
 
-  if (!shipping.success || !storeInfo.success || !guarantee.success) {
+  const tax = taxSettingsSchema.safeParse({
+    enabled: formData.get("taxEnabled") === "on",
+    ratePct: num(formData, "taxRatePct"),
+    homeStateOnly: formData.get("taxHomeStateOnly") === "on",
+    taxShipping: formData.get("taxShipping") === "on",
+    label: str(formData, "taxLabel") || "Sales tax",
+  });
+
+  if (!shipping.success || !storeInfo.success || !guarantee.success || !tax.success) {
     redirect("/admin/settings?error=1");
   }
 
   await saveSettingsGroup("shipping", shipping.data);
   await saveSettingsGroup("storeInfo", storeInfo.data);
   await saveSettingsGroup("guarantee", guarantee.data);
+  await saveSettingsGroup("tax", tax.data);
 
   await prisma.auditLog.create({
     data: {
       userId: session.user.id,
       action: "settings.update",
       entity: "StoreSetting",
-      detail: { shipping: shipping.data, storeInfo: storeInfo.data, guarantee: guarantee.data },
+      detail: { shipping: shipping.data, storeInfo: storeInfo.data, guarantee: guarantee.data, tax: tax.data },
     },
   });
 

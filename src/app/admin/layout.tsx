@@ -3,20 +3,30 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { auth, STAFF_ROLES } from "@/auth";
 
-const NAV = [
-  { label: "Dashboard", href: "/admin" },
-  { label: "Analytics", href: "/admin/analytics" },
-  { label: "Products", href: "/admin/products" },
-  { label: "Orders", href: "/admin/orders" },
-  { label: "Packing Queue", href: "/admin/packing" },
-  { label: "Customers", href: "/admin/customers" },
-  { label: "Reviews", href: "/admin/reviews" },
-  { label: "Support", href: "/admin/support" },
-  { label: "Coupons", href: "/admin/coupons" },
-  { label: "Gift Cards", href: "/admin/gift-cards" },
-  { label: "Articles", href: "/admin/articles" },
-  { label: "Audit Log", href: "/admin/audit" },
-  { label: "Settings", href: "/admin/settings" },
+import type { Role } from "@/generated/prisma/client";
+
+// Each link declares which roles may see it. VIEWER sees read-only sections;
+// specialized managers see their domain; OWNER/ADMIN see everything.
+const ALL: Role[] = [
+  "OWNER", "ADMIN", "INVENTORY_MANAGER", "SHIPPING_MANAGER",
+  "SUPPORT", "MARKETING", "VIEWER",
+];
+const NAV: { label: string; href: string; roles: Role[] }[] = [
+  { label: "Dashboard", href: "/admin", roles: ALL },
+  { label: "Analytics", href: "/admin/analytics", roles: ["OWNER", "ADMIN", "MARKETING", "VIEWER"] },
+  { label: "Products", href: "/admin/products", roles: ["OWNER", "ADMIN", "INVENTORY_MANAGER", "VIEWER"] },
+  { label: "Orders", href: "/admin/orders", roles: ["OWNER", "ADMIN", "SHIPPING_MANAGER", "SUPPORT", "VIEWER"] },
+  { label: "Packing Queue", href: "/admin/packing", roles: ["OWNER", "ADMIN", "SHIPPING_MANAGER", "VIEWER"] },
+  { label: "Customers", href: "/admin/customers", roles: ["OWNER", "ADMIN", "SUPPORT", "MARKETING", "VIEWER"] },
+  { label: "Reviews", href: "/admin/reviews", roles: ["OWNER", "ADMIN", "MARKETING", "SUPPORT", "VIEWER"] },
+  { label: "Support", href: "/admin/support", roles: ["OWNER", "ADMIN", "SUPPORT", "SHIPPING_MANAGER", "VIEWER"] },
+  { label: "Coupons", href: "/admin/coupons", roles: ["OWNER", "ADMIN", "MARKETING"] },
+  { label: "Gift Cards", href: "/admin/gift-cards", roles: ["OWNER", "ADMIN", "MARKETING"] },
+  { label: "Articles", href: "/admin/articles", roles: ["OWNER", "ADMIN", "MARKETING"] },
+  { label: "Email", href: "/admin/emails", roles: ["OWNER", "ADMIN", "MARKETING"] },
+  { label: "Audit Log", href: "/admin/audit", roles: ["OWNER", "ADMIN"] },
+  { label: "Staff & Roles", href: "/admin/staff", roles: ["OWNER"] },
+  { label: "Settings", href: "/admin/settings", roles: ["OWNER", "ADMIN"] },
 ];
 
 export default async function AdminLayout({
@@ -47,7 +57,7 @@ export default async function AdminLayout({
           </Link>
         </div>
         <nav className="space-y-1 p-3 text-sm">
-          {NAV.map((item) => (
+          {NAV.filter((item) => item.roles.includes(session.user.role)).map((item) => (
             <Link
               key={item.href}
               href={item.href}

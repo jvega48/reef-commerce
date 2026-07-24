@@ -1,8 +1,7 @@
-import Image from "next/image";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import type { Prisma, ProductStatus } from "@/generated/prisma/client";
-import { formatPrice } from "@/components/ProductCard";
+import BulkProductTable from "@/components/admin/BulkProductTable";
 
 const PAGE_SIZE = 50;
 const STATUSES = ["ALL", "ACTIVE", "DRAFT", "ARCHIVED", "SOLD"] as const;
@@ -12,7 +11,7 @@ export const metadata = { title: "Products — Admin" };
 export default async function AdminProductsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ q?: string; status?: string; page?: string }>;
+  searchParams: Promise<{ q?: string; status?: string; page?: string; bulk?: string }>;
 }) {
   const params = await searchParams;
   const page = Math.max(1, Number(params.page ?? 1) || 1);
@@ -60,13 +59,33 @@ export default async function AdminProductsPage({
           <h1 className="text-2xl font-bold">Products</h1>
           <p className="mt-1 text-sm text-slate-400">{total} products</p>
         </div>
-        <Link
-          href="/admin/products/new"
-          className="rounded-full bg-coral-500 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-coral-500/25 transition hover:bg-coral-600"
-        >
-          + New Product
-        </Link>
+        <div className="flex gap-2">
+          <a
+            href="/api/admin/export?what=products"
+            className="rounded-full border border-abyss-700 px-4 py-2.5 text-sm font-semibold text-slate-300 transition hover:border-reef-500/50 hover:text-reef-300"
+          >
+            ⬇ Export
+          </a>
+          <Link
+            href="/admin/products/import"
+            className="rounded-full border border-abyss-700 px-4 py-2.5 text-sm font-semibold text-slate-300 transition hover:border-reef-500/50 hover:text-reef-300"
+          >
+            ⬆ Import
+          </Link>
+          <Link
+            href="/admin/products/new"
+            className="rounded-full bg-coral-500 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-coral-500/25 transition hover:bg-coral-600"
+          >
+            + New Product
+          </Link>
+        </div>
       </div>
+
+      {params.bulk === "done" && (
+        <p className="mt-4 rounded-lg border border-reef-500/40 bg-reef-500/10 px-4 py-2 text-sm text-reef-300">
+          Bulk update applied.
+        </p>
+      )}
 
       <div className="mt-5 flex flex-wrap items-center gap-3">
         {STATUSES.map((s) => (
@@ -94,86 +113,22 @@ export default async function AdminProductsPage({
         </form>
       </div>
 
-      <div className="mt-5 overflow-x-auto rounded-xl border border-abyss-700/60">
-        <table className="w-full min-w-[800px] text-left text-sm">
-          <thead className="bg-abyss-900 text-xs uppercase tracking-wide text-slate-400">
-            <tr>
-              <th className="px-4 py-3">Product</th>
-              <th className="px-4 py-3">SKU</th>
-              <th className="px-4 py-3">Type</th>
-              <th className="px-4 py-3">Mode</th>
-              <th className="px-4 py-3">Status</th>
-              <th className="px-4 py-3 text-right">Qty</th>
-              <th className="px-4 py-3 text-right">Price</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-abyss-800 bg-abyss-950">
-            {products.map((p) => (
-              <tr key={p.id} className="hover:bg-abyss-900">
-                <td className="px-4 py-2">
-                  <div className="flex items-center gap-3">
-                    <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded bg-abyss-800">
-                      {p.images[0] && (
-                        <Image
-                          src={p.images[0].url}
-                          alt={p.name}
-                          fill
-                          sizes="40px"
-                          className="object-cover"
-                        />
-                      )}
-                    </div>
-                    <div className="min-w-0">
-                      <Link
-                        href={`/admin/products/${p.id}/edit`}
-                        className="block truncate font-medium text-slate-200 hover:text-reef-300"
-                      >
-                        {p.name}
-                      </Link>
-                      <p className="truncate text-xs text-slate-500">
-                        {p.categories.map((c) => c.category.name).join(", ") || "—"}
-                      </p>
-                    </div>
-                  </div>
-                </td>
-                <td className="px-4 py-2 font-mono text-xs text-slate-400">{p.sku}</td>
-                <td className="px-4 py-2 text-slate-300">{p.livestockType}</td>
-                <td className="px-4 py-2">
-                  {p.inventoryMode === "WYSIWYG" ? (
-                    <span className="rounded bg-reef-500/20 px-1.5 py-0.5 text-xs font-semibold text-reef-300">
-                      WYSIWYG
-                    </span>
-                  ) : (
-                    <span className="text-xs text-slate-500">Standard</span>
-                  )}
-                </td>
-                <td className="px-4 py-2">
-                  <span
-                    className={`rounded px-1.5 py-0.5 text-xs font-semibold ${
-                      p.status === "ACTIVE"
-                        ? "bg-emerald-500/20 text-emerald-300"
-                        : p.status === "DRAFT"
-                          ? "bg-amber-500/20 text-amber-300"
-                          : "bg-slate-500/20 text-slate-300"
-                    }`}
-                  >
-                    {p.status}
-                  </span>
-                </td>
-                <td
-                  className={`px-4 py-2 text-right ${
-                    p.quantity === 0 ? "text-coral-400" : "text-slate-200"
-                  }`}
-                >
-                  {p.quantity}
-                </td>
-                <td className="px-4 py-2 text-right font-medium text-reef-300">
-                  {formatPrice(p.price)}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <div className="mt-5">
+        <BulkProductTable
+          products={products.map((p) => ({
+            id: p.id,
+            name: p.name,
+            sku: p.sku,
+            slug: p.slug,
+            livestockType: p.livestockType,
+            inventoryMode: p.inventoryMode,
+            status: p.status,
+            quantity: p.quantity,
+            price: Number(p.price),
+            categories: p.categories.map((c) => c.category.name).join(", "),
+            image: p.images[0]?.url ?? null,
+          }))}
+        />
       </div>
 
       {totalPages > 1 && (
