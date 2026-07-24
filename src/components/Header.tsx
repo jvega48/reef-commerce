@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { auth } from "@/auth";
 import { getCartItemCount } from "@/lib/cart";
+import SearchBox from "@/components/SearchBox";
 
 const NAV = [
   { label: "Corals", href: "/shop?type=CORAL" },
@@ -55,24 +56,10 @@ export default async function Header() {
           </nav>
 
           <div className="ml-auto flex items-center gap-2">
-            {/* Search */}
-            <form action="/shop" className="hidden lg:block">
-              <div className="relative">
-                <svg
-                  className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500"
-                  fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z" />
-                </svg>
-                <input
-                  type="search"
-                  name="q"
-                  aria-label="Search products"
-                  placeholder="Search the reef…"
-                  className="w-52 rounded-full border border-abyss-700/80 bg-abyss-900/80 py-2 pl-9 pr-4 text-sm text-slate-200 placeholder:text-slate-500 transition focus:w-64 focus:border-reef-500/60 focus:outline-none"
-                />
-              </div>
-            </form>
+            {/* Search w/ autocomplete */}
+            <div className="hidden lg:block">
+              <SearchBox />
+            </div>
 
             {/* Account */}
             <Link
