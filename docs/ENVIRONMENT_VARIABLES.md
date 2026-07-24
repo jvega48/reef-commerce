@@ -47,6 +47,15 @@ Project → Settings → Environment Variables. Variables prefixed
 - **Purpose**: reserved for client-side Stripe elements. Current flow uses hosted Stripe Checkout, which doesn't need it — safe to leave empty.
 - **Example**: `pk_live_...`
 
+### `EMAIL_FROM`
+- **Purpose**: From address on all outbound transactional email. The domain must be verified in Resend before mail delivers.
+- **Example**: `AquaVida365 <orders@aquavida365.com>`
+- **Used by**: every email template via `src/lib/email.ts`.
+
+### `CRON_SECRET`
+- **Purpose**: bearer token protecting `/api/cron/recover-carts` (abandoned-cart sweep). On Vercel Cron the `x-vercel-cron` header authorizes automatically; this secret blocks anyone else from triggering the job. Generate with `openssl rand -hex 32`.
+- **Used by**: `/api/cron/recover-carts`; the schedule lives in `vercel.json` (every 4 hours).
+
 ## Planned integrations (leave empty until their code phase lands)
 
 | Variable | Service | Purpose | Where to get it |

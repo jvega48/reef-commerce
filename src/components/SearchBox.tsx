@@ -24,12 +24,14 @@ export default function SearchBox() {
   const abortRef = useRef<AbortController | null>(null);
 
   useEffect(() => {
-    if (q.trim().length < 2) {
-      setResults([]);
-      setOpen(false);
-      return;
-    }
+    // All state updates happen asynchronously (in the debounce timer), so the
+    // effect body itself never triggers a cascading synchronous render.
     const t = setTimeout(async () => {
+      if (q.trim().length < 2) {
+        setResults([]);
+        setOpen(false);
+        return;
+      }
       abortRef.current?.abort();
       const controller = new AbortController();
       abortRef.current = controller;
