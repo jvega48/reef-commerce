@@ -7,7 +7,12 @@ import Stripe from "stripe";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { sendEmail } from "@/lib/email";
-import { refundEmail, shipmentEmail, orderStatusEmail } from "@/lib/email-templates";
+import {
+  refundEmail,
+  shipmentEmail,
+  orderStatusEmail,
+  orderConfirmationEmail,
+} from "@/lib/email-templates";
 import { trackingUrl, ORDER_STATUS_LABELS } from "@/lib/tracking";
 import { formatMoney } from "@/lib/format";
 import type { OrderStatus, Role } from "@/generated/prisma/client";
@@ -392,6 +397,56 @@ export async function refundOrder(formData: FormData) {
 
   revalidatePath(`/admin/orders/${orderId}`);
   revalidatePath("/admin/orders");
+}
+
+// ---------------------------------------------------------------------------
+// Resend order confirmation / invoice email
+// ---------------------------------------------------------------------------
+
+// Re-sends the branded order-confirmation email (which links to the invoice PDF
+// and shows the itemized total) to the customer. Mirrors the payload built on
+// finalize in checkout.ts so the resent copy is identical to the original.
+export async function resendOrderConfirmation(formData: FormData) {
+  const session = await requireOrderStaff();
+  const orderId = String(formData.get("orderId") ?? "");
+  if (!orderId) return;
+
+  const order = await prisma.order.findUnique({
+    where: { id: orderId },
+    include: { items: true },
+  });
+  if (!order) return;
+
+  const tpl = orderConfirmationEmail({
+    orderNumber: order.orderNumber,
+    items: order.items.map((i) => ({
+      name: i.name,
+      quantity: i.quantity,
+      price: formatMoney(Number(i.unitPrice) * i.quantity),
+    })),
+    total: formatMoney(order.total),
+    isPickup: !order.shippingAddressId,
+  });
+  await sendEmail({
+    to: order.email,
+    ...tpl,
+    template: "order-confirmation",
+    meta: { orderId, resent: true },
+  });
+
+  await logOrderEvent(orderId, "email", `Order confirmation re-sent to ${order.email}`, {
+    createdById: session.user.id,
+  });
+  await prisma.auditLog.create({
+    data: {
+      userId: session.user.id,
+      action: "order.resend_confirmation",
+      entity: `Order:${orderId}`,
+      detail: { email: order.email },
+    },
+  });
+
+  revalidatePath(`/admin/orders/${orderId}`);
 }
 
 // ---------------------------------------------------------------------------

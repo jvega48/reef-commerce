@@ -7,6 +7,7 @@ import {
   cancelOrder,
   markDelivered,
   refundOrder,
+  resendOrderConfirmation,
   saveOrderNotes,
   updateOrderStatus,
 } from "@/lib/order-actions";
@@ -105,6 +106,16 @@ export default async function AdminOrderPage({
               Refund Receipt PDF
             </a>
           )}
+          <form action={resendOrderConfirmation}>
+            <input type="hidden" name="orderId" value={order.id} />
+            <button
+              type="submit"
+              className="rounded-full border border-abyss-700 px-4 py-2 text-sm font-semibold text-slate-300 transition hover:bg-abyss-800"
+              title={`Re-send the confirmation email to ${order.email}`}
+            >
+              ✉ Resend Invoice Email
+            </button>
+          </form>
           <Link href="/admin/orders" className="text-sm text-slate-400 hover:text-reef-300">
             ← All orders
           </Link>
