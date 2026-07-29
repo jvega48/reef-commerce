@@ -10,6 +10,7 @@ import type {
   LivestockType,
   ProductStatus,
 } from '../src/generated/prisma/client';
+import { classifyLivestock } from '../src/lib/classify';
 
 const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! });
 const prisma = new PrismaClient({ adapter });
@@ -215,6 +216,13 @@ async function main() {
     const name = sciMatch ? p.title.replace(/\s*\([^)]+\)\s*$/, '').trim() : p.title.trim();
     const scientificName = sciMatch ? sciMatch[1].trim() : null;
 
+    // Final authority: the shared classifier (the same one the image-integrity
+    // test enforces). Its genus/keyword signal correctly distinguishes e.g.
+    // tangs (Acanthurus → FISH) from corals, overriding the coarse
+    // collection/keyword guess above so seeded data never contradicts it.
+    const classified = classifyLivestock(name, scientificName);
+    if (classified.type !== null) livestockType = classified.type;
+
     const colors = KNOWN_COLORS.filter((c) =>
       p.tags.some((t) => t.toLowerCase() === c.toLowerCase()),
     );
@@ -253,13 +261,18 @@ async function main() {
         shopifyId: BigInt(p.id),
         shopifyHandle: p.handle,
         images: {
-          create: p.images.map((img, i) => ({
-            url: img.src,
-            alt: name,
-            position: img.position ?? i,
-            width: img.width,
-            height: img.height,
-          })),
+          // Assign dense 0-based positions ordered by Shopify's (1-based)
+          // position. "Primary image" depends on position 0 existing, and the
+          // image-integrity test enforces dense 0-based ordering.
+          create: [...p.images]
+            .sort((a, b) => (a.position ?? 0) - (b.position ?? 0))
+            .map((img, i) => ({
+              url: img.src,
+              alt: name,
+              position: i,
+              width: img.width,
+              height: img.height,
+            })),
         },
         categories: {
           create: cols
