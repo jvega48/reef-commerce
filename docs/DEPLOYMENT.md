@@ -55,8 +55,12 @@ Minimum for a working deploy:
 | `AUTH_URL` | `https://<your-domain>` (or the vercel.app URL until DNS is set) |
 | `NEXT_PUBLIC_SITE_URL` | same as `AUTH_URL` |
 
-Add Stripe/Resend/Shippo/R2 keys as those services come online — see their
-setup docs. Full reference: [ENVIRONMENT_VARIABLES.md](ENVIRONMENT_VARIABLES.md).
+Add Stripe/Resend/R2 keys and the shipping key as those services come online —
+see their setup docs. For shipping, the recommended provider is **EasyPost**
+(aggregator; FedEx Priority Overnight for live coral) — set `EASYPOST_API_KEY`
+and see [SHIPPING_SETUP.md](SHIPPING_SETUP.md) for the full connect + webhook +
+sandbox→production walkthrough. Full reference:
+[ENVIRONMENT_VARIABLES.md](ENVIRONMENT_VARIABLES.md).
 
 ## 5. Migrate and seed the cloud database
 
