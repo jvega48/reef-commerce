@@ -1,8 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
-import { advanceOrder } from "@/lib/order-actions";
+import { advanceOrder, buyShippoLabelsBatch } from "@/lib/order-actions";
 import { ORDER_STATUS_LABELS } from "@/lib/tracking";
+import { shippoConfigured } from "@/lib/shippo";
 
 export const metadata = { title: "Packing Queue — Admin" };
 
@@ -10,7 +11,14 @@ export const metadata = { title: "Packing Queue — Admin" };
 // shipped, grouped by stage. Buttons advance orders one stage at a time;
 // shipping happens from the order page (label + tracking).
 
-export default async function PackingQueuePage() {
+export default async function PackingQueuePage({
+  searchParams,
+}: {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}) {
+  const sp = await searchParams;
+  const batchCount = Array.isArray(sp.batch) ? sp.batch[0] : sp.batch;
+  const batchFailed = Array.isArray(sp.failed) ? sp.failed[0] : sp.failed;
   const orders = await prisma.order.findMany({
     where: { status: { in: ["PAID", "PACKING", "READY_TO_SHIP"] } },
     orderBy: { createdAt: "asc" },
@@ -19,6 +27,9 @@ export default async function PackingQueuePage() {
       shippingAddress: { select: { city: true, state: true } },
     },
   });
+  const readyToShipIds = orders
+    .filter((o) => o.status === "READY_TO_SHIP" && o.shippingAddressId)
+    .map((o) => o.id);
 
   const stages = [
     { status: "PAID", title: "New / Paid", hint: "Pull livestock, start packing", cta: "Start Packing →" },
@@ -33,6 +44,20 @@ export default async function PackingQueuePage() {
         {orders.length} order{orders.length === 1 ? "" : "s"} in the pipeline ·
         live orders ship Tuesday &amp; Wednesday
       </p>
+      {batchCount && (
+        <div className="mt-3 rounded-lg border border-emerald-500/40 bg-emerald-500/10 px-4 py-2.5 text-sm text-emerald-200">
+          ✓ Batch complete: {batchCount} order(s) processed
+          {batchFailed && batchFailed !== "0" ? `, ${batchFailed} failed (check those orders)` : ""}.
+        </div>
+      )}
+      {shippoConfigured() && readyToShipIds.length > 0 && (
+        <form action={buyShippoLabelsBatch} className="mt-3">
+          <input type="hidden" name="orderIds" value={readyToShipIds.join(",")} />
+          <button className="rounded-full border border-reef-500 bg-reef-500/10 px-4 py-2 text-sm font-semibold text-reef-200 transition hover:bg-reef-500 hover:text-abyss-950">
+            🏷 Buy labels for all {readyToShipIds.length} Ready-to-Ship
+          </button>
+        </form>
+      )}
 
       <div className="mt-6 grid gap-5 lg:grid-cols-3">
         {stages.map((stage) => {

@@ -10,6 +10,7 @@ import { getCart } from "./cart";
 import { finalizeOrder, money, type ShippingMethod } from "./checkout";
 import { computeCheckout, getAppliedPromos, PROMO_COOKIE } from "./promotions";
 import { getShippingSettings } from "./settings";
+import { isShippableState } from "./shipping";
 
 const str = (fd: FormData, key: string) => {
   const v = String(fd.get(key) ?? "").trim();
@@ -38,6 +39,12 @@ export async function placeOrder(formData: FormData) {
   const postalCode = str(formData, "postalCode");
   if (method === "overnight" && (!shipName || !line1 || !city || !state || !postalCode)) {
     redirect("/checkout?error=address");
+  }
+
+  // Enforce shipping restrictions: we don't ship live animals everywhere.
+  const shippingCfgEarly = await getShippingSettings();
+  if (method === "overnight" && state && !isShippableState(state, shippingCfgEarly)) {
+    redirect(`/checkout?error=state&state=${encodeURIComponent(state)}`);
   }
 
   // Capture the email on the cart for abandoned-checkout recovery (the cart

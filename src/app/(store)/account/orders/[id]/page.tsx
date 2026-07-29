@@ -125,12 +125,12 @@ export default async function CustomerOrderPage({
       )}
 
       {/* Tracking */}
-      {order.shipments.length > 0 && (
+      {order.shipments.some((s) => !s.voidedAt) && (
         <section className="mt-6 rounded-2xl border border-abyss-700/60 bg-abyss-900 p-5">
           <h2 className="font-semibold text-slate-200">Tracking</h2>
           <div className="mt-3 space-y-2">
-            {order.shipments.map((s) => {
-              const url = trackingUrl(s.carrier, s.trackingNumber);
+            {order.shipments.filter((s) => !s.voidedAt).map((s) => {
+              const url = s.trackingUrl ?? trackingUrl(s.carrier, s.trackingNumber);
               return (
                 <div
                   key={s.id}

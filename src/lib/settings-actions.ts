@@ -17,6 +17,16 @@ const SETTINGS_ROLES: Role[] = ["OWNER", "ADMIN"];
 
 const num = (fd: FormData, key: string) => Number(fd.get(key) ?? NaN);
 const str = (fd: FormData, key: string) => String(fd.get(key) ?? "").trim();
+// Comma/space/newline separated list → trimmed non-empty strings.
+const list = (fd: FormData, key: string) =>
+  String(fd.get(key) ?? "")
+    .split(/[\s,]+/)
+    .map((s) => s.trim())
+    .filter(Boolean);
+const intList = (fd: FormData, key: string) =>
+  list(fd, key)
+    .map((s) => Number(s))
+    .filter((n) => Number.isInteger(n));
 
 export async function saveSettings(formData: FormData) {
   const session = await auth();
@@ -35,6 +45,28 @@ export async function saveSettings(formData: FormData) {
     overnightDescription: str(formData, "overnightDescription"),
     localPickupEnabled: formData.get("localPickupEnabled") === "on",
     allowedStatesNote: str(formData, "allowedStatesNote"),
+    shipDays: intList(formData, "shipDays"),
+    blackoutDates: list(formData, "blackoutDates"),
+    holidayScheduleNote: str(formData, "holidayScheduleNote"),
+    excludedStates: list(formData, "excludedStates").map((s) => s.toUpperCase()),
+    autoGenerateLabel: formData.get("autoGenerateLabel") === "on",
+    useLiveRates: formData.get("useLiveRates") === "on",
+    defaultServiceToken: str(formData, "defaultServiceToken"),
+    defaultCarrier: str(formData, "defaultCarrier"),
+    shipFromName: str(formData, "shipFromName"),
+    shipFromCompany: str(formData, "shipFromCompany"),
+    shipFromStreet1: str(formData, "shipFromStreet1"),
+    shipFromStreet2: str(formData, "shipFromStreet2"),
+    shipFromCity: str(formData, "shipFromCity"),
+    shipFromState: str(formData, "shipFromState").toUpperCase(),
+    shipFromZip: str(formData, "shipFromZip"),
+    shipFromCountry: str(formData, "shipFromCountry").toUpperCase() || "US",
+    shipFromPhone: str(formData, "shipFromPhone"),
+    shipFromEmail: str(formData, "shipFromEmail"),
+    parcelLengthIn: num(formData, "parcelLengthIn"),
+    parcelWidthIn: num(formData, "parcelWidthIn"),
+    parcelHeightIn: num(formData, "parcelHeightIn"),
+    parcelTareOz: num(formData, "parcelTareOz"),
   });
 
   const storeInfo = storeInfoSettingsSchema.safeParse({

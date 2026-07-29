@@ -5,12 +5,16 @@ import { prisma } from "@/lib/prisma";
 import {
   addShipment,
   cancelOrder,
+  buyShippoLabel,
   markDelivered,
   refundOrder,
   resendOrderConfirmation,
   saveOrderNotes,
   updateOrderStatus,
+  validateOrderAddress,
+  voidShippoLabel,
 } from "@/lib/order-actions";
+import { shippoConfigured } from "@/lib/shippo";
 import { trackingUrl, ORDER_STATUS_LABELS } from "@/lib/tracking";
 import { formatPrice } from "@/components/ProductCard";
 
@@ -34,10 +38,18 @@ const STATUS_COLORS: Record<string, string> = {
 
 export default async function AdminOrderPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ id: string }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const { id } = await params;
+  const sp = await searchParams;
+  const one = (v: string | string[] | undefined) => (Array.isArray(v) ? v[0] : v);
+  const shipError = one(sp.shipError);
+  const shipOk = one(sp.shipOk);
+  const addr = one(sp.addr);
+  const addrMsg = one(sp.addrMsg);
   const order = await prisma.order.findUnique({
     where: { id },
     include: {
@@ -58,8 +70,34 @@ export default async function AdminOrderPage({
     order.status,
   );
 
+  const hasShippoLabel = order.shipments.some(
+    (s) => s.shippoTransactionId && !s.voidedAt,
+  );
+
   return (
     <div className="max-w-5xl">
+      {shipError && (
+        <div className="mb-4 rounded-lg border border-coral-500/40 bg-coral-500/10 px-4 py-3 text-sm text-coral-200">
+          ⚠ {shipError}
+        </div>
+      )}
+      {shipOk && (
+        <div className="mb-4 rounded-lg border border-emerald-500/40 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-200">
+          {shipOk === "voided" ? "✓ Label voided." : "✓ Shipping label created — tracking saved and customer emailed."}
+        </div>
+      )}
+      {addr && (
+        <div
+          className={`mb-4 rounded-lg border px-4 py-3 text-sm ${
+            addr === "valid"
+              ? "border-emerald-500/40 bg-emerald-500/10 text-emerald-200"
+              : "border-amber-500/40 bg-amber-500/10 text-amber-200"
+          }`}
+        >
+          {addr === "valid" ? "✓ Address validated by Shippo." : "⚠ Address may be invalid."}
+          {addrMsg ? ` ${addrMsg}` : ""}
+        </div>
+      )}
       <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
         <div>
           <div className="flex items-center gap-3">
@@ -116,6 +154,30 @@ export default async function AdminOrderPage({
               ✉ Resend Invoice Email
             </button>
           </form>
+          {shippoConfigured() && order.shippingAddressId && !hasShippoLabel && (
+            <>
+              <form action={buyShippoLabel}>
+                <input type="hidden" name="orderId" value={order.id} />
+                <button
+                  type="submit"
+                  className="rounded-full border border-reef-500 bg-reef-500/10 px-4 py-2 text-sm font-semibold text-reef-200 transition hover:bg-reef-500 hover:text-abyss-950"
+                  title="Buy a Shippo label (rate → label → tracking → email customer)"
+                >
+                  🏷 Buy Shippo Label
+                </button>
+              </form>
+              <form action={validateOrderAddress}>
+                <input type="hidden" name="orderId" value={order.id} />
+                <button
+                  type="submit"
+                  className="rounded-full border border-abyss-700 px-4 py-2 text-sm font-semibold text-slate-300 transition hover:bg-abyss-800"
+                  title="Validate the shipping address with Shippo"
+                >
+                  ✓ Validate Address
+                </button>
+              </form>
+            </>
+          )}
           <Link href="/admin/orders" className="text-sm text-slate-400 hover:text-reef-300">
             ← All orders
           </Link>
@@ -197,11 +259,15 @@ export default async function AdminOrderPage({
             {order.shipments.length > 0 && (
               <div className="mb-5 space-y-2">
                 {order.shipments.map((s) => {
-                  const url = trackingUrl(s.carrier, s.trackingNumber);
+                  const url = s.trackingUrl ?? trackingUrl(s.carrier, s.trackingNumber);
                   return (
                     <div
                       key={s.id}
-                      className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-abyss-700 bg-abyss-950 px-4 py-2.5 text-sm"
+                      className={`flex flex-wrap items-center justify-between gap-2 rounded-lg border px-4 py-2.5 text-sm ${
+                        s.voidedAt
+                          ? "border-abyss-800 bg-abyss-950/50 opacity-60"
+                          : "border-abyss-700 bg-abyss-950"
+                      }`}
                     >
                       <div>
                         <p className="font-semibold text-slate-200">
@@ -222,16 +288,37 @@ export default async function AdminOrderPage({
                       </div>
                       <div className="flex items-center gap-3">
                         <div className="text-right text-xs text-slate-400">
-                          <p className="font-semibold uppercase">{s.status.replace("_", " ")}</p>
+                          <p className="font-semibold uppercase">
+                            {s.voidedAt ? "VOIDED" : s.status.replace("_", " ")}
+                          </p>
                           {s.shippedAt && <p>shipped {s.shippedAt.toLocaleDateString()}</p>}
                           {s.deliveredAt && <p>delivered {s.deliveredAt.toLocaleDateString()}</p>}
                           {s.cost && <p>label {formatPrice(s.cost)}</p>}
                         </div>
-                        {s.status === "IN_TRANSIT" && (
+                        {s.labelUrl && !s.voidedAt && (
+                          <a
+                            href={s.labelUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="rounded-lg bg-reef-500/15 px-3 py-1.5 text-xs font-semibold text-reef-200 hover:bg-reef-500/25"
+                          >
+                            🏷 Label PDF
+                          </a>
+                        )}
+                        {s.status === "IN_TRANSIT" && !s.voidedAt && (
                           <form action={markDelivered}>
                             <input type="hidden" name="shipmentId" value={s.id} />
                             <button className="rounded-lg bg-emerald-600/20 px-3 py-1.5 text-xs font-semibold text-emerald-300 hover:bg-emerald-600/30">
                               Mark Delivered
+                            </button>
+                          </form>
+                        )}
+                        {s.shippoTransactionId && !s.voidedAt && (
+                          <form action={voidShippoLabel}>
+                            <input type="hidden" name="shipmentId" value={s.id} />
+                            <input type="hidden" name="orderId" value={order.id} />
+                            <button className="rounded-lg bg-coral-600/15 px-3 py-1.5 text-xs font-semibold text-coral-300 hover:bg-coral-600/25">
+                              Void Label
                             </button>
                           </form>
                         )}

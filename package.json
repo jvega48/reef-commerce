@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "tsx scripts/test-shipping.ts && tsx scripts/test-checkout.ts && tsx scripts/test-oversell.ts && tsx scripts/test-promotions.ts && tsx scripts/test-pdf.ts && tsx scripts/test-search.ts && tsx scripts/test-csv.ts && tsx scripts/test-image-pipeline.ts && tsx scripts/test-image-integrity.ts"
+    "test": "tsx scripts/test-shipping.ts && tsx scripts/test-checkout.ts && tsx scripts/test-oversell.ts && tsx scripts/test-promotions.ts && tsx scripts/test-pdf.ts && tsx scripts/test-search.ts && tsx scripts/test-csv.ts && tsx scripts/test-image-pipeline.ts && tsx scripts/test-image-integrity.ts && tsx scripts/test-shippo.ts"
   },
   "overrides": {
     "postcss": "^8.5.10"

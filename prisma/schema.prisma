@@ -395,15 +395,21 @@ model Shipment {
   carrier        String         @default("UPS")
   service        String? // e.g. "UPS Next Day Air"
   trackingNumber String?
-  labelUrl       String?
+  trackingUrl    String? // carrier/provider tracking URL (from Shippo)
+  labelUrl       String? // purchased label PDF (from Shippo)
   cost           Decimal?       @db.Decimal(10, 2)
   status         ShipmentStatus @default(PENDING)
+  shippoTransactionId String? // Shippo transaction object_id (for void/refund)
+  shippoRateId        String? // Shippo rate object_id the label was bought from
+  eta            DateTime?
+  voidedAt       DateTime? // label refunded/voided through Shippo
   shippedAt      DateTime?
   deliveredAt    DateTime?
   createdAt      DateTime       @default(now())
   updatedAt      DateTime       @updatedAt
 
   @@index([orderId])
+  @@index([trackingNumber])
 }
 
 model Address {

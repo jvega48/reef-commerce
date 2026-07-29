@@ -98,6 +98,117 @@ export default async function SettingsPage({
               <label className={label}>Shipping restrictions note</label>
               <input name="allowedStatesNote" defaultValue={shipping.allowedStatesNote} className={input} />
             </div>
+            <div>
+              <label className={label}>Ship days (0=Sun … 6=Sat)</label>
+              <input name="shipDays" defaultValue={shipping.shipDays.join(", ")} placeholder="2, 3" className={input} />
+            </div>
+            <div>
+              <label className={label}>Excluded states</label>
+              <input name="excludedStates" defaultValue={shipping.excludedStates.join(", ")} placeholder="HI, AK, PR" className={input} />
+            </div>
+            <div>
+              <label className={label}>Blackout dates (YYYY-MM-DD)</label>
+              <input name="blackoutDates" defaultValue={shipping.blackoutDates.join(", ")} placeholder="2026-12-25" className={input} />
+            </div>
+            <div className="md:col-span-3">
+              <label className={label}>Holiday schedule note</label>
+              <input name="holidayScheduleNote" defaultValue={shipping.holidayScheduleNote} className={input} />
+            </div>
+          </div>
+        </section>
+
+        <section className={section}>
+          <h2 className="mb-1 font-semibold text-slate-200">Shippo & Fulfillment</h2>
+          <p className="mb-4 text-xs text-slate-500">
+            Carrier labels via Shippo. The customer is always charged the flat policy rates above; live
+            rates below are what <em>you</em> pay for the label. See docs/SHIPPO_SETUP.md.
+          </p>
+          <div className="grid gap-4 md:grid-cols-3">
+            <div className="flex items-end pb-2">
+              <label className="flex cursor-pointer items-center gap-2 text-sm text-slate-300">
+                <input type="checkbox" name="autoGenerateLabel" defaultChecked={shipping.autoGenerateLabel} className="accent-[#14b5c8]" />
+                Auto-buy label on payment
+              </label>
+            </div>
+            <div className="flex items-end pb-2">
+              <label className="flex cursor-pointer items-center gap-2 text-sm text-slate-300">
+                <input type="checkbox" name="useLiveRates" defaultChecked={shipping.useLiveRates} className="accent-[#14b5c8]" />
+                Use live Shippo rates
+              </label>
+            </div>
+            <div />
+            <div>
+              <label className={label}>Default carrier</label>
+              <input name="defaultCarrier" defaultValue={shipping.defaultCarrier} placeholder="FedEx" className={input} />
+            </div>
+            <div className="md:col-span-2">
+              <label className={label}>Default service token</label>
+              <input name="defaultServiceToken" defaultValue={shipping.defaultServiceToken} placeholder="fedex_priority_overnight" className={input} />
+            </div>
+
+            <div className="md:col-span-3 mt-2 border-t border-abyss-800 pt-3 text-xs font-semibold uppercase tracking-wide text-slate-400">
+              Ship-from / return address (printed on labels)
+            </div>
+            <div>
+              <label className={label}>Name</label>
+              <input name="shipFromName" defaultValue={shipping.shipFromName} className={input} />
+            </div>
+            <div>
+              <label className={label}>Company</label>
+              <input name="shipFromCompany" defaultValue={shipping.shipFromCompany} className={input} />
+            </div>
+            <div>
+              <label className={label}>Phone</label>
+              <input name="shipFromPhone" defaultValue={shipping.shipFromPhone} className={input} />
+            </div>
+            <div className="md:col-span-2">
+              <label className={label}>Street 1</label>
+              <input name="shipFromStreet1" defaultValue={shipping.shipFromStreet1} className={input} />
+            </div>
+            <div>
+              <label className={label}>Street 2</label>
+              <input name="shipFromStreet2" defaultValue={shipping.shipFromStreet2} className={input} />
+            </div>
+            <div>
+              <label className={label}>City</label>
+              <input name="shipFromCity" defaultValue={shipping.shipFromCity} className={input} />
+            </div>
+            <div>
+              <label className={label}>State</label>
+              <input name="shipFromState" maxLength={2} defaultValue={shipping.shipFromState} className={input} />
+            </div>
+            <div>
+              <label className={label}>ZIP</label>
+              <input name="shipFromZip" defaultValue={shipping.shipFromZip} className={input} />
+            </div>
+            <div>
+              <label className={label}>Country</label>
+              <input name="shipFromCountry" maxLength={2} defaultValue={shipping.shipFromCountry} className={input} />
+            </div>
+            <div>
+              <label className={label}>Ship-from email</label>
+              <input name="shipFromEmail" defaultValue={shipping.shipFromEmail} className={input} />
+            </div>
+
+            <div className="md:col-span-3 mt-2 border-t border-abyss-800 pt-3 text-xs font-semibold uppercase tracking-wide text-slate-400">
+              Default parcel (inches / empty-box tare oz)
+            </div>
+            <div>
+              <label className={label}>Length (in)</label>
+              <input name="parcelLengthIn" type="number" step="0.1" min="0" defaultValue={shipping.parcelLengthIn} className={input} />
+            </div>
+            <div>
+              <label className={label}>Width (in)</label>
+              <input name="parcelWidthIn" type="number" step="0.1" min="0" defaultValue={shipping.parcelWidthIn} className={input} />
+            </div>
+            <div>
+              <label className={label}>Height (in)</label>
+              <input name="parcelHeightIn" type="number" step="0.1" min="0" defaultValue={shipping.parcelHeightIn} className={input} />
+            </div>
+            <div>
+              <label className={label}>Tare weight (oz)</label>
+              <input name="parcelTareOz" type="number" step="0.1" min="0" defaultValue={shipping.parcelTareOz} className={input} />
+            </div>
           </div>
         </section>
 

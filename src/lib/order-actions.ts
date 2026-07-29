@@ -14,6 +14,12 @@ import {
   orderConfirmationEmail,
 } from "@/lib/email-templates";
 import { trackingUrl, ORDER_STATUS_LABELS } from "@/lib/tracking";
+import {
+  createLabelForOrder,
+  voidLabelForShipment,
+  batchCreateLabels,
+} from "@/lib/shipping";
+import { validateAddress as shippoValidateAddress, shippoConfigured } from "@/lib/shippo";
 import { formatMoney } from "@/lib/format";
 import type { OrderStatus, Role } from "@/generated/prisma/client";
 
@@ -563,4 +569,98 @@ export async function markDelivered(formData: FormData) {
   }
   revalidatePath(`/admin/orders/${shipment.orderId}`);
   revalidatePath("/admin/orders");
+}
+
+// ---------------------------------------------------------------------------
+// Shippo — buy label, void label, batch, validate address
+// ---------------------------------------------------------------------------
+
+/** One-click: buy a Shippo label for an order (rate → label → track → email). */
+export async function buyShippoLabel(formData: FormData) {
+  const session = await requireOrderStaff();
+  const orderId = String(formData.get("orderId") ?? "");
+  if (!orderId) return;
+
+  const result = await createLabelForOrder(orderId, { actorId: session.user.id });
+  revalidatePath(`/admin/orders/${orderId}`);
+  revalidatePath("/admin/orders");
+  revalidatePath("/admin/packing");
+  if (!result.ok) {
+    redirect(`/admin/orders/${orderId}?shipError=${encodeURIComponent(result.error)}`);
+  }
+  redirect(`/admin/orders/${orderId}?shipOk=1`);
+}
+
+/** Void/refund a purchased Shippo label. */
+export async function voidShippoLabel(formData: FormData) {
+  const session = await requireOrderStaff();
+  const shipmentId = String(formData.get("shipmentId") ?? "");
+  const orderId = String(formData.get("orderId") ?? "");
+  if (!shipmentId) return;
+
+  const result = await voidLabelForShipment(shipmentId, session.user.id);
+  revalidatePath(`/admin/orders/${orderId}`);
+  if (!result.ok && result.error) {
+    redirect(`/admin/orders/${orderId}?shipError=${encodeURIComponent(result.error)}`);
+  }
+  redirect(`/admin/orders/${orderId}?shipOk=voided`);
+}
+
+/** Batch-buy labels for a set of order IDs (from the packing queue). */
+export async function buyShippoLabelsBatch(formData: FormData) {
+  const session = await requireOrderStaff();
+  const ids = String(formData.get("orderIds") ?? "")
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
+  if (ids.length === 0) return;
+
+  const results = await batchCreateLabels(ids, session.user.id);
+  const failed = results.filter((r) => !r.result.ok).length;
+  revalidatePath("/admin/packing");
+  revalidatePath("/admin/orders");
+  redirect(
+    `/admin/packing?batch=${results.length}&failed=${failed}`,
+  );
+}
+
+/** Validate an order's shipping address against Shippo before buying a label. */
+export async function validateOrderAddress(formData: FormData) {
+  await requireOrderStaff();
+  const orderId = String(formData.get("orderId") ?? "");
+  if (!orderId || !shippoConfigured()) {
+    redirect(`/admin/orders/${orderId}?shipError=${encodeURIComponent("Shippo is not configured.")}`);
+  }
+  const order = await prisma.order.findUnique({
+    where: { id: orderId },
+    include: { shippingAddress: true },
+  });
+  if (!order?.shippingAddress) {
+    redirect(`/admin/orders/${orderId}?shipError=${encodeURIComponent("No shipping address.")}`);
+  }
+  const a = order!.shippingAddress!;
+  // Build the redirect target OUTSIDE any try/catch — redirect() throws
+  // NEXT_REDIRECT internally, which a surrounding catch would swallow.
+  let target: string;
+  try {
+    const res = await shippoValidateAddress({
+      name: a.name,
+      street1: a.line1,
+      street2: a.line2 || undefined,
+      city: a.city,
+      state: a.state,
+      zip: a.postalCode,
+      country: a.country || "US",
+    });
+    const valid = res.validation_results?.is_valid ?? res.is_complete;
+    const msgs = res.validation_results?.messages?.map((m) => m.text).join("; ");
+    target = `/admin/orders/${orderId}?addr=${valid ? "valid" : "invalid"}${
+      msgs ? `&addrMsg=${encodeURIComponent(msgs)}` : ""
+    }`;
+  } catch (e) {
+    target = `/admin/orders/${orderId}?shipError=${encodeURIComponent(
+      `Address check failed: ${(e as Error).message}`,
+    )}`;
+  }
+  redirect(target);
 }

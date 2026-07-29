@@ -71,7 +71,8 @@ idempotency, oversell race). `npm run build` must pass before deploying.
 | [docs/ENVIRONMENT_VARIABLES.md](docs/ENVIRONMENT_VARIABLES.md) | Every env var explained |
 | [docs/DATABASE_SETUP.md](docs/DATABASE_SETUP.md) | Postgres, Prisma, migrations, backups |
 | [docs/STRIPE_SETUP.md](docs/STRIPE_SETUP.md) | Payments, webhooks, going live |
-| [docs/SHIPPING_SETUP.md](docs/SHIPPING_SETUP.md) | Carrier labels via Shippo/EasyPost |
+| [docs/SHIPPING_SETUP.md](docs/SHIPPING_SETUP.md) | Shipping architecture (why Shippo + FedEx overnight) |
+| [docs/SHIPPO_SETUP.md](docs/SHIPPO_SETUP.md) | Complete Shippo integration, testing & launch |
 | [docs/EMAIL_SETUP.md](docs/EMAIL_SETUP.md) | Resend + domain verification |
 | [docs/STORAGE_SETUP.md](docs/STORAGE_SETUP.md) | Cloudflare R2 / S3 for images |
 | [docs/DOMAIN_SETUP.md](docs/DOMAIN_SETUP.md) | DNS, HTTPS, redirects |
@@ -88,7 +89,7 @@ idempotency, oversell race). `npm run build` must pass before deploying.
 | Integration | Status |
 |---|---|
 | Stripe Checkout + webhook | Code complete — add keys to go live |
-| Shipping labels (Shippo/EasyPost) | Planned — admin shipments use manual tracking entry today |
+| Shipping labels (Shippo) | Code complete — add `SHIPPO_API_KEY` to buy labels, capture tracking, and sync delivery via webhook (manual entry still available) |
 | Transactional email (Resend) | Planned |
 | Image storage (Cloudflare R2) | Planned — uploads currently save to `public/uploads`; catalog images hotlink Shopify CDN |
 

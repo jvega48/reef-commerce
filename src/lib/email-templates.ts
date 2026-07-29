@@ -63,6 +63,20 @@ export function shipmentEmail(o: {
   };
 }
 
+export function deliveredEmail(o: { orderNumber: number }) {
+  return {
+    subject: `Order #${o.orderNumber} was delivered — acclimate now 🪸`,
+    html: emailLayout(
+      `Your reef pack has arrived!`,
+      `<p>Order <strong style="color:#e2e8f0;">#${o.orderNumber}</strong> shows as
+       <strong style="color:#2dd4e4;">delivered</strong>.</p>
+       <p><strong style="color:#f4735c;">Act now:</strong> open the box and begin acclimation within
+       2 hours. Film the unboxing before opening bags — it's required for any live-arrival claim.</p>
+       ${emailButton(`${site()}/guarantee`, "Live-arrival guarantee")}`,
+    ),
+  };
+}
+
 export function orderStatusEmail(o: { orderNumber: number; statusLabel: string; note?: string }) {
   return {
     subject: `Order #${o.orderNumber}: ${o.statusLabel}`,

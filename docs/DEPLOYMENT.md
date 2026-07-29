@@ -55,11 +55,17 @@ Minimum for a working deploy:
 | `AUTH_URL` | `https://<your-domain>` (or the vercel.app URL until DNS is set) |
 | `NEXT_PUBLIC_SITE_URL` | same as `AUTH_URL` |
 
-Add Stripe/Resend/R2 keys and the shipping key as those services come online —
-see their setup docs. For shipping, the recommended provider is **EasyPost**
-(aggregator; FedEx Priority Overnight for live coral) — set `EASYPOST_API_KEY`
-and see [SHIPPING_SETUP.md](SHIPPING_SETUP.md) for the full connect + webhook +
-sandbox→production walkthrough. Full reference:
+Add Stripe/Resend/R2 and Shippo keys as those services come online — see their
+setup docs. Shipping runs on **Shippo** (FedEx Priority Overnight for live
+coral):
+
+| Name | Value |
+|---|---|
+| `SHIPPO_API_KEY` | `shippo_test_…` for testing, `shippo_live_…` for production |
+| `SHIPPO_WEBHOOK_SECRET` | `openssl rand -hex 32` — used as `?token=` on the webhook URL |
+
+See §5b below and [SHIPPO_SETUP.md](SHIPPO_SETUP.md) for the full connect +
+webhook + sandbox→production walkthrough. Full reference:
 [ENVIRONMENT_VARIABLES.md](ENVIRONMENT_VARIABLES.md).
 
 ## 5. Migrate and seed the cloud database
@@ -79,6 +85,35 @@ this is the production-safe command.)
 Then **immediately change the owner password** by logging into
 `https://<site>/admin` and updating the account, and set real values in
 Admin → Settings if anything differs from the published-policy defaults.
+
+## 5b. Shippo (shipping labels & tracking)
+
+Shippo is the shipping provider. Full walkthrough:
+[SHIPPO_SETUP.md](SHIPPO_SETUP.md). Deployment steps:
+
+1. **Create a Shippo account** at https://goshippo.com. The business address
+   becomes the default label origin.
+2. **Obtain API keys** — dashboard → *Settings → API*. Copy the **Test token**
+   (`shippo_test_…`) now; the **Live token** (`shippo_live_…`) for production.
+3. **Add keys to Vercel** → *Settings → Environment Variables*:
+   - `SHIPPO_API_KEY` = your token (test first, then live)
+   - `SHIPPO_WEBHOOK_SECRET` = `openssl rand -hex 32`
+4. **Redeploy** (Vercel redeploys on env-var change, or push to `master`).
+5. **Verify connectivity** — open `/api/health`; `integrations.shipping` should
+   be `true`. Set the ship-from address in **Admin → Settings → Shipping**.
+6. **Generate a live label** — open a paid order → **🏷 Buy Shippo Label**
+   (watermarked in test, real in live). Confirm the label PDF, tracking number,
+   and cost are stored.
+7. **Confirm tracking updates** — in Shippo → *Settings → Webhooks*, add
+   `https://<yourdomain>/api/shipping/webhook?token=<SHIPPO_WEBHOOK_SECRET>` and
+   subscribe to `track_updated`. A delivery event advances the order to
+   DELIVERED.
+8. **Verify shipping emails** — check **Admin → Emails** (or the customer inbox
+   in live mode) for the "has shipped" and "delivered" messages.
+
+Optional: enable **Auto-buy label on payment** in Admin → Settings → Shipping to
+purchase the label automatically once payment settles (off by default — live
+coral ships on scheduled days).
 
 ## 6. Domain, DNS, SSL
 

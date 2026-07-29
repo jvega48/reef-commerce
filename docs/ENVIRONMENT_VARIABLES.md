@@ -60,7 +60,8 @@ Project → Settings → Environment Variables. Variables prefixed
 
 | Variable | Service | Purpose | Where to get it |
 |---|---|---|---|
-| `SHIPPO_API_KEY` | Shippo | rates, labels, tracking (UPS/FedEx/USPS via one API) | goshippo.com → Settings → API |
+| `SHIPPO_API_KEY` | Shippo | **implemented** — rates, labels, tracking (FedEx/UPS/USPS via one API). Test token = free labels. See docs/SHIPPO_SETUP.md | goshippo.com → Settings → API |
+| `SHIPPO_WEBHOOK_SECRET` | Shippo | shared secret for the tracking webhook (`?token=`) | `openssl rand -hex 32` |
 | `EASYPOST_API_KEY` | EasyPost | alternative aggregator to Shippo — set one, not both | easypost.com → API Keys |
 | `RESEND_API_KEY` | Resend | transactional email (order confirmations, tracking) | resend.com → API Keys |
 | `R2_ACCOUNT_ID` | Cloudflare R2 | account for S3-compatible storage | Cloudflare dashboard → R2 |

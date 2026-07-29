@@ -2,7 +2,9 @@ import { prisma } from "./prisma";
 import { sendEmail } from "./email";
 import { giftCardEmail, orderConfirmationEmail } from "./email-templates";
 import { formatMoney } from "./format";
-import type { ShippingSettings } from "./settings";
+import { getShippingSettings, type ShippingSettings } from "./settings";
+import { createLabelForOrder } from "./shipping";
+import { shippoConfigured } from "./shippo";
 
 // ---------------------------------------------------------------------------
 // Shipping (flat-rate per published policy until the aggregator API is wired
@@ -233,6 +235,20 @@ export async function finalizeOrder(orderId: string, paymentIntentId?: string | 
         template: "gift-card",
         meta: { orderId, giftCardId: gc.id },
       });
+    }
+
+    // Optional: auto-purchase the Shippo label the moment payment settles.
+    // Off by default (live coral ships on scheduled days); enabled per-store in
+    // Admin → Settings. Never let a shipping failure break order finalization.
+    if (order.shippingAddressId) {
+      const cfg = await getShippingSettings();
+      if (cfg.autoGenerateLabel && shippoConfigured()) {
+        try {
+          await createLabelForOrder(orderId, { markShipped: false });
+        } catch (e) {
+          console.error(`[finalizeOrder] auto-label failed for ${orderId}:`, e);
+        }
+      }
     }
   }
 }

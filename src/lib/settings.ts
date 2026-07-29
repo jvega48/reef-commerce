@@ -10,6 +10,7 @@ import { prisma } from "./prisma";
 // ---------------------------------------------------------------------------
 
 export const shippingSettingsSchema = z.object({
+  // ── Pricing charged to the customer (policy flat-rate) ──
   freeShippingThreshold: z.number().min(0),
   overnightRate: z.number().min(0),
   inStateRate: z.number().min(0),
@@ -20,6 +21,41 @@ export const shippingSettingsSchema = z.object({
   overnightDescription: z.string(),
   localPickupEnabled: z.boolean(),
   allowedStatesNote: z.string(),
+  // ── Fulfillment scheduling rules (enforced at checkout) ──
+  // Weekday indexes (0=Sun … 6=Sat) on which live orders may be delivered.
+  shipDays: z.array(z.number().int().min(0).max(6)),
+  // ISO "YYYY-MM-DD" dates on which we do not ship / deliver.
+  blackoutDates: z.array(z.string()),
+  holidayScheduleNote: z.string(),
+  excludedStates: z.array(z.string().length(2)),
+  // ── Shippo integration ──
+  // When true, a Shippo label is purchased automatically once payment settles.
+  // Off by default: live coral ships on scheduled days, so most shops buy the
+  // label at pack time from the order screen instead.
+  autoGenerateLabel: z.boolean(),
+  // Fetch live Shippo rates (for label service selection / admin display).
+  // The customer is always charged the flat policy rate above regardless.
+  useLiveRates: z.boolean(),
+  // Preferred Shippo service level token, e.g. "fedex_priority_overnight".
+  defaultServiceToken: z.string(),
+  defaultCarrier: z.string(),
+  // Ship-from / return origin printed on labels.
+  shipFromName: z.string(),
+  shipFromCompany: z.string(),
+  shipFromStreet1: z.string(),
+  shipFromStreet2: z.string(),
+  shipFromCity: z.string(),
+  shipFromState: z.string(),
+  shipFromZip: z.string(),
+  shipFromCountry: z.string(),
+  shipFromPhone: z.string(),
+  shipFromEmail: z.string(),
+  // Default parcel dimensions (inches) + empty-box tare weight (oz). Product
+  // weight is added on top of the tare when the label is created.
+  parcelLengthIn: z.number().min(0),
+  parcelWidthIn: z.number().min(0),
+  parcelHeightIn: z.number().min(0),
+  parcelTareOz: z.number().min(0),
 });
 export type ShippingSettings = z.infer<typeof shippingSettingsSchema>;
 
@@ -36,6 +72,29 @@ export const SHIPPING_DEFAULTS: ShippingSettings = {
   localPickupEnabled: true,
   allowedStatesNote:
     "We ship to the lower 48 states only. No shipping to Hawaii, Puerto Rico, or internationally.",
+  shipDays: [2, 3], // Tuesday & Wednesday
+  blackoutDates: [],
+  holidayScheduleNote:
+    "No shipping on major holidays or the day before — check the calendar before ordering.",
+  excludedStates: ["HI", "AK", "PR"],
+  autoGenerateLabel: false,
+  useLiveRates: false,
+  defaultServiceToken: "fedex_priority_overnight",
+  defaultCarrier: "FedEx",
+  shipFromName: "AquaVida365",
+  shipFromCompany: "AquaVida365",
+  shipFromStreet1: "",
+  shipFromStreet2: "",
+  shipFromCity: "",
+  shipFromState: "CA",
+  shipFromZip: "",
+  shipFromCountry: "US",
+  shipFromPhone: "",
+  shipFromEmail: "orders@aquavida365.com",
+  parcelLengthIn: 12,
+  parcelWidthIn: 12,
+  parcelHeightIn: 10,
+  parcelTareOz: 32, // insulated box + packing before livestock/water
 };
 
 export const storeInfoSettingsSchema = z.object({
