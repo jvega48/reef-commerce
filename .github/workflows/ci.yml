@@ -52,6 +52,11 @@ jobs:
       - name: Typecheck
         run: npx tsc --noEmit
 
+      - name: Seed database
+        # Integration tests run against real data (catalog, owner account).
+        # The seed is idempotent (upserts) and reads committed seed-data/*.json.
+        run: npx prisma db seed
+
       - name: Integration tests
         run: npm test
 
